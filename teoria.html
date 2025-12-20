@@ -1,1 +1,1117 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>Guardiãs da Vigilância 🦋 | Módulo 1 — Teoria</title>
+  <meta name="theme-color" content="#d946ef"/>
+
+  <style>
+    :root{
+      /* Paleta "feminina guerreira" */
+      --bg0:#fff6fb;
+      --bg1:#ffe4f3;
+      --card: rgba(255,255,255,.78);
+      --stroke: rgba(79, 12, 55, .12);
+
+      --txt:#2a0f22;
+      --muted: rgba(42,15,34,.68);
+      --muted2: rgba(42,15,34,.52);
+
+      --magenta:#d946ef;
+      --pink:#fb7185;
+      --gold:#f59e0b;
+      --lilac:#8b5cf6;
+      --teal:#06b6d4;
+      --green:#22c55e;
+      --danger:#ef4444;
+
+      --shadow: 0 18px 70px rgba(80, 10, 55, .18);
+      --r:18px; --r2:24px;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:var(--sans); color:var(--txt);
+      background:
+        radial-gradient(1200px 700px at 15% 0%, rgba(217,70,239,.18), transparent 60%),
+        radial-gradient(900px 650px at 95% 10%, rgba(251,113,133,.18), transparent 58%),
+        radial-gradient(900px 700px at 60% 100%, rgba(6,182,212,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:16px 16px calc(98px + env(safe-area-inset-bottom));}
+
+    /* Header */
+    .top{
+      position:sticky; top:0; z-index:40;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(255,246,251,.86), rgba(255,246,251,.60));
+      border-bottom:1px solid var(--stroke);
+    }
+    .topin{
+      max-width:1100px;margin:0 auto;padding:12px 16px;
+      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    }
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{
+      width:44px;height:44px;border-radius:18px;
+      border:1px solid var(--stroke);
+      box-shadow:var(--shadow);
+      background: linear-gradient(135deg, rgba(217,70,239,.92), rgba(251,113,133,.85));
+      display:grid; place-items:center;
+      font-size:20px;
+    }
+    .titlebox h1{margin:0;font-size:16px; letter-spacing:.2px}
+    .titlebox p{margin:2px 0 0;color:var(--muted); font-size:12px; line-height:1.35}
+
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.65);
+      color: rgba(42,15,34,.75);
+      font-size:12px;
+      box-shadow: 0 10px 40px rgba(80,10,55,.08);
+    }
+
+    .btn{
+      cursor:pointer; user-select:none;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      color:var(--txt);
+      padding:10px 11px;
+      border-radius:16px;
+      font-weight:900;
+      display:inline-flex; gap:8px; align-items:center;
+      text-decoration:none;
+      transition: transform .08s ease, filter .15s ease;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(217,70,239,.92), rgba(251,113,133,.85));
+      color:white;
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.55);
+      color: rgba(42,15,34,.85);
+    }
+    .btn.small{padding:8px 10px; border-radius:14px; font-size:12px}
+
+    /* Layout */
+    .grid{display:grid; grid-template-columns: 360px 1fr; gap:12px; align-items:start;}
+    @media (max-width: 980px){ .grid{grid-template-columns: 1fr;} }
+
+    .panel{
+      border:1px solid var(--stroke);
+      border-radius: var(--r2);
+      background: rgba(255,255,255,.72);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .ph{
+      padding:14px 14px;
+      border-bottom:1px solid var(--stroke);
+      background:
+        radial-gradient(900px 260px at 10% 0%, rgba(217,70,239,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.50));
+    }
+    .ph h2{margin:0;font-size:14px}
+    .ph p{margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.45}
+
+    .search{
+      width:100%;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      color:var(--txt);
+      border-radius:16px;
+      padding:10px 12px;
+      outline:none;
+      margin:10px 0 10px;
+    }
+
+    .progress{
+      display:flex; gap:10px; align-items:center; width:100%;
+      margin-top:10px;
+    }
+    .bar{flex:1;height:12px;border-radius:999px;border:1px solid var(--stroke);background:rgba(255,255,255,.65);overflow:hidden}
+    .fill{height:100%; width:0%; background: linear-gradient(90deg, rgba(34,197,94,.86), rgba(6,182,212,.72), rgba(217,70,239,.78)); transition: width .25s ease}
+    .score{
+      font-family:var(--mono); font-size:11px; color:rgba(42,15,34,.70);
+      padding:6px 10px; border:1px solid var(--stroke); border-radius:999px; background:rgba(255,255,255,.70)
+    }
+
+    .pb{padding:12px}
+
+    .seg{
+      width:100%;
+      text-align:left;
+      border:1px solid transparent;
+      background: rgba(255,255,255,.60);
+      color:var(--txt);
+      padding:10px 10px;
+      border-radius:16px;
+      cursor:pointer;
+      display:flex; gap:10px; align-items:flex-start;
+      transition: background .12s ease, border-color .12s ease, transform .08s ease;
+      margin-bottom:8px;
+    }
+    .seg:hover{background: rgba(255,255,255,.80); border-color: rgba(79,12,55,.12)}
+    .seg:active{transform: translateY(1px)}
+    .seg.active{
+      background:
+        radial-gradient(900px 240px at 10% 0%, rgba(217,70,239,.12), transparent 55%),
+        rgba(255,255,255,.82);
+      border-color: rgba(79,12,55,.14);
+    }
+    .seg .ic{font-size:18px; line-height:1.1; margin-top:1px}
+    .seg .meta{flex:1}
+    .seg .meta b{display:block; font-size:13px}
+    .seg .meta span{display:block; margin-top:2px; color:var(--muted); font-size:12px; line-height:1.35}
+    .seg .done{
+      width:18px;height:18px;border-radius:7px;
+      border:1px solid rgba(79,12,55,.14);
+      display:grid; place-items:center;
+      margin-top:2px;
+      color: rgba(42,15,34,.8);
+      background: rgba(255,255,255,.70);
+    }
+    .seg.completed .done{
+      background: rgba(34,197,94,.18);
+      border-color: rgba(34,197,94,.45);
+      color: rgba(18, 80, 46, .9);
+    }
+
+    /* Right */
+    .rh{
+      padding:14px 16px;
+      border-bottom:1px solid var(--stroke);
+      background:
+        radial-gradient(900px 260px at 90% 0%, rgba(6,182,212,.12), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.50));
+      display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    }
+    .crumb{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background: rgba(255,255,255,.70);
+      color:rgba(42,15,34,.72);
+      font-size:12px;
+    }
+    .rh h2{margin:0;font-size:16px}
+    .rh p{margin:4px 0 0; color:var(--muted); font-size:12px; line-height:1.45}
+
+    .right-actions{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+
+    .rb{padding:16px 16px 22px}
+    .lessonBox{
+      border:1px solid var(--stroke);
+      border-radius:18px;
+      background: rgba(255,255,255,.70);
+      overflow:hidden;
+    }
+    .lessonHeader{
+      padding:12px 12px;
+      border-bottom:1px solid var(--stroke);
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      background: rgba(255,255,255,.55);
+    }
+    .lessonHeader .mini{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+    .tag{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:7px 9px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      font-size:12px;
+      color: rgba(42,15,34,.75);
+    }
+
+    .content{
+      padding:14px 14px;
+      line-height:1.7;
+      color: rgba(42,15,34,.94);
+    }
+    .content h3{margin: 10px 0 6px; font-size:15px}
+    .content h4{margin: 12px 0 6px; font-size:14px}
+    .content p{margin: 8px 0; color: rgba(42,15,34,.92)}
+    .content ul{margin: 8px 0 8px 18px}
+    .content li{margin: 6px 0; color: rgba(42,15,34,.88)}
+    .content blockquote{
+      margin: 10px 0;
+      padding: 10px 12px;
+      border-left: 3px solid rgba(251,113,133,.65);
+      background: rgba(251,113,133,.08);
+      border-radius: 16px;
+      color: rgba(42,15,34,.92);
+    }
+    .callout{
+      margin: 10px 0;
+      padding: 12px 12px;
+      border: 1px solid rgba(79,12,55,.12);
+      background:
+        radial-gradient(700px 160px at 20% 0%, rgba(34,197,94,.10), transparent 55%),
+        rgba(255,255,255,.55);
+      border-radius: 18px;
+    }
+    .callout b{display:block; margin-bottom:6px}
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    @media (max-width: 980px){ .grid2{grid-template-columns:1fr} }
+
+    .art{
+      margin: 10px 0;
+      border:1px dashed rgba(79,12,55,.18);
+      border-radius:18px;
+      background: rgba(255,255,255,.65);
+      padding:10px;
+      overflow:hidden;
+    }
+
+    /* Checklist and notes */
+    .below{
+      margin-top:12px;
+      display:grid; grid-template-columns: 1fr 1fr; gap:12px;
+    }
+    @media (max-width: 980px){ .below{grid-template-columns:1fr} }
+
+    .box{
+      border:1px solid var(--stroke);
+      border-radius:18px;
+      background: rgba(255,255,255,.72);
+      padding:12px;
+    }
+    .box h3{margin:0 0 8px;font-size:14px}
+    .row{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px;
+      border-radius:14px;
+      border:1px solid rgba(79,12,55,.12);
+      background: rgba(255,255,255,.55);
+      margin-bottom:8px;
+    }
+    .row input{margin-top:2px; transform: scale(1.15); accent-color: var(--green)}
+    .row label{cursor:pointer}
+    .row small{display:block; margin-top:2px; color: var(--muted); line-height:1.45}
+
+    textarea{
+      width:100%;
+      min-height:180px;
+      resize:vertical;
+      border-radius:16px;
+      border:1px solid rgba(79,12,55,.14);
+      padding:10px 12px;
+      outline:none;
+      background: rgba(255,255,255,.75);
+      color: var(--txt);
+      line-height:1.6;
+    }
+
+    /* bottom tabs (app style) */
+    .appTabs{
+      position:fixed; left:0; right:0; bottom:0;
+      padding:10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, rgba(255,246,251,.05), rgba(255,246,251,.92));
+      border-top:1px solid var(--stroke);
+      backdrop-filter: blur(12px);
+      z-index:60;
+    }
+    .rail{max-width:1100px;margin:0 auto; display:flex; gap:8px;}
+    .appTab{
+      flex:1;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      color: rgba(42,15,34,.75);
+      padding:11px 10px;
+      border-radius:18px;
+      font-weight:1000;
+      text-decoration:none;
+      display:flex; justify-content:center; align-items:center; gap:8px;
+    }
+    .appTab.primary{
+      background: linear-gradient(135deg, rgba(217,70,239,.92), rgba(251,113,133,.85));
+      color:white;
+    }
+
+    .toast{
+      position:fixed; left:50%;
+      bottom:calc(84px + env(safe-area-inset-bottom));
+      transform:translateX(-50%) translateY(8px);
+      padding:10px 12px;
+      border:1px solid rgba(79,12,55,.16);
+      border-radius:16px;
+      background: rgba(255,255,255,.92);
+      color: rgba(42,15,34,.92);
+      font-weight:1000;
+      font-size:13px;
+      box-shadow: 0 20px 70px rgba(80,10,55,.15);
+      opacity:0; pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index:90;
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(0px)}
+  </style>
+</head>
+
+<body>
+  <header class="top">
+    <div class="topin">
+      <div class="brand">
+        <div class="logo">🧠</div>
+        <div class="titlebox">
+          <h1>Módulo 1 — Teoria (8h) • Guardiãs da Vigilância</h1>
+          <p>Conteúdo completo para alunas • aulas em botões • missões • mini-quizzes • checklist + notas</p>
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <span class="pill">✨ Protagonismo feminino na ciência</span>
+        <button class="btn small ghost" id="reset">🧼 Reset progresso</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+      <!-- LEFT: aulas -->
+      <aside class="panel">
+        <div class="ph">
+          <h2>📚 Aulas do Módulo Teoria</h2>
+          <p>Escolha uma aula. Você vai ver explicações, exemplos, missões e um mini-quiz.</p>
+
+          <input class="search" id="search" placeholder="🔎 Buscar (SUS, Aedes, arboviroses, vigilância, CDC…)"/>
+
+          <div class="progress">
+            <div class="bar"><div class="fill" id="fill"></div></div>
+            <div class="score" id="score">0/0</div>
+          </div>
+        </div>
+        <div class="pb" id="parts"></div>
+      </aside>
+
+      <!-- RIGHT: conteúdo -->
+      <section class="panel">
+        <div class="rh">
+          <div>
+            <span class="crumb" id="crumb">🧠 Teoria • Bem-vindas</span>
+            <h2 id="title">Escolha uma aula ✨</h2>
+            <p id="subtitle">Você vai aprender a pensar como vigilância: território → risco → dado → decisão.</p>
+          </div>
+
+          <div class="right-actions">
+            <button class="btn primary" id="markDone">✅ Marcar aula como concluída</button>
+            <button class="btn" id="saveNotes">💾 Salvar notas</button>
+          </div>
+        </div>
+
+        <div class="rb">
+          <div class="lessonBox">
+            <div class="lessonHeader">
+              <div class="mini">
+                <span class="tag" id="tagTime">⏱️ 8h</span>
+                <span class="tag" id="tagLevel">🎓 Nível: jovem cientista</span>
+                <span class="tag" id="tagGoal">🎯 Missão: proteger vidas</span>
+              </div>
+              <span class="tag" id="tagStatus">📌 Aberta</span>
+            </div>
+
+            <div class="content" id="content">
+              <div class="callout">
+                <b>Como usar</b>
+                <ul>
+                  <li>Abra uma aula no menu à esquerda.</li>
+                  <li>Faça as <b>missões</b> e responda o <b>mini-quiz</b>.</li>
+                  <li>Marque o checklist e registre suas <b>notas pessoais</b>.</li>
+                </ul>
+              </div>
+
+              <div class="art">
+                <svg viewBox="0 0 520 220" width="100%" height="auto" role="img" aria-label="Ilustração: território, vetor e cuidado">
+                  <defs>
+                    <linearGradient id="gA" x1="0" x2="1">
+                      <stop offset="0" stop-color="#d946ef" stop-opacity=".9"/>
+                      <stop offset="1" stop-color="#fb7185" stop-opacity=".85"/>
+                    </linearGradient>
+                    <linearGradient id="gB" x1="0" x2="1">
+                      <stop offset="0" stop-color="#06b6d4" stop-opacity=".55"/>
+                      <stop offset="1" stop-color="#8b5cf6" stop-opacity=".55"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="10" y="10" width="500" height="200" rx="26" fill="white" opacity=".9" stroke="rgba(79,12,55,.16)"/>
+                  <circle cx="110" cy="80" r="60" fill="url(#gA)" opacity=".20"/>
+                  <circle cx="405" cy="70" r="70" fill="url(#gB)" opacity=".18"/>
+                  <!-- cidade -->
+                  <rect x="70" y="120" width="120" height="70" rx="16" fill="rgba(251,113,133,.10)" stroke="rgba(251,113,133,.35)"/>
+                  <rect x="90" y="140" width="26" height="50" rx="8" fill="rgba(217,70,239,.16)"/>
+                  <rect x="122" y="132" width="26" height="58" rx="8" fill="rgba(6,182,212,.12)"/>
+                  <rect x="154" y="150" width="26" height="40" rx="8" fill="rgba(245,158,11,.12)"/>
+                  <!-- mosquito -->
+                  <circle cx="292" cy="108" r="10" fill="rgba(42,15,34,.25)"/>
+                  <path d="M292 108 L320 90" stroke="rgba(42,15,34,.25)" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M292 108 L320 126" stroke="rgba(42,15,34,.25)" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M286 98 C270 80, 250 92, 265 110 C250 120, 270 138, 286 120"
+                        fill="url(#gA)" opacity=".65"/>
+                  <path d="M298 98 C314 80, 334 92, 319 110 C334 120, 314 138, 298 120"
+                        fill="url(#gB)" opacity=".55"/>
+                  <!-- setas -->
+                  <path d="M210 170 C250 150, 285 170, 320 150" fill="none" stroke="rgba(217,70,239,.55)" stroke-width="5" stroke-linecap="round"/>
+                  <text x="205" y="206" font-family="system-ui" font-size="14" fill="rgba(42,15,34,.75)">
+                    território → risco → dado → decisão
+                  </text>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="below">
+            <div class="box">
+              <h3>☑️ Checklist da aula</h3>
+              <div id="checks"></div>
+            </div>
+
+            <div class="box">
+              <h3>📝 Minhas notas (pessoais)</h3>
+              <textarea id="notes" placeholder="Escreva aqui: o que aprendi, dúvidas, exemplos do meu bairro, ideias de ações…"></textarea>
+              <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn small primary" id="saveNotes2">💾 Salvar notas</button>
+                <button class="btn small" id="clearNotes">🗑️ Limpar notas desta aula</button>
+              </div>
+              <p style="margin:10px 0 0; color:var(--muted); font-size:12px;">
+                Dica: escreva <b>1 ação</b> que você faria na sua rua para reduzir risco de arboviroses.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- bottom app tabs -->
+  <nav class="appTabs">
+    <div class="rail">
+      <a class="appTab" href="index.html">🏠 Início</a>
+      <a class="appTab primary" href="teoria.html">🧠 Teoria</a>
+      <a class="appTab" href="campo.html">🌱 Campo</a>
+      <a class="appTab" href="laboratorio.html">🔬 Lab</a>
+      <a class="appTab" href="roteiro-professor.html">👩‍🏫 Prof</a>
+    </div>
+  </nav>
+
+  <div class="toast" id="toast">Salvo!</div>
+
+  <script>
+    // ==================== Storage ====================
+    const LS = {
+      done: "gdv_teoria_done_v1",
+      checks: "gdv_teoria_checks_v1",
+      notes: "gdv_teoria_notes_v1",
+      open: "gdv_teoria_open_v1"
+    };
+    const $ = (s, r=document)=>r.querySelector(s);
+    const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+    function readJSON(key, fallback){
+      try{ const v=localStorage.getItem(key); return v?JSON.parse(v):fallback; }catch(e){ return fallback; }
+    }
+    function writeJSON(key,val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+    const toastEl = $("#toast");
+    let toastTimer=null;
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(()=>toastEl.classList.remove("show"), 1400);
+    }
+
+    // ==================== Conteúdo do Módulo 1 — TEORIA ====================
+    // Conteúdo para ALUNAS (formação). O "roteiro professor" fica em outra página.
+    const LESSONS = [
+      {
+        id:"A1",
+        icon:"🩺",
+        title:"Aula 1 — SUS: saúde é cuidado do território",
+        subtitle:"Entender SUS como prevenção + proteção + vigilância (além do hospital).",
+        crumb:"🧠 Teoria • SUS",
+        duration:"⏱️ 1h30–2h",
+        level:"🎓 Nível: base",
+        goal:"🎯 Missão: enxergar saúde no bairro",
+        tags:["SUS","território","prevenção"],
+        html: `
+          <h3>O que você precisa saber (sem decoreba)</h3>
+          <p>
+            O <b>SUS</b> não é “só hospital”. O SUS é um sistema que:
+            <b>cuida</b> (atende), <b>protege</b> (previne) e <b>vigia</b> (observa riscos no território).
+          </p>
+
+          <div class="callout">
+            <b>Ideia-chave</b>
+            <p><b>Saúde</b> não nasce só dentro do posto. Ela nasce também no <b>ambiente</b> em que a gente vive.</p>
+          </div>
+
+          <h3>Mapa mental (bem simples)</h3>
+          <ul>
+            <li><b>Atenção à saúde</b>: consultas, vacinas, acompanhamento.</li>
+            <li><b>Promoção da saúde</b>: hábitos, educação, espaços saudáveis.</li>
+            <li><b>Vigilância em saúde</b>: observar riscos e agir antes da doença explodir.</li>
+          </ul>
+
+          <div class="art">
+            <svg viewBox="0 0 560 210" width="100%" height="auto" role="img" aria-label="Ilustração: SUS em 3 verbos">
+              <defs>
+                <linearGradient id="susG" x1="0" x2="1">
+                  <stop offset="0" stop-color="#d946ef" stop-opacity=".9"/>
+                  <stop offset="1" stop-color="#fb7185" stop-opacity=".85"/>
+                </linearGradient>
+              </defs>
+              <rect x="10" y="10" width="540" height="190" rx="26" fill="white" opacity=".92" stroke="rgba(79,12,55,.16)"/>
+              <circle cx="120" cy="105" r="60" fill="url(#susG)" opacity=".16"/>
+              <circle cx="280" cy="105" r="60" fill="rgba(6,182,212,.16)"/>
+              <circle cx="440" cy="105" r="60" fill="rgba(245,158,11,.16)"/>
+              <text x="86" y="95" font-size="18" font-family="system-ui" fill="rgba(42,15,34,.85)">Cuidar</text>
+              <text x="75" y="120" font-size="13" font-family="system-ui" fill="rgba(42,15,34,.70)">atenção</text>
+
+              <text x="250" y="95" font-size="18" font-family="system-ui" fill="rgba(42,15,34,.85)">Proteger</text>
+              <text x="246" y="120" font-size="13" font-family="system-ui" fill="rgba(42,15,34,.70)">prevenir</text>
+
+              <text x="410" y="95" font-size="18" font-family="system-ui" fill="rgba(42,15,34,.85)">Vigiar</text>
+              <text x="402" y="120" font-size="13" font-family="system-ui" fill="rgba(42,15,34,.70)">riscos</text>
+
+              <path d="M180 105 L220 105" stroke="rgba(42,15,34,.25)" stroke-width="5" stroke-linecap="round"/>
+              <path d="M340 105 L380 105" stroke="rgba(42,15,34,.25)" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <h3>Missão da aula</h3>
+          <div class="callout">
+            <b>MISSÃO 1 — “Saúde do meu território”</b>
+            <ul>
+              <li>Escreva 3 coisas da sua rua/bairro que <b>protegem</b> a saúde.</li>
+              <li>Escreva 3 coisas da sua rua/bairro que <b>aumentam risco</b> de doenças.</li>
+              <li>Para cada risco, pense em <b>1 ação simples</b> que reduziria o problema.</li>
+            </ul>
+          </div>
+
+          <h3>Mini-quiz (responda em grupo)</h3>
+          <ol>
+            <li>Verdadeiro ou falso: “SUS é só hospital”.</li>
+            <li>O que significa “vigiar riscos” no território?</li>
+            <li>Dê um exemplo de proteção e um de risco no seu bairro.</li>
+          </ol>
+
+          <h3>Links (oficiais e confiáveis)</h3>
+          <ul>
+            <li><a href="https://www.gov.br/saude/pt-br" target="_blank" rel="noopener">Ministério da Saúde — Portal</a></li>
+            <li><a href="https://bvsms.saude.gov.br/" target="_blank" rel="noopener">BVS/MS — Biblioteca Virtual em Saúde</a></li>
+            <li><a href="https://bvsms.saude.gov.br/bvs/publicacoes/guia_vigilancia_saude_5ed_rev_atual.pdf" target="_blank" rel="noopener">Guia de Vigilância em Saúde (PDF)</a></li>
+          </ul>
+        `,
+        checklist:[
+          {id:"A1C1", label:"Entendi SUS como cuidar + proteger + vigiar", note:"Consigo explicar com minhas palavras."},
+          {id:"A1C2", label:"Completei a MISSÃO 1", note:"3 proteções + 3 riscos + 3 ações."},
+          {id:"A1C3", label:"Participei do mini-quiz", note:"Respondi com minha equipe."}
+        ]
+      },
+
+      {
+        id:"A2",
+        icon:"🦠",
+        title:"Aula 2 — Arboviroses sem terror: impacto e vida real",
+        subtitle:"Dengue, chikungunya, zika, oropouche e febre amarela: o que muda na cidade?",
+        crumb:"🧠 Teoria • Arboviroses",
+        duration:"⏱️ 1h30–2h",
+        level:"🎓 Nível: base",
+        goal:"🎯 Missão: ligar doença ao ambiente",
+        tags:["dengue","chikungunya","zika","oropouche","febre amarela"],
+        html: `
+          <h3>Tradução simples</h3>
+          <p>
+            <b>Arboviroses</b> são doenças causadas por vírus que podem ser transmitidos por
+            <b>vetores</b> (ex.: mosquitos). Aqui você não vai decorar nomes difíceis: vai entender
+            <b>por que ambientes urbanos podem favorecer surtos</b>.
+          </p>
+
+          <div class="callout">
+            <b>O que realmente importa</b>
+            <ul>
+              <li><b>Onde o vetor encontra água/abrigo?</b></li>
+              <li><b>Quando o clima ajuda?</b> (chuva + calor)</li>
+              <li><b>Como o território organiza riscos?</b> (lixo, armazenamento de água, sombra, recipientes)</li>
+            </ul>
+          </div>
+
+          <h3>Impacto na saúde humana (bem direto)</h3>
+          <div class="grid2">
+            <div class="callout">
+              <b>🦟 Dengue</b>
+              <p>Febre alta, dor no corpo, pode evoluir para gravidade. Prevenção depende muito de eliminar criadouros do <b>Aedes</b>.</p>
+            </div>
+            <div class="callout">
+              <b>🦟 Chikungunya</b>
+              <p>Dor articular forte; pode durar semanas/meses. Mesmo vetor urbano pode estar envolvido.</p>
+            </div>
+            <div class="callout">
+              <b>🦟 Zika</b>
+              <p>Geralmente quadro mais leve, mas exige atenção especial em gestantes e vigilância rigorosa.</p>
+            </div>
+            <div class="callout">
+              <b>🦟 Oropouche</b>
+              <p>Febre e dores; exige vigilância e investigação de vetores e ambientes envolvidos.</p>
+            </div>
+          </div>
+
+          <div class="callout">
+            <b>🟡 Febre amarela</b>
+            <p>O controle envolve vigilância, alertas e <b>vacinação</b> quando indicada pelas autoridades de saúde.</p>
+          </div>
+
+          <div class="art">
+            <svg viewBox="0 0 560 230" width="100%" height="auto" role="img" aria-label="Ilustração: cidade e ciclo do risco">
+              <rect x="10" y="10" width="540" height="210" rx="26" fill="white" opacity=".92" stroke="rgba(79,12,55,.16)"/>
+              <text x="26" y="46" font-size="16" font-family="system-ui" fill="rgba(42,15,34,.80)">Cidade + recipientes + calor → mais vetor → mais risco</text>
+
+              <rect x="26" y="70" width="160" height="120" rx="18" fill="rgba(251,113,133,.10)" stroke="rgba(251,113,133,.35)"/>
+              <text x="44" y="100" font-size="14" font-family="system-ui" fill="rgba(42,15,34,.75)">Recipientes</text>
+              <text x="44" y="125" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">pneu • pote</text>
+              <text x="44" y="145" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">calha • balde</text>
+
+              <rect x="204" y="70" width="160" height="120" rx="18" fill="rgba(245,158,11,.10)" stroke="rgba(245,158,11,.35)"/>
+              <text x="222" y="100" font-size="14" font-family="system-ui" fill="rgba(42,15,34,.75)">Clima</text>
+              <text x="222" y="125" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">chuva + calor</text>
+
+              <rect x="382" y="70" width="142" height="120" rx="18" fill="rgba(6,182,212,.10)" stroke="rgba(6,182,212,.35)"/>
+              <text x="400" y="100" font-size="14" font-family="system-ui" fill="rgba(42,15,34,.75)">Vetor</text>
+              <text x="400" y="125" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">Aedes</text>
+
+              <path d="M186 130 L204 130" stroke="rgba(42,15,34,.25)" stroke-width="5" stroke-linecap="round"/>
+              <path d="M364 130 L382 130" stroke="rgba(42,15,34,.25)" stroke-width="5" stroke-linecap="round"/>
+
+              <circle cx="482" cy="160" r="10" fill="rgba(42,15,34,.25)"/>
+              <path d="M482 160 L506 146" stroke="rgba(42,15,34,.25)" stroke-width="4" stroke-linecap="round"/>
+              <path d="M482 160 L506 174" stroke="rgba(42,15,34,.25)" stroke-width="4" stroke-linecap="round"/>
+
+              <text x="26" y="210" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">Vigilância e controle = cortar o ciclo no território.</text>
+            </svg>
+          </div>
+
+          <h3>Missão da aula</h3>
+          <div class="callout">
+            <b>MISSÃO 2 — “Cortar o ciclo”</b>
+            <ul>
+              <li>Escolha <b>1 exemplo</b> de recipiente do seu bairro e descreva: onde fica? pega chuva? tem tampa?</li>
+              <li>Escreva <b>2 formas</b> de eliminar ou reduzir o risco (sem “culpar” pessoas).</li>
+              <li>Crie <b>1 frase educativa</b> curta e respeitosa para a comunidade.</li>
+            </ul>
+          </div>
+
+          <h3>Mini-quiz</h3>
+          <ol>
+            <li>Por que calor e chuva podem aumentar o risco?</li>
+            <li>Qual é a melhor forma de reduzir risco urbano do Aedes?</li>
+            <li>O que é “mensagem educativa respeitosa”?</li>
+          </ol>
+
+          <h3>Links e cartilhas</h3>
+          <ul>
+            <li><a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/d/dengue" target="_blank" rel="noopener">MS — Dengue</a></li>
+            <li><a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/c/chikungunya" target="_blank" rel="noopener">MS — Chikungunya</a></li>
+            <li><a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/z/zika" target="_blank" rel="noopener">MS — Zika</a></li>
+            <li><a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/f/febre-amarela" target="_blank" rel="noopener">MS — Febre amarela</a></li>
+            <li><a href="https://www.ioc.fiocruz.br/sites/default/files/Cartilha_completa_aedes.pdf" target="_blank" rel="noopener">Fiocruz/IOC — Cartilha Aedes (PDF)</a></li>
+          </ul>
+        `,
+        checklist:[
+          {id:"A2C1", label:"Entendi o ciclo cidade→vetor→risco", note:"Consigo explicar com exemplo."},
+          {id:"A2C2", label:"Completei a MISSÃO 2", note:"Recipiente + 2 ações + 1 frase."},
+          {id:"A2C3", label:"Participei do mini-quiz", note:"Respondi com minha equipe."}
+        ]
+      },
+
+      {
+        id:"A3",
+        icon:"🦟",
+        title:"Aula 3 — Vetores e ciclos de vida: o método depende do ciclo",
+        subtitle:"Aquático, terrestre, domiciliar: como cada um é encontrado.",
+        crumb:"🧠 Teoria • Vetores",
+        duration:"⏱️ 1h30–2h",
+        level:"🎓 Nível: intermediário",
+        goal:"🎯 Missão: escolher técnica certa",
+        tags:["ciclo","larva","adulto","domicílio"],
+        html: `
+          <h3>Ideia-chave</h3>
+          <blockquote><b>“O ciclo de vida manda na técnica.”</b> Onde o vetor vive define como a gente encontra ele.</blockquote>
+
+          <h3>Três categorias (bem didático)</h3>
+          <div class="grid2">
+            <div class="callout">
+              <b>🫧 Aquático</b>
+              <p>Fases na água (ex.: larvas e pupas de mosquito). A observação se concentra em recipientes e águas paradas.</p>
+            </div>
+            <div class="callout">
+              <b>🦋 Voador (adulto)</b>
+              <p>Insetos que voam podem ser amostrados com armadilhas (ex.: CDC em contextos específicos) e outras técnicas.</p>
+            </div>
+            <div class="callout">
+              <b>🏠 Domiciliar / peridomiciliar</b>
+              <p>Insetos que se abrigam em casas, quintais e frestas exigem inspeção orientada e vigilância específica.</p>
+            </div>
+            <div class="callout">
+              <b>🌿 Terrestre / sombra</b>
+              <p>Alguns vetores preferem matéria orgânica, sombra e ambientes úmidos no peridomicílio.</p>
+            </div>
+          </div>
+
+          <div class="art">
+            <svg viewBox="0 0 560 230" width="100%" height="auto" role="img" aria-label="Ilustração: ciclo de vida e técnica">
+              <rect x="10" y="10" width="540" height="210" rx="26" fill="white" opacity=".92" stroke="rgba(79,12,55,.16)"/>
+              <text x="26" y="46" font-size="16" font-family="system-ui" fill="rgba(42,15,34,.80)">Ciclo → Lugar → Técnica</text>
+
+              <rect x="26" y="70" width="160" height="120" rx="18" fill="rgba(6,182,212,.10)" stroke="rgba(6,182,212,.35)"/>
+              <text x="44" y="100" font-size="14" font-family="system-ui" fill="rgba(42,15,34,.75)">🫧 Aquático</text>
+              <text x="44" y="125" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">água parada</text>
+              <text x="44" y="145" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">recipientes</text>
+
+              <rect x="204" y="70" width="160" height="120" rx="18" fill="rgba(217,70,239,.10)" stroke="rgba(217,70,239,.35)"/>
+              <text x="222" y="100" font-size="14" font-family="system-ui" fill="rgba(42,15,34,.75)">🦋 Adulto</text>
+              <text x="222" y="125" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">voa / atração</text>
+              <text x="222" y="145" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">armadilha</text>
+
+              <rect x="382" y="70" width="142" height="120" rx="18" fill="rgba(245,158,11,.10)" stroke="rgba(245,158,11,.35)"/>
+              <text x="400" y="100" font-size="14" font-family="system-ui" fill="rgba(42,15,34,.75)">🏠 Abrigo</text>
+              <text x="400" y="125" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">frestas</text>
+              <text x="400" y="145" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">inspeção</text>
+
+              <path d="M186 130 L204 130" stroke="rgba(42,15,34,.25)" stroke-width="5" stroke-linecap="round"/>
+              <path d="M364 130 L382 130" stroke="rgba(42,15,34,.25)" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <h3>Missão da aula</h3>
+          <div class="callout">
+            <b>MISSÃO 3 — “Qual técnica eu escolheria?”</b>
+            <ul>
+              <li>Escreva 1 exemplo de <b>ambiente aquático</b> urbano (onde pode haver larvas).</li>
+              <li>Escreva 1 exemplo de <b>ambiente de abrigo</b> (frestas, acúmulos, peridomicílio).</li>
+              <li>Para cada exemplo, escreva: <b>o que eu observaria</b> + <b>que ação reduziria risco</b>.</li>
+            </ul>
+          </div>
+
+          <h3>Mini-quiz</h3>
+          <ol>
+            <li>Por que “uma única técnica” não serve para todos os vetores?</li>
+            <li>Cite um exemplo de ciclo aquático e um domiciliar.</li>
+          </ol>
+
+          <h3>Links confiáveis</h3>
+          <ul>
+            <li><a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/a/aedes-aegypti/vigilancia-entomologica" target="_blank" rel="noopener">MS — Vigilância entomológica (Aedes)</a></li>
+            <li><a href="https://www.paho.org/en/documents/manual-procedures-leishmaniasis-surveillance-and-control-region-americas-second-ed" target="_blank" rel="noopener">OPAS — Manual de leishmaniose (2ª ed.)</a></li>
+          </ul>
+        `,
+        checklist:[
+          {id:"A3C1", label:"Entendi “ciclo manda na técnica”", note:"Dou exemplos de 2 ciclos."},
+          {id:"A3C2", label:"Completei a MISSÃO 3", note:"2 ambientes + observação + ação."},
+          {id:"A3C3", label:"Participei do mini-quiz", note:"Respondi com minha equipe."}
+        ]
+      },
+
+      {
+        id:"A4",
+        icon:"🪤",
+        title:"Aula 4 — Vigilância entomológica: do dado à decisão",
+        subtitle:"Armadilhas, inspeção, índices e como isso vira ação (controle de arboviroses).",
+        crumb:"🧠 Teoria • Vigilância",
+        duration:"⏱️ 2h",
+        level:"🎓 Nível: avançando",
+        goal:"🎯 Missão: transformar achado em ação",
+        tags:["armadilha","CDC","dados","decisão"],
+        html: `
+          <h3>O que é vigilância entomológica?</h3>
+          <p>
+            É o conjunto de ações para <b>monitorar vetores</b> (presença, abundância, local e tempo)
+            e transformar isso em <b>decisão</b> de controle.
+          </p>
+
+          <div class="callout">
+            <b>O que uma vigilância boa faz</b>
+            <ul>
+              <li>Encontra <b>onde</b> está o risco</li>
+              <li>Entende <b>quando</b> aumenta</li>
+              <li>Ajuda a escolher <b>que ação</b> é mais urgente</li>
+            </ul>
+          </div>
+
+          <h3>Entendendo a armadilha CDC (com linguagem simples)</h3>
+          <div class="grid2">
+            <div class="callout">
+              <b>🪤 O que é?</b>
+              <p>Uma armadilha com <b>luz</b> (atrai alguns insetos) e <b>ventoinha</b> (puxa para um coletor).</p>
+            </div>
+            <div class="callout">
+              <b>🎯 Para que serve?</b>
+              <p>Para <b>medir</b> (monitorar) presença e quantidade de insetos em um lugar e horário.</p>
+            </div>
+          </div>
+
+          <div class="art">
+            <svg viewBox="0 0 560 250" width="100%" height="auto" role="img" aria-label="Ilustração: CDC simplificada">
+              <rect x="10" y="10" width="540" height="230" rx="26" fill="white" opacity=".92" stroke="rgba(79,12,55,.16)"/>
+              <text x="26" y="46" font-size="16" font-family="system-ui" fill="rgba(42,15,34,.80)">CDC (explicação simples)</text>
+
+              <!-- corpo -->
+              <rect x="240" y="70" width="80" height="110" rx="18" fill="rgba(217,70,239,.12)" stroke="rgba(217,70,239,.35)"/>
+              <!-- luz -->
+              <circle cx="280" cy="60" r="18" fill="rgba(245,158,11,.20)" stroke="rgba(245,158,11,.35)"/>
+              <text x="256" y="30" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.65)">luz</text>
+
+              <!-- ventoinha -->
+              <circle cx="280" cy="120" r="18" fill="rgba(6,182,212,.15)" stroke="rgba(6,182,212,.35)"/>
+              <path d="M280 102 L286 120 L280 138 L274 120 Z" fill="rgba(6,182,212,.35)"/>
+              <text x="236" y="118" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.65)">ventoinha</text>
+
+              <!-- coletor -->
+              <rect x="250" y="176" width="60" height="44" rx="14" fill="rgba(34,197,94,.12)" stroke="rgba(34,197,94,.35)"/>
+              <text x="240" y="232" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.65)">coletor</text>
+
+              <!-- setas insetos -->
+              <path d="M150 90 C190 90, 210 90, 230 90" fill="none" stroke="rgba(42,15,34,.25)" stroke-width="5" stroke-linecap="round"/>
+              <path d="M150 130 C190 130, 210 125, 230 118" fill="none" stroke="rgba(42,15,34,.25)" stroke-width="5" stroke-linecap="round"/>
+              <path d="M150 170 C190 170, 210 165, 230 160" fill="none" stroke="rgba(42,15,34,.25)" stroke-width="5" stroke-linecap="round"/>
+              <text x="70" y="60" font-size="12" font-family="system-ui" fill="rgba(42,15,34,.60)">insetos →</text>
+            </svg>
+          </div>
+
+          <h3>De “achado” para “ação” (o coração da vigilância)</h3>
+          <div class="callout">
+            <b>Modelo prático</b>
+            <ul>
+              <li><b>Achado</b>: encontramos muitos recipientes com água em uma área.</li>
+              <li><b>Interpretação</b>: alto potencial de criadouros (risco maior).</li>
+              <li><b>Decisão</b>: priorizar manejo ambiental + orientação + monitoramento.</li>
+            </ul>
+          </div>
+
+          <h3>Missão final do módulo teórico</h3>
+          <div class="callout">
+            <b>MISSÃO 4 — “Plano das Guardiãs (1 página)”</b>
+            <ul>
+              <li>1 problema do território</li>
+              <li>2 sinais de risco (observáveis)</li>
+              <li>2 ações de prevenção</li>
+              <li>1 mensagem curta para a comunidade</li>
+            </ul>
+          </div>
+
+          <h3>Mini-quiz</h3>
+          <ol>
+            <li>Qual a diferença entre “coletar por curiosidade” e “monitorar por vigilância”?</li>
+            <li>Explique “achado → interpretação → decisão” com exemplo.</li>
+          </ol>
+
+          <h3>Links e manuais</h3>
+          <ul>
+            <li><a href="https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/svsa/dengue/diretrizes-nacionais-para-prevencao-e-controle-das-arboviroses-urbanas-vigilancia-entomologica-e-controle-vetorial.pdf" target="_blank" rel="noopener">MS — Diretrizes nacionais (PDF)</a></li>
+            <li><a href="https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/svsa/dengue/manual_liraa_2013.pdf/view" target="_blank" rel="noopener">MS — Manual LIRAa (PDF)</a></li>
+          </ul>
+        `,
+        checklist:[
+          {id:"A4C1", label:"Entendi CDC (luz + ventoinha + coletor)", note:"Sei explicar com minhas palavras."},
+          {id:"A4C2", label:"Completei a MISSÃO 4", note:"Plano 1 página do grupo."},
+          {id:"A4C3", label:"Entendi “achado→interpretação→decisão”", note:"Consigo dar exemplo."}
+        ]
+      }
+    ];
+
+    // ==================== State ====================
+    let done = readJSON(LS.done, {});
+    let checks = readJSON(LS.checks, {});
+    let notes = readJSON(LS.notes, {});
+    let currentId = readJSON(LS.open, null);
+
+    // ==================== UI refs ====================
+    const partsEl = $("#parts");
+    const searchEl = $("#search");
+    const fillEl = $("#fill");
+    const scoreEl = $("#score");
+    const crumbEl = $("#crumb");
+    const titleEl = $("#title");
+    const subtitleEl = $("#subtitle");
+    const contentEl = $("#content");
+    const checksEl = $("#checks");
+    const notesEl = $("#notes");
+
+    const tagTime = $("#tagTime");
+    const tagLevel = $("#tagLevel");
+    const tagGoal = $("#tagGoal");
+    const tagStatus = $("#tagStatus");
+
+    function getLesson(id){ return LESSONS.find(x=>x.id===id) || null; }
+
+    function filteredLessons(){
+      const q = (searchEl.value||"").trim().toLowerCase();
+      if(!q) return LESSONS;
+      return LESSONS.filter(l=>{
+        const hay = (l.title+" "+l.subtitle+" "+(l.tags||[]).join(" ")).toLowerCase();
+        return hay.includes(q);
+      });
+    }
+
+    function buildParts(){
+      partsEl.innerHTML = "";
+      const list = filteredLessons();
+      if(list.length===0){
+        partsEl.innerHTML = `<div class="callout"><b>Nenhuma aula encontrada</b><p>Tente outro termo.</p></div>`;
+        return;
+      }
+      for(const l of list){
+        const b = document.createElement("button");
+        b.className = "seg" + (l.id===currentId ? " active":"") + (done[l.id] ? " completed":"");
+        b.dataset.id = l.id;
+        b.innerHTML = `
+          <div class="ic">${l.icon}</div>
+          <div class="meta">
+            <b>${l.title}</b>
+            <span>${l.subtitle}</span>
+          </div>
+          <div class="done">${done[l.id] ? "✓" : ""}</div>
+        `;
+        b.addEventListener("click", ()=> openLesson(l.id));
+        partsEl.appendChild(b);
+      }
+    }
+
+    function renderChecklist(lesson){
+      checksEl.innerHTML = "";
+      if(!lesson) return;
+
+      for(const item of lesson.checklist){
+        const row = document.createElement("div");
+        row.className = "row";
+        const cb = document.createElement("input");
+        cb.type="checkbox";
+        cb.id=item.id;
+        cb.checked=!!checks[item.id];
+        cb.addEventListener("change", ()=>{
+          checks[item.id]=cb.checked;
+          writeJSON(LS.checks, checks);
+          updateProgress();
+        });
+
+        const lab = document.createElement("label");
+        lab.htmlFor=item.id;
+        lab.innerHTML = `<b>${item.label}</b><small>${item.note||""}</small>`;
+
+        row.appendChild(cb);
+        row.appendChild(lab);
+        checksEl.appendChild(row);
+      }
+    }
+
+    function openLesson(id){
+      const l = getLesson(id);
+      if(!l) return;
+      currentId = id;
+      writeJSON(LS.open, currentId);
+
+      crumbEl.textContent = l.crumb || "🧠 Teoria";
+      titleEl.textContent = l.title;
+      subtitleEl.textContent = l.subtitle;
+
+      tagTime.textContent = l.duration || "⏱️";
+      tagLevel.textContent = l.level || "🎓";
+      tagGoal.textContent = l.goal || "🎯";
+
+      contentEl.innerHTML = l.html;
+
+      renderChecklist(l);
+
+      notesEl.value = notes[id] || "";
+
+      tagStatus.textContent = done[id] ? "✅ Concluída" : "📌 Aberta";
+      $("#markDone").textContent = done[id] ? "✅ Aula já concluída" : "✅ Marcar aula como concluída";
+
+      buildParts();
+      updateProgress();
+      toast("📌 Aula aberta!");
+    }
+
+    function computeTotals(){
+      const totalChecks = LESSONS.reduce((acc,l)=> acc + (l.checklist?.length||0), 0);
+      let doneChecks = 0;
+      LESSONS.forEach(l => (l.checklist||[]).forEach(c => { if(checks[c.id]) doneChecks++; }));
+      return {totalChecks, doneChecks};
+    }
+
+    function updateProgress(){
+      const {totalChecks, doneChecks} = computeTotals();
+      const pct = totalChecks ? Math.round((doneChecks/totalChecks)*100) : 0;
+      fillEl.style.width = pct + "%";
+      scoreEl.textContent = `${doneChecks}/${totalChecks} • ${pct}%`;
+    }
+
+    // Events
+    searchEl.addEventListener("input", ()=> buildParts());
+
+    function saveNotes(){
+      if(!currentId) return toast("Abra uma aula primeiro");
+      notes[currentId] = notesEl.value || "";
+      writeJSON(LS.notes, notes);
+      toast("💾 Notas salvas!");
+    }
+    $("#saveNotes").addEventListener("click", saveNotes);
+    $("#saveNotes2").addEventListener("click", saveNotes);
+
+    $("#clearNotes").addEventListener("click", ()=>{
+      if(!currentId) return;
+      if(!confirm("Limpar notas desta aula?")) return;
+      notesEl.value = "";
+      notes[currentId] = "";
+      writeJSON(LS.notes, notes);
+      toast("🗑️ Notas limpas!");
+    });
+
+    $("#markDone").addEventListener("click", ()=>{
+      if(!currentId) return toast("Abra uma aula primeiro");
+      done[currentId] = true;
+      writeJSON(LS.done, done);
+      tagStatus.textContent = "✅ Concluída";
+      $("#markDone").textContent = "✅ Aula já concluída";
+      buildParts();
+      toast("🏁 Aula concluída!");
+    });
+
+    $("#reset").addEventListener("click", ()=>{
+      if(!confirm("Resetar progresso e notas deste módulo (Teoria)?")) return;
+      localStorage.removeItem(LS.done);
+      localStorage.removeItem(LS.checks);
+      localStorage.removeItem(LS.notes);
+      localStorage.removeItem(LS.open);
+      done={}; checks={}; notes={}; currentId=null;
+      searchEl.value="";
+      buildParts();
+      updateProgress();
+      contentEl.innerHTML = `<div class="callout"><b>Reset feito</b><p>Abra uma aula novamente no menu.</p></div>`;
+      checksEl.innerHTML = "";
+      notesEl.value = "";
+      crumbEl.textContent = "🧠 Teoria • Reset";
+      titleEl.textContent = "Escolha uma aula ✨";
+      subtitleEl.textContent = "Você vai aprender a pensar como vigilância: território → risco → dado → decisão.";
+      tagStatus.textContent = "📌 Aberta";
+      toast("🧼 Reset concluído");
+    });
+
+    // init
+    buildParts();
+    updateProgress();
+    const first = LESSONS[0];
+    if(currentId && getLesson(currentId)) openLesson(currentId);
+    else if(first) openLesson(first.id);
+  </script>
+</body>
+</html>
 
