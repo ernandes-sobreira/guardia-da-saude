@@ -3,103 +3,179 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Guardiãs da Vigilância | Plataforma</title>
+<title>Guardiãs da Vigilância 🦋 | Plataforma</title>
+<meta name="theme-color" content="#db2777"/>
 
 <style>
 :root{
   --bg0:#fff7fb;
   --bg1:#ffe4f2;
-  --card:#ffffffdd;
-  --stroke:#e9b6d6;
+  --card: rgba(255,255,255,.92);
+  --stroke: rgba(140,20,90,.18);
   --txt:#3b0a2a;
-  --muted:#6b2d4a;
+  --muted: rgba(59,10,42,.65);
   --pink:#db2777;
   --violet:#8b5cf6;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  --teal:#06b6d4;
+  --green:#22c55e;
+  --gold:#f59e0b;
+  --r:18px;
+  --shadow: 0 18px 60px rgba(120,20,80,.18);
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
 }
+*{box-sizing:border-box}
 body{
   margin:0;
-  background:linear-gradient(180deg,var(--bg0),var(--bg1));
+  background:
+    radial-gradient(900px 600px at 10% 0%, rgba(219,39,119,.18), transparent 55%),
+    radial-gradient(800px 600px at 90% 10%, rgba(139,92,246,.18), transparent 55%),
+    linear-gradient(180deg,var(--bg0),var(--bg1));
   color:var(--txt);
 }
 header{
-  padding:22px 16px;
-  text-align:center;
+  position:sticky; top:0; z-index:30;
+  background: rgba(255,247,251,.92);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid var(--stroke);
 }
-header h1{
-  margin:0;
+.h{
+  max-width:1100px; margin:auto;
+  padding:14px 16px;
+  display:flex; gap:12px; align-items:center;
+}
+.badge{
+  width:46px;height:46px;border-radius:18px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  color:#fff;
+  box-shadow:var(--shadow);
   font-size:22px;
 }
-header p{
-  margin:8px 0 0;
-  font-size:14px;
-  color:var(--muted);
-}
+.h h1{margin:0;font-size:16px}
+.h p{margin:2px 0 0;font-size:12px;color:var(--muted)}
 
 main{
-  max-width:1000px;
-  margin:auto;
-  padding:16px 16px 120px;
-  display:grid;
-  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
-  gap:16px;
+  max-width:1100px; margin:auto;
+  padding:16px 16px 130px;
+  display:grid; gap:14px;
 }
 
-.card{
+.panel{
   background:var(--card);
   border:1px solid var(--stroke);
-  border-radius:22px;
-  padding:18px;
-  box-shadow:0 14px 40px rgba(120,20,80,.18);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.ph{
+  padding:14px;
+  border-bottom:1px solid var(--stroke);
   display:flex;
-  flex-direction:column;
   justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
 }
-.card h2{
-  margin:0 0 6px;
-  font-size:16px;
+.ph h2{margin:0;font-size:14px}
+.ph small{color:var(--muted)}
+.pb{padding:14px}
+
+.hero{
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap:12px;
 }
-.card p{
-  margin:0 0 14px;
-  font-size:13px;
-  color:var(--muted);
-}
-.card a{
-  text-decoration:none;
-  text-align:center;
+@media(max-width:880px){ .hero{grid-template-columns:1fr} }
+
+.callout{
+  background:rgba(219,39,119,.08);
+  border-left:4px solid var(--pink);
   padding:12px;
   border-radius:14px;
+  margin:12px 0 0;
+}
+.tip{
+  background:rgba(6,182,212,.10);
+  border-left:4px solid var(--teal);
+  padding:12px;
+  border-radius:14px;
+  margin:10px 0 0;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:12px;
+}
+@media(max-width:980px){ .cards{grid-template-columns:1fr} }
+
+.cardLink{
+  text-decoration:none;
+  color:inherit;
+}
+.card{
+  background:rgba(255,255,255,.8);
+  border:1px solid rgba(140,20,90,.12);
+  border-radius:18px;
+  padding:14px;
+  transition:.12s transform ease, .12s box-shadow ease;
+  height:100%;
+}
+.card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(120,20,80,.18);
+}
+.cardTop{
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:8px;
+}
+.ic{
+  width:40px;height:40px;border-radius:16px;
+  display:grid;place-items:center;
+  color:#fff;font-size:20px;font-weight:900;
   background:linear-gradient(135deg,var(--pink),var(--violet));
-  color:white;
-  font-weight:800;
+}
+.card b{display:block}
+.card small{color:var(--muted); line-height:1.5}
+.tagRow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+.tag{
+  font-size:12px;
+  padding:8px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.7);
+  border:1px solid rgba(140,20,90,.12);
+  font-weight:900;
 }
 
 footer{
   position:fixed;
-  bottom:0;left:0;right:0;
-  background:#fff;
+  bottom:0; left:0; right:0;
+  background: rgba(255,247,251,.95);
   border-top:1px solid var(--stroke);
 }
-.footer{
-  max-width:1000px;
+.foot{
+  max-width:1100px;
   margin:auto;
   padding:10px;
   display:flex;
   gap:8px;
+  flex-wrap:wrap;
 }
-.footer a{
+.foot a{
   flex:1;
   text-align:center;
-  padding:12px;
-  border-radius:14px;
-  background:#fdf2f8;
-  color:var(--txt);
-  font-weight:800;
   text-decoration:none;
+  padding:12px;
+  border-radius:16px;
+  font-weight:950;
+  background:rgba(255,255,255,.75);
+  border:1px solid rgba(140,20,90,.14);
+  color:var(--txt);
 }
-.footer a.active{
+.foot a.active{
   background:linear-gradient(135deg,var(--pink),var(--violet));
-  color:white;
+  color:#fff;
+  border:none;
 }
 </style>
 </head>
@@ -107,52 +183,135 @@ footer{
 <body>
 
 <header>
-  <h1>🌺 Guardiãs da Vigilância</h1>
-  <p>Ciência, território e cuidado com a saúde coletiva</p>
+  <div class="h">
+    <div class="badge">🦋</div>
+    <div>
+      <h1>Guardiãs da Vigilância</h1>
+      <p>3 módulos + protocolo + desafio — ciência, território e decisão</p>
+    </div>
+  </div>
 </header>
 
 <main>
 
-  <div class="card">
-    <h2>🧠 Módulo Teórico</h2>
-    <p>SUS, vigilância em saúde, arboviroses e ciclos dos vetores.</p>
-    <a href="teoria.html">Acessar teoria</a>
+<section class="panel">
+  <div class="ph">
+    <h2>Bem-vindas</h2>
+    <small>Escolha um módulo para começar</small>
   </div>
+  <div class="pb hero">
+    <div>
+      <b style="font-size:16px">Mulheres na ciência que leem o território ✨</b>
+      <p style="margin:8px 0 0; color:var(--muted); line-height:1.65">
+        Aqui vocês vão entender <b>SUS</b>, <b>vigilâncias</b>, <b>arboviroses</b> e <b>ciclos dos vetores</b> —
+        e depois aplicar isso no <b>campo</b>, no <b>laboratório</b> e no <b>protocolo predial</b>.
+      </p>
 
-  <div class="card">
-    <h2>🌱 Módulo de Campo</h2>
-    <p>Ecologia dos vetores no território, ambientes de risco e observação científica.</p>
-    <a href="campo.html">Acessar campo</a>
-  </div>
+      <div class="callout">
+        <b>Como usar</b>
+        <div>1) Faça a Teoria • 2) Vá ao Campo • 3) Use o Protocolo • 4) Faça o Laboratório • 5) Jogue o Desafio 🎯</div>
+      </div>
 
-  <div class="card">
-    <h2>🏢 Protocolo Predial</h2>
-    <p>Avaliação rápida de imóveis com índices oficiais (IP, IB, IR).</p>
-    <a href="indice-predial.html">Acessar protocolo</a>
-  </div>
+      <div class="tip">
+        <b>Objetivo</b>
+        <div>Formar guardiãs capazes de observar, registrar e propor ações reais de vigilância entomológica.</div>
+      </div>
+    </div>
 
-  <div class="card">
-    <h2>🧬 Módulo de Laboratório</h2>
-    <p>Do material ao dado, do dado à decisão em saúde.</p>
-    <a href="laboratorio.html">Acessar laboratório</a>
+    <div class="panel" style="box-shadow:none; border-radius:18px; overflow:hidden">
+      <div class="pb">
+        <b style="display:block">Atalhos rápidos</b>
+        <div class="tagRow">
+          <a class="tag" href="teoria.html">🧠 Teoria</a>
+          <a class="tag" href="campo.html">🌱 Campo</a>
+          <a class="tag" href="indice-predial.html">🏢 Protocolo</a>
+          <a class="tag" href="laboratorio.html">🧬 Laboratório</a>
+          <a class="tag" href="quiz.html">🎯 Desafio</a>
+          <a class="tag" href="roteiro-professor.html">👩‍🏫 Roteiro</a>
+        </div>
+        <small style="display:block; margin-top:10px">
+          Dica: tudo salva no celular (checklists, notas e recordes do desafio).
+        </small>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div class="card">
-    <h2>👩‍🏫 Roteiro da Educadora</h2>
-    <p>Intenção pedagógica, condução segura e avaliação formativa.</p>
-    <a href="roteiro-professor.html">Acessar roteiro</a>
+<section class="panel">
+  <div class="ph">
+    <h2>Trilha de 3 dias (em módulos)</h2>
+    <small>Conteúdo completo + checklists</small>
   </div>
+  <div class="pb cards">
+
+    <a class="cardLink" href="teoria.html">
+      <div class="card">
+        <div class="cardTop"><div class="ic">🧠</div><div><b>Teoria (Roda do Curso)</b><small>SUS • vigilâncias • arboviroses • ciclos</small></div></div>
+        <div class="tagRow">
+          <span class="tag">conteúdo completo</span><span class="tag">checklist</span><span class="tag">notas</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="cardLink" href="campo.html">
+      <div class="card">
+        <div class="cardTop"><div class="ic">🌱</div><div><b>Campo (Território Vivo)</b><small>onde buscar larvas/adultos • técnicas • armadilhas</small></div></div>
+        <div class="tagRow">
+          <span class="tag">observação</span><span class="tag">registro</span><span class="tag">decisão</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="cardLink" href="indice-predial.html">
+      <div class="card">
+        <div class="cardTop"><div class="ic">🏢</div><div><b>Protocolo Predial</b><small>checklist + índices + relatório por prédio</small></div></div>
+        <div class="tagRow">
+          <span class="tag">IP/IB</span><span class="tag">relatório</span><span class="tag">recomendação</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="cardLink" href="laboratorio.html">
+      <div class="card">
+        <div class="cardTop"><div class="ic">🧬</div><div><b>Laboratório</b><small>triagem, organização, identificação e síntese</small></div></div>
+        <div class="tagRow">
+          <span class="tag">boas práticas</span><span class="tag">registro</span><span class="tag">síntese</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="cardLink" href="quiz.html">
+      <div class="card">
+        <div class="cardTop"><div class="ic">🎯</div><div><b>Desafio das Guardiãs</b><small>30 questões embaralhadas • níveis • explicações</small></div></div>
+        <div class="tagRow">
+          <span class="tag">Semente</span><span class="tag">Trilha</span><span class="tag">Coroa</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="cardLink" href="roteiro-professor.html">
+      <div class="card">
+        <div class="cardTop"><div class="ic">👩‍🏫</div><div><b>Roteiro do Professor</b><small>minuto a minuto • materiais • condução</small></div></div>
+        <div class="tagRow">
+          <span class="tag">planejamento</span><span class="tag">condução</span><span class="tag">tempo</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
 
 </main>
 
+<!-- MENU PADRÃO -->
 <footer>
-  <div class="footer">
+  <div class="foot">
     <a class="active" href="index.html">🏠 Início</a>
-    <a href="teoria.html">🧠</a>
-    <a href="campo.html">🌱</a>
-    <a href="indice-predial.html">🏢</a>
-    <a href="laboratorio.html">🧬</a>
-    <a href="roteiro-professor.html">👩‍🏫</a>
+    <a href="teoria.html">🧠 Teoria</a>
+    <a href="campo.html">🌱 Campo</a>
+    <a href="indice-predial.html">🏢 Protocolo</a>
+    <a href="quiz.html">🎯 Desafio</a>
+    <a href="laboratorio.html">🧬 Lab</a>
   </div>
 </footer>
 
