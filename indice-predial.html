@@ -3,82 +3,241 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Protocolo Predial Avançado | Vigilância Entomológica</title>
+<title>Protocolo Predial (Avançado) | Vigilância Entomológica</title>
+<meta name="theme-color" content="#db2777"/>
 
 <style>
 :root{
   --bg0:#fff7fb;
   --bg1:#ffe4f2;
-  --card:#ffffffee;
-  --stroke:#e9b6d6;
+  --card: rgba(255,255,255,.92);
+  --stroke: rgba(140,20,90,.18);
   --txt:#3b0a2a;
-  --muted:#6b2d4a;
+  --muted: rgba(59,10,42,.65);
   --pink:#db2777;
   --violet:#8b5cf6;
+  --teal:#06b6d4;
   --green:#22c55e;
   --gold:#f59e0b;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  --red:#ef4444;
+  --r:18px;
+  --shadow: 0 18px 60px rgba(120,20,80,.18);
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
 }
+*{box-sizing:border-box}
 body{
   margin:0;
-  background:linear-gradient(180deg,var(--bg0),var(--bg1));
+  background:
+    radial-gradient(900px 600px at 10% 0%, rgba(219,39,119,.18), transparent 55%),
+    radial-gradient(800px 600px at 90% 10%, rgba(139,92,246,.18), transparent 55%),
+    linear-gradient(180deg,var(--bg0),var(--bg1));
   color:var(--txt);
 }
 header{
-  background:#fff;
+  position:sticky; top:0; z-index:20;
+  background: rgba(255,247,251,.9);
+  backdrop-filter: blur(10px);
   border-bottom:1px solid var(--stroke);
-  padding:14px;
 }
-header h1{margin:0;font-size:16px}
-header p{margin:4px 0 0;font-size:12px;color:var(--muted)}
+.h{
+  max-width:980px;
+  margin:auto;
+  padding:14px 16px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.badge{
+  width:44px;height:44px;border-radius:16px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  color:#fff;
+  box-shadow:var(--shadow);
+  font-size:20px;
+}
+.h h1{margin:0;font-size:16px}
+.h p{margin:2px 0 0;font-size:12px;color:var(--muted)}
 
 main{
-  max-width:900px;
+  max-width:980px;
   margin:auto;
-  padding:16px 16px 140px;
+  padding:16px 16px 130px;
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:14px;
 }
 
 .panel{
   background:var(--card);
   border:1px solid var(--stroke);
-  border-radius:18px;
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.ph{
   padding:14px;
-  margin-bottom:14px;
-}
-
-label{font-weight:800;font-size:13px}
-input,textarea,select{
-  width:100%;
-  padding:8px;
-  margin-top:6px;
-  margin-bottom:10px;
-  border-radius:12px;
-  border:1px solid var(--stroke);
-}
-
-.check{
+  border-bottom:1px solid var(--stroke);
   display:flex;
+  align-items:center;
+  justify-content:space-between;
   gap:10px;
-  align-items:flex-start;
-  margin-bottom:8px;
+  flex-wrap:wrap;
+}
+.ph h2{margin:0;font-size:14px}
+.ph small{color:var(--muted)}
+.pb{padding:14px}
+
+.grid2{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+}
+@media(max-width:780px){
+  .grid2{grid-template-columns:1fr}
 }
 
-button{
-  padding:14px;
-  border-radius:16px;
+label{display:block;font-weight:800;font-size:12px}
+input,select,textarea{
+  width:100%;
+  border:1px solid var(--stroke);
+  border-radius:14px;
+  padding:10px;
+  margin-top:6px;
+  background:#fff;
+  color:var(--txt);
+}
+textarea{min-height:140px}
+
+.row{
+  display:grid;
+  grid-template-columns: 22px 1fr auto;
+  gap:10px;
+  align-items:center;
+  padding:10px;
+  border:1px solid rgba(140,20,90,.12);
+  border-radius:14px;
+  background:rgba(255,255,255,.65);
+  margin-bottom:10px;
+}
+.row input[type="checkbox"]{
+  width:18px;height:18px;
+}
+.row .meta{
+  font-size:12px;
+  color:var(--muted);
+}
+.qty{
+  display:flex; align-items:center; gap:6px;
+}
+.qty input{
+  width:90px;
+  padding:8px 10px;
+  border-radius:12px;
+  margin:0;
+}
+
+.pills{
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.pill{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(140,20,90,.14);
+  background:rgba(255,255,255,.65);
+}
+.pill select{
+  width:auto;
+  padding:8px 10px;
+  margin:0;
+  border-radius:999px;
+}
+
+.actions{
+  display:flex; gap:10px; flex-wrap:wrap;
+}
+.btn{
   border:none;
-  background:linear-gradient(135deg,var(--pink),var(--violet));
-  color:white;
+  border-radius:16px;
+  padding:12px 14px;
   font-weight:900;
   cursor:pointer;
 }
-
+.btn.primary{
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  color:white;
+}
+.btn.ghost{
+  background:rgba(255,255,255,.75);
+  border:1px solid var(--stroke);
+  color:var(--txt);
+}
+.btn.warn{
+  background:rgba(245,158,11,.15);
+  border:1px solid rgba(245,158,11,.35);
+}
+.btn.danger{
+  background:rgba(239,68,68,.12);
+  border:1px solid rgba(239,68,68,.35);
+}
 .result{
-  background:#fdf2f8;
-  border-left:4px solid var(--pink);
   padding:14px;
+  border-left:4px solid var(--pink);
+  background:rgba(219,39,119,.06);
   border-radius:16px;
   margin-top:12px;
+}
+.kpis{
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:10px;
+  margin-top:10px;
+}
+@media(max-width:780px){.kpis{grid-template-columns:1fr}}
+.kpi{
+  background:rgba(255,255,255,.7);
+  border:1px solid rgba(140,20,90,.12);
+  border-radius:16px;
+  padding:10px;
+}
+.kpi b{display:block;font-size:12px;color:var(--muted)}
+.kpi span{font-size:18px;font-weight:950}
+
+hr{
+  border:none;
+  border-top:1px solid rgba(140,20,90,.12);
+  margin:14px 0;
+}
+
+footer{
+  position:fixed;
+  bottom:0; left:0; right:0;
+  background: rgba(255,247,251,.95);
+  border-top:1px solid var(--stroke);
+}
+.foot{
+  max-width:980px;
+  margin:auto;
+  padding:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.foot a{
+  flex:1;
+  text-align:center;
+  text-decoration:none;
+  padding:12px;
+  border-radius:16px;
+  font-weight:900;
+  background:rgba(255,255,255,.75);
+  border:1px solid rgba(140,20,90,.14);
+  color:var(--txt);
+}
+.foot a.active{
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  color:#fff;
+  border:none;
 }
 </style>
 </head>
@@ -86,130 +245,464 @@ button{
 <body>
 
 <header>
-  <h1>🏢 Protocolo Predial Avançado</h1>
-  <p>Avaliação entomológica ampliada — base SUS / OPAS</p>
+  <div class="h">
+    <div class="badge">🏢</div>
+    <div>
+      <h1>Protocolo Predial (Avançado)</h1>
+      <p>Índices oficiais (IP/IB/IR) + caracterização de recipientes, fase do vetor, técnicas e relatório completo</p>
+    </div>
+  </div>
 </header>
 
 <main>
 
 <!-- IDENTIFICAÇÃO -->
-<div class="panel">
-  <label>Identificação do prédio / local</label>
-  <input id="local" placeholder="Ex: Escola X, Prédio B">
+<section class="panel">
+  <div class="ph">
+    <h2>1) Identificação do local</h2>
+    <small>Preencha antes de calcular</small>
+  </div>
+  <div class="pb grid2">
+    <div>
+      <label>Local / prédio</label>
+      <input id="local" placeholder="Ex: Escola X — Bloco A">
+    </div>
+    <div>
+      <label>Tipo de local</label>
+      <select id="tipoLocal">
+        <option value="Escolar">Escolar</option>
+        <option value="Domiciliar">Domiciliar</option>
+        <option value="Comercial">Comercial</option>
+        <option value="Institucional">Institucional</option>
+        <option value="Área comum">Área comum</option>
+      </select>
+    </div>
+    <div>
+      <label>Data</label>
+      <input type="date" id="data">
+    </div>
+    <div>
+      <label>Equipe / alunas (opcional)</label>
+      <input id="equipe" placeholder="Ex: Grupo 1 — Guardiãs">
+    </div>
+  </div>
+</section>
 
-  <label>Tipo de local</label>
-  <select id="tipoLocal">
-    <option>Domiciliar</option>
-    <option>Escolar</option>
-    <option>Comercial</option>
-    <option>Institucional</option>
-    <option>Área comum</option>
-  </select>
+<!-- UNIDADES E ÍNDICES -->
+<section class="panel">
+  <div class="ph">
+    <h2>2) Unidades e índices (base oficial)</h2>
+    <small>IP (HI), IB (BI) e IR (CI)</small>
+  </div>
+  <div class="pb grid2">
+    <div>
+      <label>Nº total de unidades/imóveis avaliados</label>
+      <input id="imoveis" type="number" min="1" placeholder="Ex: 12">
+    </div>
+    <div>
+      <label>Nº de unidades com evidência de vetor (larva/pupa/adulto)</label>
+      <input id="imoveisPos" type="number" min="0" placeholder="Ex: 2">
+    </div>
 
-  <label>Data da inspeção</label>
-  <input type="date" id="data">
-</div>
+    <div style="grid-column:1/-1">
+      <label>Fase do vetor observada (intensidade)</label>
+      <div class="pills">
+        <div class="pill">
+          🐛 Larvas
+          <select id="faseLarva">
+            <option value="0">0 (não)</option>
+            <option value="1">1 (poucas)</option>
+            <option value="2">2 (muitas)</option>
+          </select>
+        </div>
+        <div class="pill">
+          🟤 Pupas
+          <select id="fasePupa">
+            <option value="0">0 (não)</option>
+            <option value="1">1 (poucas)</option>
+            <option value="2">2 (muitas)</option>
+          </select>
+        </div>
+        <div class="pill">
+          🦟 Adultos
+          <select id="faseAdulto">
+            <option value="0">0 (não)</option>
+            <option value="1">1 (poucos)</option>
+            <option value="2">2 (muitos)</option>
+          </select>
+        </div>
+      </div>
+      <div class="meta" style="margin-top:8px">
+        Dica: pupas e muitos adultos sugerem risco maior porque indicam emergência/atividade recente.
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- IMÓVEIS -->
-<div class="panel">
-  <h3>🏠 Avaliação predial</h3>
+<!-- RECIPIENTES COM QUANTIDADE -->
+<section class="panel">
+  <div class="ph">
+    <h2>3) Recipientes (marcar + contar)</h2>
+    <small>O relatório vai usar isso</small>
+  </div>
+  <div class="pb">
+    <div class="row">
+      <input type="checkbox" id="c_baldes">
+      <div>
+        <b>Baldes / tonéis / caixas destampadas</b>
+        <div class="meta">Alta prioridade (água armazenada)</div>
+      </div>
+      <div class="qty">
+        <span class="meta">Qtd</span>
+        <input type="number" min="0" id="q_baldes" value="0">
+      </div>
+    </div>
 
-  <label>Nº total de unidades/imóveis avaliados</label>
-  <input type="number" id="imoveis">
+    <div class="row">
+      <input type="checkbox" id="c_pratos">
+      <div>
+        <b>Pratos de plantas / vasos</b>
+        <div class="meta">Foco doméstico frequente</div>
+      </div>
+      <div class="qty">
+        <span class="meta">Qtd</span>
+        <input type="number" min="0" id="q_pratos" value="0">
+      </div>
+    </div>
 
-  <label>Nº de unidades com presença de vetor</label>
-  <input type="number" id="imoveisPos">
+    <div class="row">
+      <input type="checkbox" id="c_pneus">
+      <div>
+        <b>Pneus</b>
+        <div class="meta">Acumula água + sombra = risco alto</div>
+      </div>
+      <div class="qty">
+        <span class="meta">Qtd</span>
+        <input type="number" min="0" id="q_pneus" value="0">
+      </div>
+    </div>
 
-  <div class="check"><input type="checkbox"> Presença de larvas</div>
-  <div class="check"><input type="checkbox"> Presença de pupas</div>
-  <div class="check"><input type="checkbox"> Presença de adultos</div>
-</div>
+    <div class="row">
+      <input type="checkbox" id="c_calhas">
+      <div>
+        <b>Calhas / ralos / lajes</b>
+        <div class="meta">Difícil de ver — risco “invisível”</div>
+      </div>
+      <div class="qty">
+        <span class="meta">Qtd</span>
+        <input type="number" min="0" id="q_calhas" value="0">
+      </div>
+    </div>
 
-<!-- RECIPIENTES -->
-<div class="panel">
-  <h3>📦 Tipos de recipientes identificados</h3>
+    <div class="row">
+      <input type="checkbox" id="c_descartaveis">
+      <div>
+        <b>Materiais descartáveis (copos, garrafas, sucata)</b>
+        <div class="meta">Relaciona-se a manejo de resíduos</div>
+      </div>
+      <div class="qty">
+        <span class="meta">Qtd</span>
+        <input type="number" min="0" id="q_descartaveis" value="0">
+      </div>
+    </div>
 
-  <div class="check"><input type="checkbox"> Baldes / tonéis / caixas destampadas</div>
-  <div class="check"><input type="checkbox"> Pratos de plantas</div>
-  <div class="check"><input type="checkbox"> Pneus</div>
-  <div class="check"><input type="checkbox"> Calhas / ralos</div>
-  <div class="check"><input type="checkbox"> Materiais descartáveis</div>
-  <div class="check"><input type="checkbox"> Recipientes naturais (ocos, bromélias)</div>
+    <div class="row">
+      <input type="checkbox" id="c_naturais">
+      <div>
+        <b>Recipientes naturais (ocos, bromélias)</b>
+        <div class="meta">Nem sempre eliminável — pode ser monitoramento</div>
+      </div>
+      <div class="qty">
+        <span class="meta">Qtd</span>
+        <input type="number" min="0" id="q_naturais" value="0">
+      </div>
+    </div>
 
-  <label>Total de recipientes inspecionados</label>
-  <input type="number" id="recip">
-
-  <label>Nº de recipientes positivos</label>
-  <input type="number" id="recipPos">
-</div>
+    <div class="grid2" style="margin-top:10px">
+      <div>
+        <label>Total de recipientes inspecionados</label>
+        <input id="recipTotal" type="number" min="0" placeholder="Ex: 28">
+      </div>
+      <div>
+        <label>Nº de recipientes positivos (larva/pupa)</label>
+        <input id="recipPos" type="number" min="0" placeholder="Ex: 3">
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- AMBIENTE -->
-<div class="panel">
-  <h3>🌱 Caracterização ambiental</h3>
+<section class="panel">
+  <div class="ph">
+    <h2>4) Caracterização ambiental (checklist)</h2>
+    <small>Risco depende do contexto</small>
+  </div>
+  <div class="pb">
+    <div class="row">
+      <input type="checkbox" id="a_sombra">
+      <div><b>Área sombreada</b><div class="meta">Sombra favorece permanência de água e atividade do vetor</div></div>
+      <div class="meta">+ risco</div>
+    </div>
+    <div class="row">
+      <input type="checkbox" id="a_fluxo">
+      <div><b>Próximo à circulação humana</b><div class="meta">Aumenta chance de contato humano–vetor</div></div>
+      <div class="meta">+ risco</div>
+    </div>
+    <div class="row">
+      <input type="checkbox" id="a_mo">
+      <div><b>Acúmulo de matéria orgânica</b><div class="meta">Pode indicar micro-hábitats para outros vetores</div></div>
+      <div class="meta">+ risco</div>
+    </div>
+    <div class="row">
+      <input type="checkbox" id="a_agua_art">
+      <div><b>Presença de água parada artificial</b><div class="meta">Indicador forte para arboviroses urbanas</div></div>
+      <div class="meta">++ risco</div>
+    </div>
+    <div class="row">
+      <input type="checkbox" id="a_agua_nat">
+      <div><b>Presença de água natural</b><div class="meta">Nem sempre eliminável; às vezes é monitoramento</div></div>
+      <div class="meta">monitor</div>
+    </div>
+  </div>
+</section>
 
-  <div class="check"><input type="checkbox"> Área sombreada</div>
-  <div class="check"><input type="checkbox"> Próximo a circulação humana</div>
-  <div class="check"><input type="checkbox"> Acúmulo de matéria orgânica</div>
-  <div class="check"><input type="checkbox"> Presença de água parada artificial</div>
-  <div class="check"><input type="checkbox"> Presença de água natural</div>
-</div>
+<!-- TÉCNICAS / ARMADILHAS -->
+<section class="panel">
+  <div class="ph">
+    <h2>5) Técnicas e esforço amostral</h2>
+    <small>O relatório usa isso</small>
+  </div>
+  <div class="pb grid2">
+    <div>
+      <label>Técnica principal</label>
+      <select id="tecPrincipal">
+        <option>Inspeção visual direta</option>
+        <option>Ovitrampa (ovos)</option>
+        <option>Armadilha CDC (adultos)</option>
+        <option>Busca ativa supervisionada</option>
+      </select>
+    </div>
+    <div>
+      <label>Tempo aproximado de inspeção (min)</label>
+      <input id="tempo" type="number" min="0" placeholder="Ex: 45">
+    </div>
+    <div>
+      <label>Nº de ovitrampas instaladas (se aplicável)</label>
+      <input id="nOvi" type="number" min="0" value="0">
+    </div>
+    <div>
+      <label>Nº de CDC instaladas (se aplicável)</label>
+      <input id="nCDC" type="number" min="0" value="0">
+    </div>
+  </div>
+</section>
 
-<!-- ARMADILHAS -->
-<div class="panel">
-  <h3>🪤 Técnicas de vigilância utilizadas</h3>
+<!-- OBSERVAÇÕES -->
+<section class="panel">
+  <div class="ph">
+    <h2>6) Observações técnicas</h2>
+    <small>Use linguagem de vigilância</small>
+  </div>
+  <div class="pb">
+    <textarea id="obs" placeholder="Descreva o padrão observado (recipientes dominantes, fase do vetor, condições ambientais, e ações recomendadas)."></textarea>
+  </div>
+</section>
 
-  <div class="check"><input type="checkbox"> Inspeção visual direta</div>
-  <div class="check"><input type="checkbox"> Ovitrampa</div>
-  <div class="check"><input type="checkbox"> Armadilha CDC</div>
-  <div class="check"><input type="checkbox"> Coleta manual supervisionada</div>
-</div>
+<!-- AÇÕES -->
+<section class="panel">
+  <div class="ph">
+    <h2>7) Relatório automático</h2>
+    <small>Gera texto com base no que você marcou</small>
+  </div>
+  <div class="pb">
+    <div class="actions">
+      <button class="btn primary" onclick="gerarRelatorio()">📄 Gerar relatório</button>
+      <button class="btn ghost" onclick="copiarRelatorio()">📋 Copiar</button>
+      <button class="btn ghost" onclick="baixarRelatorio()">⬇️ Baixar .txt</button>
+      <button class="btn warn" onclick="salvarVistoria()">💾 Salvar vistoria</button>
+      <button class="btn danger" onclick="limparTudo()">🧹 Limpar</button>
+    </div>
 
-<!-- OBS -->
-<div class="panel">
-  <h3>📝 Observações técnicas</h3>
-  <textarea id="obs" placeholder="Descreva padrão ecológico, fase dominante do vetor, riscos sanitários e ações recomendadas."></textarea>
-</div>
+    <div id="saida"></div>
 
-<!-- RESULTADO -->
-<div class="panel">
-  <button onclick="calcular()">📊 Gerar relatório técnico</button>
-  <div id="saida"></div>
-</div>
+    <hr>
+
+    <div>
+      <label>Vistorias salvas neste celular</label>
+      <select id="listaVistorias" onchange="carregarVistoria(this.value)">
+        <option value="">— selecionar —</option>
+      </select>
+      <div class="meta" style="margin-top:8px">
+        Dica: use isso para avaliar vários prédios e guardar histórico.
+      </div>
+    </div>
+  </div>
+</section>
 
 </main>
 
+<footer>
+  <div class="foot">
+    <a href="index.html">🏠 Início</a>
+    <a href="teoria.html">🧠 Teoria</a>
+    <a href="campo.html">🌱 Campo</a>
+    <a class="active" href="indice-predial.html">🏢 Protocolo</a>
+    <a href="laboratorio.html">🧬 Lab</a>
+    <a href="roteiro-professor.html">👩‍🏫 Prof</a>
+  </div>
+</footer>
+
 <script>
-function calcular(){
-  const im=document.getElementById("imoveis").value;
-  const imPos=document.getElementById("imoveisPos").value;
-  const r=document.getElementById("recip").value;
-  const rPos=document.getElementById("recipPos").value;
+/* ========= helpers ========= */
+function valNum(id){ return Number(document.getElementById(id).value || 0); }
+function valStr(id){ return (document.getElementById(id).value || "").trim(); }
+function ck(id){ return document.getElementById(id).checked; }
+function sel(id){ return document.getElementById(id).value; }
 
-  if(im<=0){alert("Informe nº de imóveis");return;}
-
-  const IP=((imPos/im)*100).toFixed(1);
-  const IB=((rPos/im)*100).toFixed(1);
-  const IR=r>0?((rPos/r)*100).toFixed(1):0;
-
-  let risco="Baixo";
-  if(IP>=1) risco="Moderado";
-  if(IP>=4) risco="Alto";
-
-  document.getElementById("saida").innerHTML=`
-  <div class="result">
-    <h3>📄 Relatório Entomológico Predial</h3>
-    <p><b>Índice Predial (IP):</b> ${IP}%</p>
-    <p><b>Índice de Breteau (IB):</b> ${IB}</p>
-    <p><b>Índice de Recipientes (IR):</b> ${IR}%</p>
-    <p><b>Classificação de risco:</b> <b>${risco}</b></p>
-    <p><b>Interpretação técnica:</b> 
-    ${risco==="Baixo"?"Manter vigilância periódica.":
-      risco==="Moderado"?"Reforçar manejo ambiental e educação em saúde.":
-      "Ação imediata de controle e monitoramento intensivo."}
-    </p>
-  </div>`;
+function recipItem(idC, idQ, nome){
+  return { checked: ck(idC), qtd: valNum(idQ), nome };
 }
-</script>
+function fmtList(arr){
+  if(arr.length===0) return "—";
+  return arr.map(x=>`• ${x}`).join("\n");
+}
+function todayFallback(){
+  const d = new Date();
+  const yyyy=d.getFullYear(), mm=String(d.getMonth()+1).padStart(2,'0'), dd=String(d.getDate()).padStart(2,'0');
+  return `${yyyy}-${mm}-${dd}`;
+}
 
-</body>
-</html>
+/* ========= relatório ========= */
+let lastReportText = "";
+
+function gerarRelatorio(){
+  const local = valStr("local") || "Local não informado";
+  const tipoLocal = sel("tipoLocal");
+  const data = document.getElementById("data").value || todayFallback();
+  const equipe = valStr("equipe");
+
+  const im = valNum("imoveis");
+  const imPos = valNum("imoveisPos");
+  if(im<=0){
+    alert("Informe o Nº total de unidades/imóveis avaliados.");
+    return;
+  }
+  if(imPos>im){
+    alert("Imóveis positivos não pode ser maior que o total de imóveis.");
+    return;
+  }
+
+  const recipTotal = valNum("recipTotal");
+  const recipPos = valNum("recipPos");
+  if(recipTotal>0 && recipPos>recipTotal){
+    alert("Recipientes positivos não pode ser maior que recipientes inspecionados.");
+    return;
+  }
+
+  // índices oficiais
+  const IP = ((imPos/im)*100);
+  const IB = ((recipPos/im)*100);
+  const IR = (recipTotal>0 ? ((recipPos/recipTotal)*100) : 0);
+
+  // itens de recipientes
+  const recipItens = [
+    recipItem("c_baldes","q_baldes","Baldes/tonéis/caixas destampadas"),
+    recipItem("c_pratos","q_pratos","Pratos de plantas/vasos"),
+    recipItem("c_pneus","q_pneus","Pneus"),
+    recipItem("c_calhas","q_calhas","Calhas/ralos/lajes"),
+    recipItem("c_descartaveis","q_descartaveis","Materiais descartáveis/sucata"),
+    recipItem("c_naturais","q_naturais","Recipientes naturais (ocos/bromélias)")
+  ];
+
+  const recipMarcados = recipItens
+    .filter(x=>x.checked || x.qtd>0)
+    .map(x=>`${x.nome}${x.qtd>0?` (qtd: ${x.qtd})`:``}`);
+
+  // ambiente
+  const ambMarcados = [];
+  if(ck("a_sombra")) ambMarcados.push("Área sombreada");
+  if(ck("a_fluxo")) ambMarcados.push("Próximo à circulação humana");
+  if(ck("a_mo")) ambMarcados.push("Acúmulo de matéria orgânica");
+  if(ck("a_agua_art")) ambMarcados.push("Presença de água parada artificial");
+  if(ck("a_agua_nat")) ambMarcados.push("Presença de água natural");
+
+  // fase
+  const lar = Number(sel("faseLarva"));
+  const pup = Number(sel("fasePupa"));
+  const adu = Number(sel("faseAdulto"));
+
+  // técnicas / esforço
+  const tec = sel("tecPrincipal");
+  const tempo = valNum("tempo");
+  const nOvi = valNum("nOvi");
+  const nCDC = valNum("nCDC");
+
+  // risco: score transparente (não “chute”)
+  // Baseia-se em: positivos (IP/recipPos), fase (pupa/adulto pesa), água artificial e proximidade humana, recipientes de alto risco, esforço baixo.
+  let score = 0;
+
+  // evidência direta
+  score += (imPos>0 ? 3 : 0);
+  score += (recipPos>0 ? 3 : 0);
+
+  // fase (pupa/adulto = mais risco)
+  score += lar;          // 0-2
+  score += pup * 2;      // 0-4
+  score += adu * 2;      // 0-4
+
+  // ambiente
+  if(ck("a_agua_art")) score += 3;
+  if(ck("a_fluxo")) score += 2;
+  if(ck("a_sombra")) score += 1;
+  if(ck("a_mo")) score += 1;
+  // água natural: não soma risco automaticamente (pode ser monitoramento), mas registra
+
+  // recipientes “pesados”
+  const qPneus = valNum("q_pneus");
+  const qBaldes = valNum("q_baldes");
+  const qCalhas = valNum("q_calhas");
+  if(ck("c_pneus") || qPneus>0) score += 2;
+  if(ck("c_baldes") || qBaldes>0) score += 2;
+  if(ck("c_calhas") || qCalhas>0) score += 1;
+
+  // esforço muito baixo pode reduzir confiança (não “reduz risco”, reduz certeza)
+  let confianca = "Alta";
+  if(tempo>0 && tempo<20) confianca = "Média";
+  if(tempo>0 && tempo<10) confianca = "Baixa";
+
+  // Classificação final (score)
+  let classe = "Baixo";
+  let cor = "var(--green)";
+  if(score>=8){ classe="Moderado"; cor="var(--gold)"; }
+  if(score>=13){ classe="Alto"; cor="var(--red)"; }
+
+  // recomendações automáticas
+  const acoes = [];
+  if(ck("a_agua_art") || recipMarcados.length>0){
+    acoes.push("Manejo ambiental imediato: eliminação/vedação de água parada em recipientes e revisão de armazenamento de água.");
+  }
+  if(ck("c_calhas") || qCalhas>0){
+    acoes.push("Ação específica: inspeção e limpeza de calhas/ralos/lajes (foco frequentemente oculto).");
+  }
+  if(ck("c_pneus") || qPneus>0){
+    acoes.push("Ação específica: destinação adequada de pneus (armazenar coberto/perfurar/encaminhar).");
+  }
+  if(adu>0){
+    acoes.push("Alerta: presença de adultos sugere atividade recente; reforçar orientação e monitoramento em curto prazo.");
+  }
+  if(pup>0){
+    acoes.push("Alerta crítico: pupas indicam emergência próxima; priorizar intervenção no mesmo dia.");
+  }
+  if(nOvi>0){
+    acoes.push("Registrar ovitrampas: planejar retorno para leitura/coleta conforme protocolo local (monitoramento).");
+  }
+  if(nCDC>0){
+    acoes.push("Registrar CDC: planejar triagem de adultos no laboratório e análise do contexto noturno.");
+  }
+  if(acoes.length===0){
+    acoes.push("Manter vigilância periódica e educação em saúde, com reavaliação programada.");
+  }
+
+  const obs = valStr("obs");
+
+  /
