@@ -3,103 +3,234 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Guardiãs da Vigilância 🧠 | Teoria</title>
+<title>Guardiãs da Vigilância 🧠 | Teoria (Roda do Curso)</title>
+<meta name="theme-color" content="#db2777"/>
 
 <style>
 :root{
   --bg0:#fff7fb;
   --bg1:#ffe4f2;
-  --card:#ffffffdd;
-  --stroke:#e9b6d6;
+  --card: rgba(255,255,255,.92);
+  --stroke: rgba(140,20,90,.18);
   --txt:#3b0a2a;
-  --muted:#6b2d4a;
+  --muted: rgba(59,10,42,.65);
   --pink:#db2777;
   --violet:#8b5cf6;
   --teal:#06b6d4;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  --green:#22c55e;
+  --gold:#f59e0b;
+  --red:#ef4444;
+  --r:18px;
+  --shadow: 0 18px 60px rgba(120,20,80,.18);
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
 }
+*{box-sizing:border-box}
 body{
   margin:0;
-  background:linear-gradient(180deg,var(--bg0),var(--bg1));
+  background:
+    radial-gradient(900px 600px at 10% 0%, rgba(219,39,119,.18), transparent 55%),
+    radial-gradient(800px 600px at 90% 10%, rgba(139,92,246,.18), transparent 55%),
+    linear-gradient(180deg,var(--bg0),var(--bg1));
   color:var(--txt);
 }
 header{
-  background:#fff;
+  position:sticky; top:0; z-index:30;
+  background: rgba(255,247,251,.92);
+  backdrop-filter: blur(10px);
   border-bottom:1px solid var(--stroke);
-  padding:14px;
 }
-header h1{margin:0;font-size:16px}
-header p{margin:4px 0 0;font-size:12px;color:var(--muted)}
+.h{
+  max-width:1050px; margin:auto;
+  padding:14px 16px;
+  display:flex; gap:12px; align-items:center;
+}
+.badge{
+  width:46px;height:46px;border-radius:18px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  color:#fff;
+  box-shadow:var(--shadow);
+  font-size:22px;
+}
+.h h1{margin:0;font-size:16px}
+.h p{margin:2px 0 0;font-size:12px;color:var(--muted)}
 
 main{
-  max-width:1000px;
-  margin:auto;
-  padding:16px 16px 120px;
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:16px;
+  max-width:1050px; margin:auto;
+  padding:16px 16px 130px;
+  display:grid; gap:14px;
 }
-@media(max-width:900px){main{grid-template-columns:1fr}}
 
 .panel{
   background:var(--card);
   border:1px solid var(--stroke);
-  border-radius:18px;
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.ph{
   padding:14px;
+  border-bottom:1px solid var(--stroke);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
 }
-.btn{
-  width:100%;
-  text-align:left;
-  padding:12px;
-  margin-bottom:8px;
-  border-radius:14px;
-  border:1px solid transparent;
-  background:#fff;
+.ph h2{margin:0;font-size:14px}
+.ph small{color:var(--muted)}
+.pb{padding:14px}
+
+.chips{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.chip{
+  border:1px solid rgba(140,20,90,.16);
+  background:rgba(255,255,255,.75);
+  padding:10px 12px;
+  border-radius:999px;
   cursor:pointer;
-  font-weight:700;
-}
-.btn.active{
-  border-color:var(--pink);
-  background:#fdf2f8;
-}
-.subbtn{
-  margin-left:14px;
+  font-weight:900;
   font-size:13px;
+  display:flex; gap:8px; align-items:center;
 }
-.content h3{margin-top:14px}
+.chip.active{
+  border:none;
+  color:#fff;
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+}
+@media(max-width:880px){ .grid2{grid-template-columns:1fr} }
+
 .callout{
-  background:#fdf2f8;
+  background:rgba(219,39,119,.08);
   border-left:4px solid var(--pink);
   padding:12px;
   border-radius:14px;
   margin:12px 0;
 }
-nav{
-  position:fixed;
-  bottom:0;left:0;right:0;
+.tip{
+  background:rgba(6,182,212,.10);
+  border-left:4px solid var(--teal);
+  padding:12px;
+  border-radius:14px;
+  margin:12px 0;
+}
+.warn{
+  background:rgba(245,158,11,.12);
+  border-left:4px solid var(--gold);
+  padding:12px;
+  border-radius:14px;
+  margin:12px 0;
+}
+
+details{
+  border:1px solid rgba(140,20,90,.12);
+  border-radius:16px;
+  background:rgba(255,255,255,.7);
+  padding:10px 12px;
+  margin:10px 0;
+}
+summary{cursor:pointer; font-weight:950}
+details .inner{margin-top:10px; line-height:1.75}
+
+.check{
+  display:grid;
+  grid-template-columns: 22px 1fr;
+  gap:10px;
+  align-items:start;
+  margin:8px 0;
+}
+.check input{width:18px;height:18px;margin-top:2px}
+
+textarea{
+  width:100%;
+  min-height:120px;
+  border-radius:14px;
+  border:1px solid var(--stroke);
+  padding:10px;
   background:#fff;
+}
+
+a{color:var(--pink);font-weight:900}
+
+.kit{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:10px;
+}
+@media(max-width:880px){ .kit{grid-template-columns:1fr} }
+.cardMini{
+  background:rgba(255,255,255,.75);
+  border:1px solid rgba(140,20,90,.12);
+  border-radius:16px;
+  padding:12px;
+}
+.cardMini b{display:block}
+.cardMini small{color:var(--muted)}
+
+.svgWrap{
+  background:rgba(255,255,255,.75);
+  border:1px solid rgba(140,20,90,.12);
+  border-radius:16px;
+  padding:12px;
+  overflow:auto;
+}
+
+.btnRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+.btn{
+  border:none;
+  border-radius:16px;
+  padding:12px 14px;
+  font-weight:950;
+  cursor:pointer;
+}
+.btn.primary{
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  color:white;
+}
+.btn.ghost{
+  background:rgba(255,255,255,.8);
+  border:1px solid var(--stroke);
+  color:var(--txt);
+}
+
+footer{
+  position:fixed;
+  bottom:0; left:0; right:0;
+  background: rgba(255,247,251,.95);
   border-top:1px solid var(--stroke);
 }
-.nav{
-  max-width:1000px;
+.foot{
+  max-width:1050px;
   margin:auto;
   padding:10px;
   display:flex;
   gap:8px;
+  flex-wrap:wrap;
 }
-.nav a{
+.foot a{
   flex:1;
   text-align:center;
-  padding:12px;
-  border-radius:14px;
   text-decoration:none;
-  background:#fdf2f8;
+  padding:12px;
+  border-radius:16px;
+  font-weight:950;
+  background:rgba(255,255,255,.75);
+  border:1px solid rgba(140,20,90,.14);
   color:var(--txt);
-  font-weight:800;
 }
-.nav a.active{
+.foot a.active{
   background:linear-gradient(135deg,var(--pink),var(--violet));
-  color:white;
+  color:#fff;
+  border:none;
 }
 </style>
 </head>
@@ -107,174 +238,364 @@ nav{
 <body>
 
 <header>
-  <h1>🧠 Módulo Teórico — Vigilância em Saúde</h1>
-  <p>Entender para depois observar, coletar e decidir</p>
+  <div class="h">
+    <div class="badge">🧠</div>
+    <div>
+      <h1>Módulo Teórico — A roda do curso</h1>
+      <p>O SUS + as vigilâncias + as arboviroses + ciclos dos vetores (para entender campo e laboratório)</p>
+    </div>
+  </div>
 </header>
 
 <main>
 
-<!-- MENU -->
-<aside class="panel" id="menu"></aside>
+<!-- SELETOR PRINCIPAL -->
+<section class="panel">
+  <div class="ph">
+    <h2>Escolha uma aula</h2>
+    <small>Toque nos botões — estilo app</small>
+  </div>
+  <div class="pb">
+    <div class="chips" id="chips"></div>
+    <div class="tip" style="margin-top:12px">
+      <b>Como usar</b>
+      <div>1) Abra a aula → 2) Leia os blocos → 3) Marque o checklist → 4) Escreva sua nota.</div>
+    </div>
+  </div>
+</section>
 
 <!-- CONTEÚDO -->
-<section class="panel content" id="content">
-  <p>Selecione um tema à esquerda.</p>
+<section class="panel">
+  <div class="ph">
+    <h2 id="aulaTitulo">Selecione uma aula acima</h2>
+    <small id="aulaSub">Quando você selecionar, o conteúdo aparece aqui.</small>
+  </div>
+  <div class="pb" id="conteudo"></div>
 </section>
 
 </main>
 
-<nav>
-  <div class="nav">
-    <a href="index.html">🏠</a>
-    <a class="active" href="teoria.html">🧠</a>
-    <a href="campo.html">🌱</a>
-    <a href="laboratorio.html">🧬</a>
-    <a href="roteiro-professor.html">👩‍🏫</a>
+<footer>
+  <div class="foot">
+    <a href="index.html">🏠 Início</a>
+    <a class="active" href="teoria.html">🧠 Teoria</a>
+    <a href="campo.html">🌱 Campo</a>
+    <a href="indice-predial.html">🏢 Protocolo</a>
+    <a href="laboratorio.html">🧬 Lab</a>
+    <a href="roteiro-professor.html">👩‍🏫 Prof</a>
   </div>
-</nav>
+</footer>
 
 <script>
+/* ========= armazenamento local (check + notas por aula) ========= */
+const STORE_KEY = "guardias_teoria_v2";
+function loadStore(){ return JSON.parse(localStorage.getItem(STORE_KEY)||"{}"); }
+function saveStore(obj){ localStorage.setItem(STORE_KEY, JSON.stringify(obj)); }
+function setVal(path, value){
+  const s=loadStore();
+  s[path]=value;
+  saveStore(s);
+}
+function getVal(path, fallback=""){
+  const s=loadStore();
+  return (s[path]!==undefined)? s[path] : fallback;
+}
+
+/* ========= conteúdo ========= */
 const aulas = [
 {
-title:"O que é Vigilância em Saúde",
-html:`
-<h3>Vigilância em Saúde</h3>
-<p>É o conjunto de ações que observa o ambiente, os vetores e as pessoas
-antes da doença se espalhar.</p>
-<div class="callout">
-<b>Ideia-chave:</b> vigilância age antes do hospital.
-</div>
-`
-},
-{
-title:"Arboviroses e saúde humana",
-html:`
-<h3>Arboviroses</h3>
-<p>Doenças transmitidas por artrópodes, principalmente mosquitos.</p>
-<ul>
-<li>Dengue</li>
-<li>Zika</li>
-<li>Chikungunya</li>
-<li>Oropouche</li>
-<li>Febre amarela</li>
-</ul>
-`
-},
-{
-title:"🔁 Ciclos de vida dos vetores",
-subs:[
-{
-t:"Ciclo do mosquito urbano (Aedes)",
-h:`
-<h3>Ciclo do Aedes</h3>
-<p>O ciclo é <b>aquático-terrestre</b>:</p>
-<ol>
-<li>Ovo (resistente à seca)</li>
-<li>Larva (água parada)</li>
-<li>Pupa (água)</li>
-<li>Adulto (ambiente terrestre)</li>
-</ol>
-<div class="callout">
-<b>Implicação:</b> eliminar água parada interrompe o ciclo.
-</div>
-`
-},
-{
-t:"Mosquitos de água natural",
-h:`
-<h3>Mosquitos de ambientes naturais</h3>
-<p>Dependem de poças, áreas alagadas, margens de rios.</p>
-<div class="callout">
-<b>Implicação:</b> nem todo foco é eliminável — muitos são monitorados.
-</div>
-`
-},
-{
-t:"Ciclo dos flebotomíneos",
-h:`
-<h3>Flebotomíneos</h3>
-<p>Ciclo ligado ao solo úmido e matéria orgânica.</p>
-<ul>
-<li>Ovos no solo</li>
-<li>Larvas terrestres</li>
-<li>Adultos noturnos</li>
-</ul>
-<div class="callout">
-<b>Implicação:</b> controle exige manejo ambiental, não só água.
-</div>
-`
-},
-{
-t:"Ciclo dos triatomíneos",
-h:`
-<h3>Triatomíneos</h3>
-<p>Insetos com ciclo totalmente terrestre.</p>
-<ul>
-<li>Vivem em frestas e abrigos</li>
-<li>Associados a domicílios e anexos</li>
-</ul>
-<div class="callout">
-<b>Implicação:</b> vigilância domiciliar é essencial.
-</div>
-`
-},
-{
-t:"Comparação dos ciclos",
-h:`
-<h3>Comparando ciclos</h3>
-<table border="1" cellpadding="6">
-<tr><th>Vetor</th><th>Fase crítica</th><th>Ação-chave</th></tr>
-<tr><td>Aedes</td><td>Larva</td><td>Eliminar água</td></tr>
-<tr><td>Flebotomíneo</td><td>Solo</td><td>Manejo ambiental</td></tr>
-<tr><td>Triatomíneo</td><td>Abrigo</td><td>Vedação/inspeção</td></tr>
-</table>
-`
-},
-{
-t:"Por que o ciclo define a vigilância",
-h:`
-<h3>Ciclo → Técnica → Decisão</h3>
-<p>Quem entende o ciclo sabe:</p>
-<ul>
-<li>Onde procurar</li>
-<li>Quando agir</li>
-<li>Como controlar</li>
-</ul>
-<div class="callout">
-<b>Mensagem final:</b> ciclo biológico guia a política pública.
-</div>
-`
-}
-]
-}
-];
+ id:"sus",
+ icon:"🏥",
+ title:"SUS sem mistério",
+ sub:"O que é SUS e por que ele existe",
+ html:`
+<div class="grid2">
+  <div>
+    <h3>O que é o SUS?</h3>
+    <p>O <b>Sistema Único de Saúde</b> é a rede pública do Brasil que garante saúde como <b>direito</b>.
+    Ele não é “só hospital”. Ele inclui <b>vacinação</b>, <b>vigilância</b>, <b>laboratórios</b>, <b>atenção básica</b>,
+    prevenção e resposta a surtos.</p>
 
-const menu=document.getElementById("menu");
-const content=document.getElementById("content");
+    <div class="callout">
+      <b>Ideia-chave</b>
+      <div>O SUS não começa quando a pessoa adoece. Ele começa quando o território é cuidado.</div>
+    </div>
+  </div>
 
-aulas.forEach(a=>{
- const b=document.createElement("button");
- b.className="btn";
- b.textContent=a.title;
- b.onclick=()=>{
-   document.querySelectorAll(".btn").forEach(x=>x.classList.remove("active"));
-   b.classList.add("active");
-   if(!a.subs){
-     content.innerHTML=a.html;
-   }else{
-     let html=`<h3>${a.title}</h3><p>Selecione um ciclo abaixo:</p>`;
-     a.subs.forEach(s=>{
-       html+=`<button class="btn subbtn" onclick="document.getElementById('${s.t}').scrollIntoView({behavior:'smooth'})">${s.t}</button>`;
-     });
-     a.subs.forEach(s=>{
-       html+=`<div id="${s.t}">${s.h}</div>`;
-     });
-     content.innerHTML=html;
-   }
- };
- menu.appendChild(b);
-});
-</script>
+  <div class="svgWrap">
+    <b>Ilustração: SUS como rede</b>
+    <svg viewBox="0 0 680 220" width="100%" height="auto" aria-label="Rede SUS">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#db2777" stop-opacity="0.9"/>
+          <stop offset="1" stop-color="#8b5cf6" stop-opacity="0.9"/>
+        </linearGradient>
+      </defs>
+      <rect x="10" y="10" width="660" height="200" rx="18" fill="rgba(255,255,255,.65)" stroke="rgba(140,20,90,.15)"/>
+      <circle cx="120" cy="110" r="42" fill="url(#g1)"/>
+      <text x="120" y="116" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">SUS</text>
 
-</body>
-</html>
+      <g fill="rgba(255,255,255,.9)" stroke="rgba(140,20,90,.2)">
+        <circle cx="280" cy="55" r="28"/><text x="280" y="60" text-anchor="middle" fill="#3b0a2a" font-size="11" font-weight="700">UBS</text>
+        <circle cx="360" cy="155" r="28"/><text x="360" y="160" text-anchor="middle" fill="#3b0a2a" font-size="11" font-weight="700">VIG</text>
+        <circle cx="520" cy="70" r="28"/><text x="520" y="75" text-anchor="middle" fill="#3b0a2a" font-size="11" font-weight="700">VAC</text>
+        <circle cx="560" cy="160" r="28"/><text x="560" y="165" text-anchor="middle" fill="#3b0a2a" font-size="11" font-weight="700">LAB</text>
+      </g>
+
+      <g stroke="rgba(219,39,119,.55)" stroke-width="4">
+        <line x1="160" y1="110" x2="252" y2="65"/>
+        <line x1="160" y1="110" x2="332" y2="150"/>
+        <line x1="160" y1="110" x2="492" y2="80"/>
+        <line x1="160" y1="110" x2="532" y2="150"/>
+      </g>
+    </svg>
+    <small style="color:var(--muted)">UBS = atenção básica • VIG = vigilância • VAC = vacinação • LAB = laboratório</small>
+  </div>
+</div>
+
+<details open>
+  <summary>O que o SUS faz de mais importante para arboviroses?</summary>
+  <div class="inner">
+    <ul>
+      <li><b>Detecta cedo</b>: notificação, vigilância e análise de dados</li>
+      <li><b>Previne</b>: controle de vetores, educação em saúde, saneamento integrado</li>
+      <li><b>Responde</b>: atendimento, investigação, bloqueio de transmissão</li>
+      <li><b>Integra</b>: laboratório + campo + comunicação</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>Links oficiais para você consultar</summary>
+  <div class="inner">
+    <ul>
+      <li><a href="https://www.gov.br/saude/pt-br/sus" target="_blank" rel="noopener">Portal do SUS (Ministério da Saúde)</a></li>
+      <li><a href="https://www.paho.org/pt/topicos/dengue" target="_blank" rel="noopener">OPAS — Dengue (visão regional)</a></li>
+      <li><a href="https://www.who.int/health-topics/dengue-and-severe-dengue" target="_blank" rel="noopener">OMS — Dengue</a></li>
+    </ul>
+    <div class="warn"><b>Dica:</b> Links podem mudar com o tempo; use como ponto de partida oficial.</div>
+  </div>
+</details>
+
+<hr>
+
+<h3>Checklist da aula</h3>
+<div class="check"><input type="checkbox" data-k="sus_c1"> <div>Consigo explicar SUS como rede (não só hospital).</div></div>
+<div class="check"><input type="checkbox" data-k="sus_c2"> <div>Sei dizer como vigilância se conecta com UBS e laboratório.</div></div>
+<div class="check"><input type="checkbox" data-k="sus_c3"> <div>Entendi que arboviroses são problema de território + saúde.</div></div>
+
+<label style="margin-top:10px">Minha nota desta aula (o que eu aprendi?)</label>
+<textarea data-k="sus_note" placeholder="Escreva com suas palavras..."></textarea>
+`
+},
+{
+ id:"vigs",
+ icon:"🛰️",
+ title:"As vigilâncias (a base do curso)",
+ sub:"Epidemiológica, ambiental, sanitária e entomológica",
+ html:`
+<div class="grid2">
+  <div>
+    <h3>O que é Vigilância em Saúde?</h3>
+    <p>É o conjunto de ações que <b>observa</b>, <b>detecta</b> e <b>age</b> para reduzir riscos e evitar doenças.
+    Ela liga dados, território e decisão.</p>
+
+    <div class="callout">
+      <b>Frase-guia do curso</b>
+      <div>“Entender o vetor é entender como a doença encontra as pessoas.”</div>
+    </div>
+
+    <h3>Quatro vigilâncias que se conversam</h3>
+    <div class="kit">
+      <div class="cardMini"><b>Vigilância Epidemiológica</b><small>casos, surtos, notificação, curvas</small></div>
+      <div class="cardMini"><b>Vigilância Ambiental</b><small>ambiente, água, lixo, clima, risco</small></div>
+      <div class="cardMini"><b>Vigilância Sanitária</b><small>produtos/serviços, inspeção, prevenção</small></div>
+      <div class="cardMini"><b>Vigilância Entomológica</b><small>vetores: larva, pupa, adulto, armadilhas</small></div>
+    </div>
+  </div>
+
+  <div class="svgWrap">
+    <b>Ilustração: a “roda” do curso</b>
+    <svg viewBox="0 0 560 320" width="100%" height="auto" aria-label="Roda vigilâncias">
+      <rect x="10" y="10" width="540" height="300" rx="18" fill="rgba(255,255,255,.65)" stroke="rgba(140,20,90,.15)"/>
+      <circle cx="280" cy="160" r="46" fill="rgba(219,39,119,.9)"/>
+      <text x="280" y="166" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">SAÚDE</text>
+
+      <g>
+        <circle cx="160" cy="90" r="36" fill="rgba(139,92,246,.85)"/>
+        <text x="160" y="96" text-anchor="middle" fill="#fff" font-size="10" font-weight="800">EPI</text>
+
+        <circle cx="400" cy="90" r="36" fill="rgba(6,182,212,.85)"/>
+        <text x="400" y="96" text-anchor="middle" fill="#fff" font-size="10" font-weight="800">AMB</text>
+
+        <circle cx="160" cy="230" r="36" fill="rgba(245,158,11,.85)"/>
+        <text x="160" y="236" text-anchor="middle" fill="#fff" font-size="10" font-weight="800">SAN</text>
+
+        <circle cx="400" cy="230" r="36" fill="rgba(34,197,94,.85)"/>
+        <text x="400" y="236" text-anchor="middle" fill="#fff" font-size="10" font-weight="800">ENTO</text>
+      </g>
+
+      <g stroke="rgba(219,39,119,.55)" stroke-width="4">
+        <line x1="200" y1="110" x2="246" y2="140"/>
+        <line x1="360" y1="110" x2="314" y2="140"/>
+        <line x1="200" y1="210" x2="246" y2="180"/>
+        <line x1="360" y1="210" x2="314" y2="180"/>
+      </g>
+    </svg>
+    <small style="color:var(--muted)">EPI: epidemiológica • AMB: ambiental • SAN: sanitária • ENTO: entomológica</small>
+  </div>
+</div>
+
+<details open>
+  <summary>Vigilância Entomológica (o que é, de verdade)</summary>
+  <div class="inner">
+    <p>É a parte que observa os <b>vetores</b> no território:</p>
+    <ul>
+      <li>Onde estão <b>larvas/pupas</b> (ambiente aquático ou microambientes)</li>
+      <li>Onde estão <b>adultos</b> (atividade, horários, abrigo)</li>
+      <li>Quais <b>técnicas</b> medem melhor (ovitrampa, CDC, inspeção)</li>
+      <li>Como isso vira <b>decisão</b> (controle, educação, monitoramento)</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>Vigilância Ambiental (por que entra no curso?)</summary>
+  <div class="inner">
+    <p>Porque arbovirose não é “só mosquito”: é <b>cidade</b> + <b>água</b> + <b>resíduos</b> + <b>clima</b> + <b>desigualdade</b>.</p>
+    <ul>
+      <li>Chuva e drenagem → poças/valetas</li>
+      <li>Armazenamento de água → recipientes</li>
+      <li>Resíduos → acúmulo de criadouros</li>
+      <li>Sombra/vegetação → microclima</li>
+    </ul>
+  </div>
+</details>
+
+<hr>
+<h3>Checklist da aula</h3>
+<div class="check"><input type="checkbox" data-k="vigs_c1"> <div>Consigo diferenciar vigilância epidemiológica, ambiental, sanitária e entomológica.</div></div>
+<div class="check"><input type="checkbox" data-k="vigs_c2"> <div>Entendi que entomologia liga “ciclo do vetor” com “onde procurar”.</div></div>
+<div class="check"><input type="checkbox" data-k="vigs_c3"> <div>Consigo explicar por que ambiente urbano define risco.</div></div>
+
+<label style="margin-top:10px">Minha nota desta aula</label>
+<textarea data-k="vigs_note" placeholder="Escreva com suas palavras..."></textarea>
+`
+},
+{
+ id:"arb",
+ icon:"🦟",
+ title:"Arboviroses e impacto humano",
+ sub:"Dengue, Zika, Chikungunya, Oropouche e Febre Amarela",
+ html:`
+<h3>Arboviroses: o que importa para saúde humana</h3>
+<p>São doenças transmitidas por artrópodes (principalmente mosquitos). O que interessa aqui não é decorar nomes,
+mas entender o <b>impacto real</b> na vida das pessoas e no SUS.</p>
+
+<div class="grid2">
+  <div class="cardMini">
+    <b>Dengue</b>
+    <small>febre, dor no corpo, risco de gravidade; pressiona UBS e hospital.</small>
+  </div>
+  <div class="cardMini">
+    <b>Chikungunya</b>
+    <small>dores articulares que podem persistir; impacto grande na qualidade de vida.</small>
+  </div>
+  <div class="cardMini">
+    <b>Zika</b>
+    <small>risco em gestantes; importância da prevenção e comunicação em saúde.</small>
+  </div>
+  <div class="cardMini">
+    <b>Oropouche</b>
+    <small>febre e sintomas sistêmicos; relação com ambientes e vetores específicos.</small>
+  </div>
+  <div class="cardMini">
+    <b>Febre Amarela</b>
+    <small>existe ciclo silvestre; vacinação é central.</small>
+  </div>
+</div>
+
+<div class="warn">
+<b>Mensagem forte</b>
+<div>Arbovirose não é “culpa” do morador. É resultado do modo como a cidade e o ambiente são organizados.</div>
+</div>
+
+<details open>
+  <summary>Por que surtos acontecem?</summary>
+  <div class="inner">
+    <ul>
+      <li>Muito criadouro + clima favorável + circulação do vírus</li>
+      <li>Desigualdade e saneamento insuficiente</li>
+      <li>Baixa percepção de risco (o vetor fica “invisível”)</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>Links rápidos oficiais</summary>
+  <div class="inner">
+    <ul>
+      <li><a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/d/dengue" target="_blank" rel="noopener">MS — Dengue</a></li>
+      <li><a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/z/zika" target="_blank" rel="noopener">MS — Zika</a></li>
+      <li><a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/c/chikungunya" target="_blank" rel="noopener">MS — Chikungunya</a></li>
+      <li><a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/f/febre-amarela" target="_blank" rel="noopener">MS — Febre Amarela</a></li>
+    </ul>
+  </div>
+</details>
+
+<hr>
+<h3>Checklist da aula</h3>
+<div class="check"><input type="checkbox" data-k="arb_c1"> <div>Consigo explicar arbovirose como problema coletivo (território + saúde).</div></div>
+<div class="check"><input type="checkbox" data-k="arb_c2"> <div>Entendi por que vacinação é decisiva na febre amarela.</div></div>
+<div class="check"><input type="checkbox" data-k="arb_c3"> <div>Consigo citar pelo menos 2 efeitos sociais/na vida real de surtos.</div></div>
+
+<label style="margin-top:10px">Minha nota desta aula</label>
+<textarea data-k="arb_note" placeholder="Escreva com suas palavras..."></textarea>
+`
+},
+{
+ id:"ciclos",
+ icon:"🔁",
+ title:"Ciclos de vida dos vetores (completo)",
+ sub:"O ciclo define onde procurar e como controlar",
+ html:`
+<h3>Regra de ouro</h3>
+<div class="callout">
+<b>Se você entende o ciclo, você entende:</b>
+<ul>
+<li>onde procurar (habitat)</li>
+<li>em qual fase agir</li>
+<li>qual armadilha faz sentido</li>
+<li>qual ação interrompe a transmissão</li>
+</ul>
+</div>
+
+<div class="svgWrap">
+<b>Ilustração: ciclo do mosquito urbano (ex.: Aedes)</b>
+<svg viewBox="0 0 760 260" width="100%" height="auto" aria-label="Ciclo Aedes">
+  <rect x="10" y="10" width="740" height="240" rx="18" fill="rgba(255,255,255,.65)" stroke="rgba(140,20,90,.15)"/>
+  <g font-family="system-ui" font-weight="900">
+    <circle cx="120" cy="130" r="46" fill="rgba(219,39,119,.90)"/><text x="120" y="136" text-anchor="middle" fill="#fff" font-size="14">OVO</text>
+    <circle cx="300" cy="70" r="46" fill="rgba(139,92,246,.85)"/><text x="300" y="76" text-anchor="middle" fill="#fff" font-size="14">LARVA</text>
+    <circle cx="460" cy="130" r="46" fill="rgba(6,182,212,.85)"/><text x="460" y="136" text-anchor="middle" fill="#fff" font-size="14">PUPA</text>
+    <circle cx="640" cy="70" r="46" fill="rgba(34,197,94,.85)"/><text x="640" y="76" text-anchor="middle" fill="#fff" font-size="14">ADULTO</text>
+  </g>
+  <g stroke="rgba(219,39,119,.55)" stroke-width="5" fill="none">
+    <path d="M160 118 C210 86,240 78,260 78"/>
+    <path d="M340 86 C390 110,410 120,420 124"/>
+    <path d="M500 118 C560 90,590 78,600 78"/>
+    <path d="M640 116 C560 210,260 210,120 176"/>
+  </g>
+  <g fill="#3b0a2a" font-size="12" font-weight="700" font-family="system-ui">
+    <text x="205" y="60">Água parada / micro-hábitat</text>
+    <text x="410" y="210">Interrompe aqui = reduz transmissão</text>
+  </g>
+</svg>
+</div>
+
+<details open>
+  <summary>1) Mosquito urbano (Aedes): o que olhar no território</summary>
+  <div class="inner">
+    <ul>
+      <li><b>Ovos</b>: ficam em paredes de recipientes; resistem à seca (por isso voltam quando chove).</li>
+      <li><b>Larvas</b>: vivem
