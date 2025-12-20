@@ -1,1 +1,546 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>Guardiãs da Vigilância 🦋 | Módulo 2 — Campo</title>
+  <meta name="theme-color" content="#d946ef"/>
 
+  <style>
+    :root{
+      --bg0:#fff6fb;
+      --bg1:#ffe4f3;
+      --card: rgba(255,255,255,.78);
+      --stroke: rgba(79, 12, 55, .12);
+
+      --txt:#2a0f22;
+      --muted: rgba(42,15,34,.68);
+      --muted2: rgba(42,15,34,.52);
+
+      --magenta:#d946ef;
+      --pink:#fb7185;
+      --gold:#f59e0b;
+      --lilac:#8b5cf6;
+      --teal:#06b6d4;
+      --green:#22c55e;
+      --danger:#ef4444;
+
+      --shadow: 0 18px 70px rgba(80, 10, 55, .18);
+      --r:18px; --r2:24px;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:var(--sans); color:var(--txt);
+      background:
+        radial-gradient(1200px 700px at 15% 0%, rgba(217,70,239,.18), transparent 60%),
+        radial-gradient(900px 650px at 95% 10%, rgba(251,113,133,.18), transparent 58%),
+        radial-gradient(900px 700px at 60% 100%, rgba(6,182,212,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:16px 16px calc(98px + env(safe-area-inset-bottom));}
+
+    /* Header */
+    .top{
+      position:sticky; top:0; z-index:40;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(255,246,251,.86), rgba(255,246,251,.60));
+      border-bottom:1px solid var(--stroke);
+    }
+    .topin{
+      max-width:1100px;margin:0 auto;padding:12px 16px;
+      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    }
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{
+      width:44px;height:44px;border-radius:18px;
+      border:1px solid var(--stroke);
+      box-shadow:var(--shadow);
+      background: linear-gradient(135deg, rgba(217,70,239,.92), rgba(251,113,133,.85));
+      display:grid; place-items:center;
+      font-size:20px;
+    }
+    .titlebox h1{margin:0;font-size:16px; letter-spacing:.2px}
+    .titlebox p{margin:2px 0 0;color:var(--muted); font-size:12px; line-height:1.35}
+
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.65);
+      color: rgba(42,15,34,.75);
+      font-size:12px;
+      box-shadow: 0 10px 40px rgba(80,10,55,.08);
+    }
+
+    .btn{
+      cursor:pointer; user-select:none;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      color:var(--txt);
+      padding:10px 11px;
+      border-radius:16px;
+      font-weight:900;
+      display:inline-flex; gap:8px; align-items:center;
+      text-decoration:none;
+      transition: transform .08s ease, filter .15s ease;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(217,70,239,.92), rgba(251,113,133,.85));
+      color:white;
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.55);
+      color: rgba(42,15,34,.85);
+    }
+    .btn.small{padding:8px 10px; border-radius:14px; font-size:12px}
+
+    /* Layout */
+    .grid{display:grid; grid-template-columns: 360px 1fr; gap:12px; align-items:start;}
+    @media (max-width: 980px){ .grid{grid-template-columns: 1fr;} }
+
+    .panel{
+      border:1px solid var(--stroke);
+      border-radius: var(--r2);
+      background: rgba(255,255,255,.72);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .ph{
+      padding:14px 14px;
+      border-bottom:1px solid var(--stroke);
+      background:
+        radial-gradient(900px 260px at 10% 0%, rgba(6,182,212,.12), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.50));
+    }
+    .ph h2{margin:0;font-size:14px}
+    .ph p{margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.45}
+
+    .search{
+      width:100%;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      color:var(--txt);
+      border-radius:16px;
+      padding:10px 12px;
+      outline:none;
+      margin:10px 0 10px;
+    }
+
+    .progress{
+      display:flex; gap:10px; align-items:center; width:100%;
+      margin-top:10px;
+    }
+    .bar{flex:1;height:12px;border-radius:999px;border:1px solid var(--stroke);background:rgba(255,255,255,.65);overflow:hidden}
+    .fill{height:100%; width:0%; background: linear-gradient(90deg, rgba(34,197,94,.86), rgba(6,182,212,.72), rgba(217,70,239,.78)); transition: width .25s ease}
+    .score{
+      font-family:var(--mono); font-size:11px; color:rgba(42,15,34,.70);
+      padding:6px 10px; border:1px solid var(--stroke); border-radius:999px; background:rgba(255,255,255,.70)
+    }
+
+    .pb{padding:12px}
+
+    .seg{
+      width:100%;
+      text-align:left;
+      border:1px solid transparent;
+      background: rgba(255,255,255,.60);
+      color:var(--txt);
+      padding:10px 10px;
+      border-radius:16px;
+      cursor:pointer;
+      display:flex; gap:10px; align-items:flex-start;
+      transition: background .12s ease, border-color .12s ease, transform .08s ease;
+      margin-bottom:8px;
+    }
+    .seg:hover{background: rgba(255,255,255,.80); border-color: rgba(79,12,55,.12)}
+    .seg:active{transform: translateY(1px)}
+    .seg.active{
+      background:
+        radial-gradient(900px 240px at 10% 0%, rgba(6,182,212,.14), transparent 55%),
+        rgba(255,255,255,.82);
+      border-color: rgba(79,12,55,.14);
+    }
+    .seg .ic{font-size:18px; line-height:1.1; margin-top:1px}
+    .seg .meta{flex:1}
+    .seg .meta b{display:block; font-size:13px}
+    .seg .meta span{display:block; margin-top:2px; color:var(--muted); font-size:12px; line-height:1.35}
+    .seg .done{
+      width:18px;height:18px;border-radius:7px;
+      border:1px solid rgba(79,12,55,.14);
+      display:grid; place-items:center;
+      margin-top:2px;
+      color: rgba(42,15,34,.8);
+      background: rgba(255,255,255,.70);
+    }
+    .seg.completed .done{
+      background: rgba(34,197,94,.18);
+      border-color: rgba(34,197,94,.45);
+      color: rgba(18, 80, 46, .9);
+    }
+
+    /* Right */
+    .rh{
+      padding:14px 16px;
+      border-bottom:1px solid var(--stroke);
+      background:
+        radial-gradient(900px 260px at 90% 0%, rgba(217,70,239,.12), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.50));
+      display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    }
+    .crumb{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background: rgba(255,255,255,.70);
+      color:rgba(42,15,34,.72);
+      font-size:12px;
+    }
+    .rh h2{margin:0;font-size:16px}
+    .rh p{margin:4px 0 0; color:var(--muted); font-size:12px; line-height:1.45}
+
+    .right-actions{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+
+    .rb{padding:16px 16px 22px}
+    .lessonBox{
+      border:1px solid var(--stroke);
+      border-radius:18px;
+      background: rgba(255,255,255,.70);
+      overflow:hidden;
+    }
+    .lessonHeader{
+      padding:12px 12px;
+      border-bottom:1px solid var(--stroke);
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      background: rgba(255,255,255,.55);
+    }
+    .lessonHeader .mini{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+    .tag{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:7px 9px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      font-size:12px;
+      color: rgba(42,15,34,.75);
+    }
+
+    .content{
+      padding:14px 14px;
+      line-height:1.7;
+      color: rgba(42,15,34,.94);
+    }
+    .content h3{margin: 10px 0 6px; font-size:15px}
+    .content h4{margin: 12px 0 6px; font-size:14px}
+    .content p{margin: 8px 0; color: rgba(42,15,34,.92)}
+    .content ul{margin: 8px 0 8px 18px}
+    .content li{margin: 6px 0; color: rgba(42,15,34,.88)}
+    .content ol{margin: 8px 0 8px 18px}
+    .content blockquote{
+      margin: 10px 0;
+      padding: 10px 12px;
+      border-left: 3px solid rgba(6,182,212,.75);
+      background: rgba(6,182,212,.08);
+      border-radius: 16px;
+      color: rgba(42,15,34,.92);
+    }
+    .callout{
+      margin: 10px 0;
+      padding: 12px 12px;
+      border: 1px solid rgba(79,12,55,.12);
+      background:
+        radial-gradient(700px 160px at 20% 0%, rgba(245,158,11,.10), transparent 55%),
+        rgba(255,255,255,.55);
+      border-radius: 18px;
+    }
+    .callout b{display:block; margin-bottom:6px}
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    @media (max-width: 980px){ .grid2{grid-template-columns:1fr} }
+
+    .art{
+      margin: 10px 0;
+      border:1px dashed rgba(79,12,55,.18);
+      border-radius:18px;
+      background: rgba(255,255,255,.65);
+      padding:10px;
+      overflow:hidden;
+    }
+
+    /* Checklist and notes */
+    .below{
+      margin-top:12px;
+      display:grid; grid-template-columns: 1fr 1fr; gap:12px;
+    }
+    @media (max-width: 980px){ .below{grid-template-columns:1fr} }
+
+    .box{
+      border:1px solid var(--stroke);
+      border-radius:18px;
+      background: rgba(255,255,255,.72);
+      padding:12px;
+    }
+    .box h3{margin:0 0 8px;font-size:14px}
+    .row{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px;
+      border-radius:14px;
+      border:1px solid rgba(79,12,55,.12);
+      background: rgba(255,255,255,.55);
+      margin-bottom:8px;
+    }
+    .row input{margin-top:2px; transform: scale(1.15); accent-color: var(--green)}
+    .row label{cursor:pointer}
+    .row small{display:block; margin-top:2px; color: var(--muted); line-height:1.45}
+
+    textarea{
+      width:100%;
+      min-height:180px;
+      resize:vertical;
+      border-radius:16px;
+      border:1px solid rgba(79,12,55,.14);
+      padding:10px 12px;
+      outline:none;
+      background: rgba(255,255,255,.75);
+      color: var(--txt);
+      line-height:1.6;
+    }
+
+    /* bottom tabs (app style) */
+    .appTabs{
+      position:fixed; left:0; right:0; bottom:0;
+      padding:10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, rgba(255,246,251,.05), rgba(255,246,251,.92));
+      border-top:1px solid var(--stroke);
+      backdrop-filter: blur(12px);
+      z-index:60;
+    }
+    .rail{max-width:1100px;margin:0 auto; display:flex; gap:8px;}
+    .appTab{
+      flex:1;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      color: rgba(42,15,34,.75);
+      padding:11px 10px;
+      border-radius:18px;
+      font-weight:1000;
+      text-decoration:none;
+      display:flex; justify-content:center; align-items:center; gap:8px;
+    }
+    .appTab.primary{
+      background: linear-gradient(135deg, rgba(217,70,239,.92), rgba(251,113,133,.85));
+      color:white;
+    }
+
+    .toast{
+      position:fixed; left:50%;
+      bottom:calc(84px + env(safe-area-inset-bottom));
+      transform:translateX(-50%) translateY(8px);
+      padding:10px 12px;
+      border:1px solid rgba(79,12,55,.16);
+      border-radius:16px;
+      background: rgba(255,255,255,.92);
+      color: rgba(42,15,34,.92);
+      font-weight:1000;
+      font-size:13px;
+      box-shadow: 0 20px 70px rgba(80,10,55,.15);
+      opacity:0; pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index:90;
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(0px)}
+  </style>
+</head>
+
+<body>
+  <header class="top">
+    <div class="topin">
+      <div class="brand">
+        <div class="logo">🌱</div>
+        <div class="titlebox">
+          <h1>Módulo 2 — Campo (8h) • Guardiãs da Vigilância</h1>
+          <p>Estações de missão • técnicas por ciclo • biossegurança • observação + registro</p>
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <span class="pill">🎒 Campo com segurança e respeito</span>
+        <button class="btn small ghost" id="reset">🧼 Reset progresso</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+      <!-- LEFT: aulas -->
+      <aside class="panel">
+        <div class="ph">
+          <h2>🧭 Estações do Campo</h2>
+          <p>Escolha uma estação. Você vai ver “o que observar”, “como registrar” e “como virar vigilância”.</p>
+
+          <input class="search" id="search" placeholder="🔎 Buscar (criadouro, CDC, triatomíneo, larva, peridomicílio…)"/>
+
+          <div class="progress">
+            <div class="bar"><div class="fill" id="fill"></div></div>
+            <div class="score" id="score">0/0</div>
+          </div>
+        </div>
+        <div class="pb" id="parts"></div>
+      </aside>
+
+      <!-- RIGHT: conteúdo -->
+      <section class="panel">
+        <div class="rh">
+          <div>
+            <span class="crumb" id="crumb">🌱 Campo • Bem-vindas</span>
+            <h2 id="title">Escolha uma estação ✨</h2>
+            <p id="subtitle">No campo, a ciência começa com olhar + cuidado + registro limpo.</p>
+          </div>
+
+          <div class="right-actions">
+            <button class="btn primary" id="markDone">✅ Marcar estação como concluída</button>
+            <button class="btn" id="saveNotes">💾 Salvar notas</button>
+          </div>
+        </div>
+
+        <div class="rb">
+          <div class="lessonBox">
+            <div class="lessonHeader">
+              <div class="mini">
+                <span class="tag" id="tagTime">⏱️ 8h</span>
+                <span class="tag" id="tagLevel">🎓 Nível: campo</span>
+                <span class="tag" id="tagGoal">🎯 Missão: observar e proteger</span>
+              </div>
+              <span class="tag" id="tagStatus">📌 Aberta</span>
+            </div>
+
+            <div class="content" id="content">
+              <div class="callout">
+                <b>Como usar no dia do campo</b>
+                <ul>
+                  <li>Uma estação por vez (sala → rua → volta).</li>
+                  <li>Registre com <b>respeito</b> (sem fotografar pessoas; foque ambiente/recipientes).</li>
+                  <li>Se algo for perigoso, a regra é: <b>não mexer</b> e avisar a equipe adulta.</li>
+                </ul>
+              </div>
+
+              <div class="art">
+                <svg viewBox="0 0 560 220" width="100%" height="auto" role="img" aria-label="Ilustração: equipe no campo com lupa e mapa">
+                  <defs>
+                    <linearGradient id="cg1" x1="0" x2="1">
+                      <stop offset="0" stop-color="#06b6d4" stop-opacity=".65"/>
+                      <stop offset="1" stop-color="#8b5cf6" stop-opacity=".55"/>
+                    </linearGradient>
+                    <linearGradient id="cg2" x1="0" x2="1">
+                      <stop offset="0" stop-color="#d946ef" stop-opacity=".9"/>
+                      <stop offset="1" stop-color="#fb7185" stop-opacity=".85"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="10" y="10" width="540" height="200" rx="26" fill="white" opacity=".92" stroke="rgba(79,12,55,.16)"/>
+                  <circle cx="120" cy="90" r="64" fill="url(#cg2)" opacity=".18"/>
+                  <circle cx="420" cy="70" r="70" fill="url(#cg1)" opacity=".18"/>
+                  <!-- mapa -->
+                  <rect x="280" y="110" width="240" height="80" rx="18" fill="rgba(6,182,212,.10)" stroke="rgba(6,182,212,.35)"/>
+                  <path d="M300 165 C340 120, 380 190, 430 140 C450 120, 490 155, 510 130" fill="none" stroke="rgba(217,70,239,.7)" stroke-width="4" stroke-linecap="round"/>
+                  <circle cx="340" cy="150" r="6" fill="#fb7185"/>
+                  <circle cx="430" cy="140" r="6" fill="#d946ef"/>
+                  <circle cx="510" cy="130" r="6" fill="#f59e0b"/>
+                  <!-- lupa -->
+                  <circle cx="150" cy="140" r="34" fill="none" stroke="rgba(245,158,11,.75)" stroke-width="8"/>
+                  <line x1="174" y1="164" x2="215" y2="198" stroke="rgba(245,158,11,.70)" stroke-width="10" stroke-linecap="round"/>
+                  <text x="26" y="206" font-family="system-ui" font-size="14" fill="rgba(42,15,34,.75)">olhar + cuidado + registro → vigilância</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="below">
+            <div class="box">
+              <h3>☑️ Checklist da estação</h3>
+              <div id="checks"></div>
+            </div>
+
+            <div class="box">
+              <h3>📝 Minhas notas (pessoais)</h3>
+              <textarea id="notes" placeholder="Escreva aqui: o que observei, dúvidas, lugares do meu bairro, ideias de prevenção…"></textarea>
+              <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn small primary" id="saveNotes2">💾 Salvar notas</button>
+                <button class="btn small" id="clearNotes">🗑️ Limpar notas desta estação</button>
+              </div>
+              <p style="margin:10px 0 0; color:var(--muted); font-size:12px;">
+                Dica: registre <b>o que você viu</b> + <b>o que isso significa</b> + <b>qual ação ajuda</b>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- bottom app tabs -->
+  <nav class="appTabs">
+    <div class="rail">
+      <a class="appTab" href="index.html">🏠 Início</a>
+      <a class="appTab" href="teoria.html">🧠 Teoria</a>
+      <a class="appTab primary" href="campo.html">🌱 Campo</a>
+      <a class="appTab" href="laboratorio.html">🔬 Lab</a>
+      <a class="appTab" href="roteiro-professor.html">👩‍🏫 Prof</a>
+    </div>
+  </nav>
+
+  <div class="toast" id="toast">Salvo!</div>
+
+  <script>
+    // ==================== Storage ====================
+    const LS = {
+      done: "gdv_campo_done_v1",
+      checks: "gdv_campo_checks_v1",
+      notes: "gdv_campo_notes_v1",
+      open: "gdv_campo_open_v1"
+    };
+    const $ = (s, r=document)=>r.querySelector(s);
+
+    function readJSON(key, fallback){
+      try{ const v=localStorage.getItem(key); return v?JSON.parse(v):fallback; }catch(e){ return fallback; }
+    }
+    function writeJSON(key,val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+    const toastEl = $("#toast");
+    let toastTimer=null;
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(()=>toastEl.classList.remove("show"), 1400);
+    }
+
+    // ==================== Conteúdo — Módulo 2 (Campo) ====================
+    const LESSONS = [
+      {
+        id:"C0",
+        icon:"🧤",
+        title:"Estação 0 — Segurança, ética e combinados",
+        subtitle:"Antes de qualquer coleta: segurança, respeito e registro responsável.",
+        crumb:"🌱 Campo • Segurança",
+        duration:"⏱️ 40–60 min",
+        level:"🎓 Nível: essencial",
+        goal:"🎯 Missão: campo sem riscos",
+        tags:["segurança","ética","registro","EPI"],
+        html: `
+          <h3>Regra de ouro</h3>
+          <blockquote><b>Se não é seguro, não é científico.</b> A primeira missão da vigilância é proteger pessoas.</blockquote>
+
+          <div class="callout">
+            <b>Checklist de segurança (o básico do básico)</b>
+            <ul>
+              <li>Ir em dupla/trio (nunca sozinha).</li>
+              <li>Calçado fechado, cabelo preso, repelente quando indicado.</li>
+              <li>Não colocar a mão onde não vê (frestas, pilhas, lixo).</li>
+              <li>S
