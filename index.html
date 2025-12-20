@@ -1,1 +1,321 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>Guardiãs da Vigilância 🦋 | Futuras Cientistas</title>
+  <meta name="theme-color" content="#d946ef"/>
+
+  <style>
+    :root{
+      /* Paleta "feminina guerreira" */
+      --bg0:#fff6fb;
+      --bg1:#ffe4f3;
+      --card: rgba(255,255,255,.78);
+      --stroke: rgba(79, 12, 55, .12);
+
+      --txt:#2a0f22;
+      --muted: rgba(42,15,34,.68);
+
+      --magenta:#d946ef;
+      --pink:#fb7185;
+      --gold:#f59e0b;
+      --lilac:#8b5cf6;
+      --teal:#06b6d4;
+      --green:#22c55e;
+
+      --shadow: 0 18px 70px rgba(80, 10, 55, .18);
+      --r:18px; --r2:24px;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--sans); color:var(--txt);
+      background:
+        radial-gradient(1200px 700px at 15% 0%, rgba(217,70,239,.18), transparent 60%),
+        radial-gradient(900px 650px at 95% 10%, rgba(251,113,133,.18), transparent 58%),
+        radial-gradient(900px 700px at 60% 100%, rgba(6,182,212,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    .wrap{max-width:1100px;margin:0 auto;padding:16px 16px 90px;}
+    .top{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(255,246,251,.86), rgba(255,246,251,.60));
+      border-bottom:1px solid var(--stroke);
+    }
+    .topin{max-width:1100px;margin:0 auto;padding:12px 16px; display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{
+      width:44px;height:44px;border-radius:18px;
+      border:1px solid var(--stroke);
+      box-shadow:var(--shadow);
+      background: linear-gradient(135deg, rgba(217,70,239,.92), rgba(251,113,133,.85));
+      display:grid; place-items:center;
+      font-size:20px;
+    }
+    h1{margin:0;font-size:16px; letter-spacing:.2px}
+    .sub{margin:2px 0 0; color:var(--muted); font-size:12px; line-height:1.35}
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.65);
+      color: rgba(42,15,34,.75);
+      font-size:12px;
+      box-shadow: 0 10px 40px rgba(80,10,55,.08);
+    }
+
+    .hero{
+      margin-top:14px;
+      border:1px solid var(--stroke);
+      border-radius: var(--r2);
+      background: rgba(255,255,255,.72);
+      box-shadow:var(--shadow);
+      padding:16px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:center;
+    }
+    @media (max-width: 880px){ .hero{grid-template-columns:1fr} }
+
+    .hero h2{margin:0 0 6px; font-size:20px}
+    .hero p{margin:0; color:var(--muted); line-height:1.5}
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+
+    .btn{
+      cursor:pointer; user-select:none;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      color:var(--txt);
+      padding:11px 12px;
+      border-radius:16px;
+      font-weight:900;
+      display:inline-flex; gap:8px; align-items:center;
+      transition: transform .08s ease, filter .15s ease;
+      text-decoration:none;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(217,70,239,.92), rgba(251,113,133,.85));
+      color:white;
+    }
+    .btn.gold{
+      background: linear-gradient(135deg, rgba(245,158,11,.90), rgba(251,113,133,.55));
+      color:#2a0f22;
+      font-weight:1000;
+    }
+
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 880px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      border:1px solid var(--stroke);
+      border-radius: var(--r2);
+      background: rgba(255,255,255,.78);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .ch{
+      padding:14px 14px;
+      border-bottom:1px solid var(--stroke);
+      background:
+        radial-gradient(800px 220px at 15% 0%, rgba(217,70,239,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.50));
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    }
+    .ch b{font-size:14px}
+    .ch span{color:var(--muted); font-size:12px}
+    .cb{padding:14px}
+    .cb p{margin:0 0 10px; color:var(--muted); line-height:1.5}
+    .tagrow{display:flex; gap:8px; flex-wrap:wrap}
+    .tag{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:7px 9px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      font-size:12px;
+      color: rgba(42,15,34,.75);
+    }
+
+    /* SVG art box */
+    .art{
+      border:1px dashed rgba(80,10,55,.22);
+      border-radius: 20px;
+      background: rgba(255,255,255,.65);
+      padding:10px;
+    }
+
+    /* bottom tabs (app style) */
+    .appTabs{
+      position:fixed; left:0; right:0; bottom:0;
+      padding:10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, rgba(255,246,251,.05), rgba(255,246,251,.92));
+      border-top:1px solid var(--stroke);
+      backdrop-filter: blur(12px);
+      z-index:60;
+    }
+    .rail{max-width:1100px;margin:0 auto; display:flex; gap:8px;}
+    .appTab{
+      flex:1;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      color: rgba(42,15,34,.75);
+      padding:11px 10px;
+      border-radius:18px;
+      font-weight:1000;
+      text-decoration:none;
+      display:flex; justify-content:center; align-items:center; gap:8px;
+    }
+    .appTab.primary{
+      background: linear-gradient(135deg, rgba(217,70,239,.92), rgba(251,113,133,.85));
+      color:white;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top">
+    <div class="topin">
+      <div class="brand">
+        <div class="logo">🦋</div>
+        <div>
+          <h1>Guardiãs da Vigilância — Meninas na Ciência</h1>
+          <p class="sub">Formação completa em Vigilância Ambiental em Saúde e Vigilância Entomológica • 3 módulos (8h + 8h + 8h)</p>
+        </div>
+      </div>
+      <div class="pill">✨ Força feminina em ciência • pesquisa • gestão • inovação</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <h2>“Quem vigia o ambiente, protege vidas.”</h2>
+        <p>
+          Esta plataforma é uma mini-academia de 3 dias para <b>10 meninas (~15 anos)</b>.
+          Vocês vão aprender, ver no campo e entender no laboratório como a vigilância em saúde ajuda a prevenir
+          <b>dengue, chikungunya, zika, oropouche e febre amarela</b> — com protagonismo e ciência aplicada.
+        </p>
+
+        <div class="ctaRow">
+          <a class="btn primary" href="teoria.html">🧠 Começar: Teoria</a>
+          <a class="btn" href="campo.html">🌱 Ir para: Campo</a>
+          <a class="btn" href="laboratorio.html">🔬 Ir para: Laboratório</a>
+          <a class="btn gold" href="roteiro-professor.html">👩‍🏫 Roteiro da Aula (professor)</a>
+        </div>
+      </div>
+
+      <div class="art" aria-label="Ilustração">
+        <!-- Ilustração SVG (não precisa internet) -->
+        <svg viewBox="0 0 420 240" width="100%" height="auto" role="img" aria-label="Meninas na ciência com lupa e mapa">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0" stop-color="#d946ef" stop-opacity=".9"/>
+              <stop offset="1" stop-color="#fb7185" stop-opacity=".85"/>
+            </linearGradient>
+            <linearGradient id="g2" x1="0" x2="1">
+              <stop offset="0" stop-color="#06b6d4" stop-opacity=".55"/>
+              <stop offset="1" stop-color="#8b5cf6" stop-opacity=".55"/>
+            </linearGradient>
+          </defs>
+          <rect x="10" y="10" width="400" height="220" rx="26" fill="white" opacity=".85" stroke="rgba(80,10,55,.18)"/>
+          <circle cx="92" cy="96" r="44" fill="url(#g1)" opacity=".22"/>
+          <circle cx="320" cy="70" r="58" fill="url(#g2)" opacity=".22"/>
+          <!-- mapa -->
+          <rect x="210" y="110" width="170" height="90" rx="18" fill="rgba(6,182,212,.10)" stroke="rgba(6,182,212,.35)"/>
+          <path d="M230 170 C260 130, 290 200, 320 150 C340 120, 360 155, 372 135" fill="none" stroke="rgba(217,70,239,.7)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="260" cy="150" r="6" fill="#fb7185"/>
+          <circle cx="320" cy="150" r="6" fill="#d946ef"/>
+          <circle cx="372" cy="135" r="6" fill="#f59e0b"/>
+          <!-- lupa -->
+          <circle cx="126" cy="154" r="34" fill="none" stroke="rgba(217,70,239,.8)" stroke-width="8"/>
+          <line x1="150" y1="178" x2="185" y2="210" stroke="rgba(217,70,239,.75)" stroke-width="10" stroke-linecap="round"/>
+          <!-- borboleta -->
+          <path d="M75 64 C55 55, 45 80, 62 90 C45 100, 55 125, 78 112 C90 135, 115 120, 105 100 C125 92, 118 68, 98 72 C92 58, 83 58, 75 64Z"
+                fill="url(#g1)" opacity=".75"/>
+          <circle cx="86" cy="92" r="5" fill="#2a0f22" opacity=".55"/>
+          <text x="28" y="210" font-family="system-ui" font-size="14" fill="rgba(42,15,34,.75)">Ciência aplicada • território • cuidado</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="ch">
+          <div><b>🧠 Módulo Teoria</b><br><span>O que é SUS • vigilância • arboviroses • vetores</span></div>
+          <a class="btn" href="teoria.html">Abrir →</a>
+        </div>
+        <div class="cb">
+          <p>Aprenda a pensar como vigilância: <b>território → risco → dado → decisão</b>. Sem decoreba.</p>
+          <div class="tagrow">
+            <span class="tag">🩺 SUS</span><span class="tag">🦠 Arboviroses</span><span class="tag">🦟 Vetores</span><span class="tag">🪤 Vigilância</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="ch">
+          <div><b>🌱 Módulo Campo</b><br><span>Olhar científico • técnicas por ciclo • segurança</span></div>
+          <a class="btn" href="campo.html">Abrir →</a>
+        </div>
+        <div class="cb">
+          <p>Treine o olhar nos microambientes urbanos e veja como nasce um dado de vigilância.</p>
+          <div class="tagrow">
+            <span class="tag">🎒 Segurança</span><span class="tag">🏘️ Território</span><span class="tag">🪤 Técnicas</span><span class="tag">🗣️ Comunicação</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="ch">
+          <div><b>🔬 Módulo Laboratório</b><br><span>Rotulagem • observação • interpretação</span></div>
+          <a class="btn" href="laboratorio.html">Abrir →</a>
+        </div>
+        <div class="cb">
+          <p>Transforme observação em informação e informação em ação, com protagonismo.</p>
+          <div class="tagrow">
+            <span class="tag">🧤 Biossegurança</span><span class="tag">🔎 Observação</span><span class="tag">📊 Semáforo</span><span class="tag">🌸 Pitch</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="ch">
+          <div><b>👩‍🏫 Roteiro do Professor</b><br><span>Minuto a minuto • falas • materiais</span></div>
+          <a class="btn" href="roteiro-professor.html">Abrir →</a>
+        </div>
+        <div class="cb">
+          <p>Separado do conteúdo da aluna. Aqui fica o “como conduzir” e a logística.</p>
+          <div class="tagrow">
+            <span class="tag">⏱️ Minuto a minuto</span><span class="tag">📌 Objetivos</span><span class="tag">📦 Materiais</span><span class="tag">✅ Avaliação</span>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <nav class="appTabs">
+    <div class="rail">
+      <a class="appTab primary" href="index.html">🏠 Início</a>
+      <a class="appTab" href="teoria.html">🧠 Teoria</a>
+      <a class="appTab" href="campo.html">🌱 Campo</a>
+      <a class="appTab" href="laboratorio.html">🔬 Lab</a>
+      <a class="appTab" href="roteiro-professor.html">👩‍🏫 Prof</a>
+    </div>
+  </nav>
+</body>
+</html>
 
