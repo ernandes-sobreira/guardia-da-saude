@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Desafio das Guardiãs 🎯 | Quiz</title>
+<meta name="theme-color" content="#db2777"/>
+
+<style>
+:root{
+  --bg0:#fff7fb;
+  --bg1:#ffe4f2;
+  --card: rgba(255,255,255,.92);
+  --stroke: rgba(140,20,90,.18);
+  --txt:#3b0a2a;
+  --muted: rgba(59,10,42,.65);
+  --pink:#db2777;
+  --violet:#8b5cf6;
+  --teal:#06b6d4;
+  --green:#22c55e;
+  --gold:#f59e0b;
+  --red:#ef4444;
+  --r:18px;
+  --shadow: 0 18px 60px rgba(120,20,80,.18);
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:
+    radial-gradient(900px 600px at 10% 0%, rgba(219,39,119,.18), transparent 55%),
+    radial-gradient(800px 600px at 90% 10%, rgba(139,92,246,.18), transparent 55%),
+    linear-gradient(180deg,var(--bg0),var(--bg1));
+  color:var(--txt);
+}
+header{
+  position:sticky; top:0; z-index:30;
+  background: rgba(255,247,251,.92);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid var(--stroke);
+}
+.h{
+  max-width:980px; margin:auto;
+  padding:14px 16px;
+  display:flex; gap:12px; align-items:center;
+}
+.badge{
+  width:46px;height:46px;border-radius:18px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  color:#fff;
+  box-shadow:var(--shadow);
+  font-size:22px;
+}
+.h h1{margin:0;font-size:16px}
+.h p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+
+main{
+  max-width:980px; margin:auto;
+  padding:16px 16px 130px;
+  display:grid; gap:14px;
+}
+
+.panel{
+  background:var(--card);
+  border:1px solid var(--stroke);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.ph{
+  padding:14px;
+  border-bottom:1px solid var(--stroke);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.ph h2{margin:0;font-size:14px}
+.ph small{color:var(--muted)}
+.pb{padding:14px}
+
+.pills{display:flex; gap:8px; flex-wrap:wrap}
+.pill{
+  border:1px solid rgba(140,20,90,.16);
+  background:rgba(255,255,255,.75);
+  padding:10px 12px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:950;
+  font-size:13px;
+}
+.pill.active{
+  border:none;
+  color:#fff;
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+}
+
+.kpis{
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:10px;
+}
+@media(max-width:820px){ .kpis{grid-template-columns:1fr} }
+.kpi{
+  background:rgba(255,255,255,.75);
+  border:1px solid rgba(140,20,90,.12);
+  border-radius:16px;
+  padding:10px;
+}
+.kpi b{display:block;font-size:12px;color:var(--muted)}
+.kpi span{font-size:18px;font-weight:950}
+
+.qCard{
+  background:rgba(255,255,255,.78);
+  border:1px solid rgba(140,20,90,.12);
+  border-radius:18px;
+  padding:14px;
+}
+.qTop{
+  display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+}
+.tag{
+  font-size:12px;
+  padding:8px 10px;
+  border-radius:999px;
+  background:rgba(6,182,212,.10);
+  border:1px solid rgba(6,182,212,.25);
+  color:#0f5a66;
+  font-weight:900;
+}
+
+.opt{
+  display:grid;
+  grid-template-columns: 22px 1fr;
+  gap:10px;
+  align-items:start;
+  padding:12px;
+  border-radius:16px;
+  border:1px solid rgba(140,20,90,.12);
+  background:rgba(255,255,255,.75);
+  margin-top:10px;
+  cursor:pointer;
+}
+.opt:hover{outline:2px solid rgba(219,39,119,.18)}
+.opt input{width:18px;height:18px;margin-top:2px; pointer-events:none;}
+.opt.correct{border-color: rgba(34,197,94,.55); background:rgba(34,197,94,.10)}
+.opt.wrong{border-color: rgba(239,68,68,.55); background:rgba(239,68,68,.10)}
+.opt.dim{opacity:.65}
+
+hr{
+  border:none;
+  border-top:1px solid rgba(140,20,90,.12);
+  margin:14px 0;
+}
+
+.callout{
+  background:rgba(219,39,119,.08);
+  border-left:4px solid var(--pink);
+  padding:12px;
+  border-radius:14px;
+  margin:12px 0;
+}
+.tip{
+  background:rgba(6,182,212,.10);
+  border-left:4px solid var(--teal);
+  padding:12px;
+  border-radius:14px;
+  margin:12px 0;
+}
+.warn{
+  background:rgba(245,158,11,.12);
+  border-left:4px solid var(--gold);
+  padding:12px;
+  border-radius:14px;
+  margin:12px 0;
+}
+
+.btnRow{display:flex; gap:10px; flex-wrap:wrap}
+.btn{
+  border:none;
+  border-radius:16px;
+  padding:12px 14px;
+  font-weight:950;
+  cursor:pointer;
+}
+.btn.primary{
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  color:white;
+}
+.btn.ghost{
+  background:rgba(255,255,255,.85);
+  border:1px solid var(--stroke);
+  color:var(--txt);
+}
+.btn.danger{
+  background:rgba(239,68,68,.12);
+  border:1px solid rgba(239,68,68,.35);
+  color:#7a0f1d;
+}
+
+small{color:var(--muted)}
+pre{white-space:pre-wrap}
+
+footer{
+  position:fixed;
+  bottom:0; left:0; right:0;
+  background: rgba(255,247,251,.95);
+  border-top:1px solid var(--stroke);
+}
+.foot{
+  max-width:980px;
+  margin:auto;
+  padding:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.foot a{
+  flex:1;
+  text-align:center;
+  text-decoration:none;
+  padding:12px;
+  border-radius:16px;
+  font-weight:950;
+  background:rgba(255,255,255,.75);
+  border:1px solid rgba(140,20,90,.14);
+  color:var(--txt);
+}
+.foot a.active{
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  color:#fff;
+  border:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="h">
+    <div class="badge">🎯</div>
+    <div>
+      <h1>Desafio das Guardiãs</h1>
+      <p>Jogo de conhecimento — embaralhado, com níveis, explicações e nota final</p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="panel">
+  <div class="ph">
+    <h2>Escolha o nível</h2>
+    <small>As perguntas mudam e são embaralhadas</small>
+  </div>
+  <div class="pb">
+    <div class="pills">
+      <button class="pill active" id="lvl_easy" onclick="setLevel('easy')">🌱 Semente (fácil)</button>
+      <button class="pill" id="lvl_mid" onclick="setLevel('mid')">🌿 Trilha (médio)</button>
+      <button class="pill" id="lvl_hard" onclick="setLevel('hard')">👑 Coroa (difícil)</button>
+    </div>
+
+    <div class="kpis" style="margin-top:12px">
+      <div class="kpi"><b>Questões nesta rodada</b><span id="k_total">—</span></div>
+      <div class="kpi"><b>Acertos</b><span id="k_hits">0</span></div>
+      <div class="kpi"><b>Progresso</b><span id="k_prog">0%</span></div>
+    </div>
+
+    <div class="tip">
+      <b>Regras do jogo</b>
+      <div>1) Uma alternativa por questão • 2) Você vê a explicação • 3) No final sai a nota e seu “selo”.</div>
+    </div>
+
+    <div class="btnRow">
+      <button class="btn primary" onclick="start()">🚀 Começar rodada</button>
+      <button class="btn ghost" onclick="resume()">▶️ Continuar</button>
+      <button class="btn danger" onclick="resetBest()">🧼 Zerar recordes</button>
+    </div>
+
+    <div class="callout" id="bestBox" style="display:none"></div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="ph">
+    <h2>Rodada</h2>
+    <small id="roundInfo">Toque em “Começar rodada”.</small>
+  </div>
+  <div class="pb" id="gameArea">
+    <div class="qCard">
+      <b>Pronta?</b>
+      <p style="margin:8px 0 0">Escolha o nível e inicie. O jogo embaralha as perguntas e as alternativas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="finalPanel" style="display:none">
+  <div class="ph">
+    <h2>Resultado final</h2>
+    <small>Seu selo e sua nota</small>
+  </div>
+  <div class="pb" id="finalBox"></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot">
+    <a href="index.html">🏠 Início</a>
+    <a href="teoria.html">🧠 Teoria</a>
+    <a href="campo.html">🌱 Campo</a>
+    <a href="indice-predial.html">🏢 Protocolo</a>
+    <a class="active" href="quiz.html">🎯 Desafio</a>
+    <a href="laboratorio.html">🧬 Lab</a>
+  </div>
+</footer>
+
+<script>
+/* ========= banco de questões (30) =========
+Formato:
+{
+  id, level: easy|mid|hard,
+  topic,
+  q,
+  opts: [ {t, ok}, ... ],
+  explain: "explicação curta e forte",
+  why: ["por que A...", "por que B..."]
+}
+*/
+const QUESTIONS = [
+  // ===== EASY (10) =====
+  {
+    id:"E1", level:"easy", topic:"SUS",
+    q:"O SUS é principalmente…",
+    opts:[
+      {t:"Uma rede que garante saúde como direito e inclui prevenção, vigilância e cuidado", ok:true},
+      {t:"Apenas hospitais e pronto-socorro", ok:false},
+      {t:"Um serviço só para quem não tem plano de saúde", ok:false},
+      {t:"Um programa temporário de vacinação", ok:false},
+    ],
+    explain:"O SUS é uma rede ampla: atenção básica, vigilância, vacinação, laboratórios e cuidado.",
+    why:[
+      "Hospitais são só uma parte do SUS.",
+      "O SUS é universal (para todos).",
+      "Vacinação é componente, não o todo."
+    ]
+  },
+  {
+    id:"E2", level:"easy", topic:"Vigilância",
+    q:"Vigilância em Saúde significa…",
+    opts:[
+      {t:"Observar riscos, detectar cedo e agir para prevenir/controle", ok:true},
+      {t:"Somente registrar casos em planilhas", ok:false},
+      {t:"Apenas fiscalizar comércio", ok:false},
+      {t:"Apenas fazer campanhas em redes sociais", ok:false},
+    ],
+    explain:"Vigilância liga dados + território + decisão. Não é só registro.",
+    why:[
+      "Registro é parte, mas sem ação não vira vigilância.",
+      "Fiscalização é mais ligada à vigilância sanitária, não a toda vigilância em saúde.",
+      "Comunicação ajuda, mas não substitui investigação e ação."
+    ]
+  },
+  {
+    id:"E3", level:"easy", topic:"Arboviroses",
+    q:"Uma arbovirose é…",
+    opts:[
+      {t:"Doença transmitida por artrópodes, como mosquitos", ok:true},
+      {t:"Doença transmitida apenas por água contaminada", ok:false},
+      {t:"Doença exclusivamente genética", ok:false},
+      {t:"Doença causada por falta de vitamina", ok:false},
+    ],
+    explain:"Arboviroses envolvem vetor (ex.: mosquito) e vírus circulando.",
+    why:[
+      "Água pode influenciar criadouros, mas não é via de transmissão direta.",
+      "Não é genética.",
+      "Não é por deficiência vitamínica."
+    ]
+  },
+  {
+    id:"E4", level:"easy", topic:"Ciclo",
+    q:"No ciclo do mosquito urbano, as larvas vivem principalmente…",
+    opts:[
+      {t:"Na água parada em recipientes", ok:true},
+      {t:"No ar, voando", ok:false},
+      {t:"Somente no solo seco", ok:false},
+      {t:"Dentro de frutas", ok:false},
+    ],
+    explain:"Larvas precisam de água para se desenvolver.",
+    why:[
+      "Voar é fase adulta.",
+      "Solo seco não sustenta larvas de Aedes.",
+      "Não é um ciclo de frutas."
+    ]
+  },
+  {
+    id:"E5", level:"easy", topic:"Controle",
+    q:"A forma mais direta de reduzir mosquito urbano é…",
+    opts:[
+      {t:"Eliminar/vedar água parada e manejar recipientes", ok:true},
+      {t:"Apenas usar perfume forte", ok:false},
+      {t:"Apenas pintar paredes", ok:false},
+      {t:"Apenas abrir janelas", ok:false},
+    ],
+    explain:"Controle efetivo interrompe o ciclo: remove criadouros e reduz emergência de adultos.",
+    why:[
+      "Perfume não controla população.",
+      "Pintura não remove criadouros.",
+      "Ventilação ajuda conforto, mas não resolve foco."
+    ]
+  },
+  {
+    id:"E6", level:"easy", topic:"Fase crítica",
+    q:"Encontrar pupas é importante porque…",
+    opts:[
+      {t:"O adulto está prestes a emergir, aumentando risco imediato", ok:true},
+      {t:"Significa que o mosquito já morreu", ok:false},
+      {t:"Significa que não há mais transmissão", ok:false},
+      {t:"É sinal de que o ambiente está seco", ok:false},
+    ],
+    explain:"Pupa é a fase pré-adulta. É um alerta de emergência próxima.",
+    why:[
+      "Pupa não é morte.",
+      "Transmissão pode aumentar quando adultos emergem.",
+      "Pupas dependem de água."
+    ]
+  },
+  {
+    id:"E7", level:"easy", topic:"Armadilhas",
+    q:"Ovitrampa serve principalmente para…",
+    opts:[
+      {t:"Indicar atividade de postura de ovos (presença/reprodução)", ok:true},
+      {t:"Capturar peixes", ok:false},
+      {t:"Medir qualidade do ar", ok:false},
+      {t:"Substituir totalmente inspeção predial", ok:false},
+    ],
+    explain:"Ovitrampa é monitoramento de postura, não substitui todas as outras ações.",
+    why:[
+      "Não tem relação com pesca.",
+      "Não mede ar.",
+      "Inspeção ainda é necessária para localizar recipientes."
+    ]
+  },
+  {
+    id:"E8", level:"easy", topic:"Febre Amarela",
+    q:"Na febre amarela, uma ação central de prevenção é…",
+    opts:[
+      {t:"Vacinação em áreas indicadas", ok:true},
+      {t:"Somente tomar antibiótico", ok:false},
+      {t:"Somente beber mais água", ok:false},
+      {t:"Somente usar repelente uma vez por mês", ok:false},
+    ],
+    explain:"A vacina é um pilar para febre amarela em áreas recomendadas pelas autoridades.",
+    why:[
+      "Antibiótico não trata vírus.",
+      "Hidratação ajuda sintomas, mas não previne circulação viral.",
+      "Repelente ajuda, mas não substitui vacinação quando indicada."
+    ]
+  },
+  {
+    id:"E9", level:"easy", topic:"Vigilância Ambiental",
+    q:"Um exemplo de fator ambiental que aumenta risco de arboviroses é…",
+    opts:[
+      {t:"Acúmulo de recipientes e água parada em áreas urbanas", ok:true},
+      {t:"Apenas a cor das casas", ok:false},
+      {t:"Apenas o número de carros", ok:false},
+      {t:"Apenas o tipo de música do bairro", ok:false},
+    ],
+    explain:"Ambiente urbano com água parada e resíduos cria criadouros e aumenta risco.",
+    why:[
+      "Cor de casa não é determinante.",
+      "Carros podem influenciar mobilidade, mas não é o fator principal do vetor.",
+      "Música não tem relação."
+    ]
+  },
+  {
+    id:"E10", level:"easy", topic:"Conceito-chave",
+    q:"A frase ‘entender o ciclo é entender onde procurar’ significa…",
+    opts:[
+      {t:"O habitat muda por fase; cada fase pede busca e ação diferentes", ok:true},
+      {t:"Que só precisa olhar adultos", ok:false},
+      {t:"Que só precisa olhar larvas", ok:false},
+      {t:"Que não precisa de vigilância, só sorte", ok:false},
+    ],
+    explain:"Ciclo → fase → habitat → técnica → decisão.",
+    why:[
+      "Olhar só adultos perde a fonte (criadouro).",
+      "Olhar só larvas perde a atividade adulta e risco imediato.",
+      "Vigilância é método, não sorte."
+    ]
+  },
+
+  // ===== MID (10) =====
+  {
+    id:"M1", level:"mid", topic:"Vigilâncias",
+    q:"Qual combinação está correta?",
+    opts:[
+      {t:"Epidemiológica (casos) + Entomológica (vetores) + Ambiental (contexto)", ok:true},
+      {t:"Epidemiológica (produtos) + Sanitária (casos) + Ambiental (bancos)", ok:false},
+      {t:"Entomológica (somente hospital) + Ambiental (somente laboratório)", ok:false},
+      {t:"Sanitária (mosquitos) + Entomológica (vacinas) + Ambiental (cirurgias)", ok:false},
+    ],
+    explain:"Cada vigilância tem foco diferente e elas se complementam.",
+    why:[
+      "Produtos/serviços não são vigilância epidemiológica.",
+      "Hospital e laboratório não definem sozinhos os campos.",
+      "Vacinas não são ‘entomologia’."
+    ]
+  },
+  {
+    id:"M2", level:"mid", topic:"Índices",
+    q:"O Índice Predial (IP/House Index) se refere a…",
+    opts:[
+      {t:"% de imóveis com presença de larvas/pupas em relação aos inspecionados", ok:true},
+      {t:"% de pessoas vacinadas no bairro", ok:false},
+      {t:"% de lixo reciclado na cidade", ok:false},
+      {t:"Número total de mosquitos adultos capturados por noite", ok:false},
+    ],
+    explain:"IP é proporção de imóveis positivos entre os inspecionados.",
+    why:[
+      "Vacinação é outro indicador.",
+      "Reciclagem é ambiental, não índice entomológico clássico.",
+      "Captura de adultos é outro tipo de monitoramento."
+    ]
+  },
+  {
+    id:"M3", level:"mid", topic:"Breteau",
+    q:"O Índice de Breteau (IB) é útil porque…",
+    opts:[
+      {t:"Relaciona recipientes positivos ao número de imóveis inspecionados (pressão de criadouros)", ok:true},
+      {t:"Conta apenas adultos no céu", ok:false},
+      {t:"Mede somente chuva", ok:false},
+      {t:"Substitui totalmente a vigilância epidemiológica", ok:false},
+    ],
+    explain:"IB ajuda a entender ‘quantos focos’ existem por conjunto de imóveis.",
+    why:[
+      "Não é contagem de adultos.",
+      "Não é índice climático.",
+      "Vigilâncias se complementam."
+    ]
+  },
+  {
+    id:"M4", level:"mid", topic:"Armadilhas",
+    q:"A armadilha CDC é mais associada a…",
+    opts:[
+      {t:"Captura de insetos adultos (atividade no ambiente)", ok:true},
+      {t:"Detecção de ovos em parede de recipientes", ok:false},
+      {t:"Coleta de larvas dentro de ralos com água", ok:false},
+      {t:"Medição de pH da água", ok:false},
+    ],
+    explain:"CDC foca em adultos, geralmente no período noturno/ambientes específicos.",
+    why:[
+      "Ovos → ovitrampa/inspeção.",
+      "Larvas → inspeção/larvoscopia.",
+      "pH não é objetivo da CDC."
+    ]
+  },
+  {
+    id:"M5", level:"mid", topic:"Ambiente",
+    q:"Por que recipientes em área sombreada podem ser mais problemáticos?",
+    opts:[
+      {t:"Sombra reduz evaporação e cria microclima favorável ao vetor", ok:true},
+      {t:"Porque sombra mata larvas", ok:false},
+      {t:"Porque sombra impede qualquer reprodução", ok:false},
+      {t:"Porque sombra elimina água parada", ok:false},
+    ],
+    explain:"Sombra = água dura mais + abrigo para adultos.",
+    why:[
+      "Sombra não mata larvas automaticamente.",
+      "Não impede reprodução.",
+      "Não elimina água."
+    ]
+  },
+  {
+    id:"M6", level:"mid", topic:"Ciclo e decisão",
+    q:"Você encontrou pupas e muitos recipientes com água parada artificial. A decisão mais coerente é…",
+    opts:[
+      {t:"Intervenção imediata (eliminação/vedação) + orientação e retorno curto", ok:true},
+      {t:"Ignorar porque pupas não importam", ok:false},
+      {t:"Esperar 2 meses para ver se passa", ok:false},
+      {t:"Focar apenas em cartazes sem eliminar criadouros", ok:false},
+    ],
+    explain:"Pupa = risco imediato → agir rápido e planejar retorno.",
+    why:[
+      "Pupas são sinal de emergência próxima.",
+      "Tempo longo deixa a população crescer.",
+      "Comunicação sem manejo ambiental perde eficácia."
+    ]
+  },
+  {
+    id:"M7", level:"mid", topic:"Oropouche",
+    q:"Qual frase é mais correta sobre Oropouche?",
+    opts:[
+      {t:"É uma arbovirose com dinâmica de vetores e ambiente; vigilância é essencial", ok:true},
+      {t:"É sempre transmitida por água contaminada", ok:false},
+      {t:"Não tem relação com vetores", ok:false},
+      {t:"Só acontece em países frios", ok:false},
+    ],
+    explain:"Oropouche envolve vetor/ambiente e precisa de vigilância e investigação.",
+    why:[
+      "Não é via hídrica direta.",
+      "Tem relação com vetores.",
+      "Não é restrita a países frios."
+    ]
+  },
+  {
+    id:"M8", level:"mid", topic:"Vigilância Ambiental",
+    q:"Qual ação é típica de vigilância ambiental na prevenção de arboviroses?",
+    opts:[
+      {t:"Mapear pontos de acúmulo de água/resíduos e articular manejo urbano", ok:true},
+      {t:"Prescrever remédio individual", ok:false},
+      {t:"Fazer cirurgia", ok:false},
+      {t:"Vender repelente no comércio", ok:false},
+    ],
+    explain:"Vigilância ambiental atua no contexto do território e seus determinantes.",
+    why:[
+      "Prescrição e cirurgia são atenção à saúde, não vigilância ambiental.",
+      "Vender repelente é mercado; pode apoiar, mas não define vigilância."
+    ]
+  },
+  {
+    id:"M9", level:"mid", topic:"Comunicação",
+    q:"Qual comunicação é mais alinhada com SUS e vigilância (sem culpar a pessoa)?",
+    opts:[
+      {t:"‘Vamos juntas reduzir criadouros: a cidade e as casas precisam de soluções de manejo’", ok:true},
+      {t:"‘Se tem dengue é culpa do morador’", ok:false},
+      {t:"‘Não tem o que fazer, é azar’", ok:false},
+      {t:"‘Só spray resolve tudo’", ok:false},
+    ],
+    explain:"A comunicação boa é coletiva, prática e respeitosa — não culpabiliza.",
+    why:[
+      "Culpar atrapalha adesão e justiça social.",
+      "Não é azar: é determinante territorial e biológico.",
+      "Spray não resolve fonte do problema."
+    ]
+  },
+  {
+    id:"M10", level:"mid", topic:"Integração",
+    q:"O que significa integrar ‘campo + laboratório’ na vigilância?",
+    opts:[
+      {t:"Coletar/registrar no território e confirmar/organizar achados no laboratório para orientar decisão", ok:true},
+      {t:"Fazer tudo só no laboratório sem ir a campo", ok:false},
+      {t:"Fazer tudo só no campo sem registrar", ok:false},
+      {t:"Fazer apenas apresentações bonitas", ok:false},
+    ],
+    explain:"Integração é transformar observação em dado confiável e ação coerente.",
+    why:[
+      "Laboratório sem território perde contexto.",
+      "Campo sem registro vira memória, não evidência.",
+      "Apresentação é produto, não método."
+    ]
+  },
+
+  // ===== HARD (10) =====
+  {
+    id:"H1", level:"hard", topic:"Estratégia",
+    q:"Você tem poucos recursos. Qual estratégia tem maior impacto para mosquito urbano?",
+    opts:[
+      {t:"Priorizar eliminação/vedação de recipientes de alto risco (água armazenada, pneus, calhas) + retorno curto", ok:true},
+      {t:"Aplicar inseticida em toda a cidade sem diagnóstico", ok:false},
+      {t:"Coletar somente adultos e ignorar criadouros", ok:false},
+      {t:"Fazer apenas posts em redes sociais", ok:false},
+    ],
+    explain:"Maior impacto costuma vir de interromper a produção (criadouros prioritários) com ação focada.",
+    why:[
+      "Inseticida indiscriminado pode ter baixa efetividade e efeitos colaterais.",
+      "Adultos sem controle de criadouros = reposição contínua.",
+      "Comunicação ajuda, mas não substitui ação."
+    ]
+  },
+  {
+    id:"H2", level:"hard", topic:"Interpretação",
+    q:"Dois prédios têm mesmo IP, mas um tem muito mais recipientes positivos. Qual leitura é melhor?",
+    opts:[
+      {t:"O prédio com mais recipientes positivos tem maior pressão de criadouros e tende a demandar manejo mais intenso", ok:true},
+      {t:"São iguais em tudo", ok:false},
+      {t:"O que importa é só número de pessoas no prédio", ok:false},
+      {t:"IP elimina necessidade de olhar recipientes", ok:false},
+    ],
+    explain:"IP é uma parte; recipientes positivos detalham a ‘pressão’ do ambiente.",
+    why:[
+      "Mesma % de imóveis positivos pode esconder níveis diferentes de criadouros.",
+      "População importa, mas não substitui diagnóstico entomológico.",
+      "Recipientes são o mecanismo do ciclo."
+    ]
+  },
+  {
+    id:"H3", level:"hard", topic:"Fase e tempo",
+    q:"Qual achado sugere necessidade de ação mais imediata?",
+    opts:[
+      {t:"Pupas presentes + água parada artificial", ok:true},
+      {t:"Somente ovos antigos em recipiente seco", ok:false},
+      {t:"Somente um adulto isolado sem contexto", ok:false},
+      {t:"Somente sombra sem água", ok:false},
+    ],
+    explain:"Pupas indicam adultos prestes a emergir. Água artificial alimenta o ciclo urbano.",
+    why:[
+      "Ovos são importantes, mas o risco imediato aumenta com pupas.",
+      "Adulto isolado pode ocorrer sem evidência de foco local.",
+      "Sombra sem água não fecha o ciclo."
+    ]
+  },
+  {
+    id:"H4", level:"hard", topic:"Armadilhas e pergunta",
+    q:"Se a pergunta é ‘há atividade reprodutiva de Aedes aqui?’, a ferramenta mais direta é…",
+    opts:[
+      {t:"Ovitrampa", ok:true},
+      {t:"CDC", ok:false},
+      {t:"Termômetro", ok:false},
+      {t:"Somente entrevista sem observação", ok:false},
+    ],
+    explain:"Ovitrampa mede postura de ovos (atividade reprodutiva).",
+    why:[
+      "CDC mede adultos, não postura diretamente.",
+      "Termômetro mede ambiente.",
+      "Entrevista sem evidência é frágil."
+    ]
+  },
+  {
+    id:"H5", level:"hard", topic:"Ambiente urbano",
+    q:"Qual combinação descreve melhor um ‘microambiente de risco’ para mosquito urbano?",
+    opts:[
+      {t:"Sombra + água parada em recipientes + proximidade humana", ok:true},
+      {t:"Sol forte + vento + ausência de água", ok:false},
+      {t:"Ambiente seco sem recipientes", ok:false},
+      {t:"Somente temperatura baixa", ok:false},
+    ],
+    explain:"Risco emerge quando habitat sustenta imaturos e adultos ficam perto de pessoas.",
+    why:[
+      "Sem água e recipientes, não há ciclo urbano típico.",
+      "Seco e sem recipientes reduz criadouros.",
+      "Temperatura sozinha não cria foco."
+    ]
+  },
+  {
+    id:"H6", level:"hard", topic:"Justiça sanitária",
+    q:"A frase mais alinhada com saúde coletiva e justiça é…",
+    opts:[
+      {t:"‘Reduzir arboviroses exige ações no domicílio e também infraestrutura urbana e políticas públicas’", ok:true},
+      {t:"‘Tudo se resolve com esforço individual’", ok:false},
+      {t:"‘Só quem mora em bairro pobre tem dengue’", ok:false},
+      {t:"‘Não vale a pena vigiar, é inevitável’", ok:false},
+    ],
+    explain:"Determinantes estruturais (água, lixo, drenagem) são parte do risco.",
+    why:[
+      "Individual ajuda, mas não substitui infraestrutura.",
+      "Dengue pode ocorrer em diferentes contextos — desigualdade aumenta vulnerabilidade.",
+      "Vigilância reduz risco e orienta ação."
+    ]
+  },
+  {
+    id:"H7", level:"hard", topic:"Decisão",
+    q:"Qual resposta é mais coerente com vigilância baseada em evidências?",
+    opts:[
+      {t:"Registrar achados (fase/recipiente/ambiente), calcular índices e recomendar ação específica", ok:true},
+      {t:"Agir sem registrar para ganhar tempo", ok:false},
+      {t:"Registrar sem agir porque ‘não é minha função’", ok:false},
+      {t:"Escolher ação pelo que ‘parece’ mais bonito", ok:false},
+    ],
+    explain:"Evidência + registro + ação = vigilância boa.",
+    why:[
+      "Sem registro, não há rastreabilidade nem aprendizado.",
+      "Sem ação, registro vira arquivo morto.",
+      "Estética não guia saúde pública."
+    ]
+  },
+  {
+    id:"H8", level:"hard", topic:"Ciclos diferentes",
+    q:"Qual afirmação é mais correta sobre flebotomíneos versus mosquitos urbanos?",
+    opts:[
+      {t:"Flebotomíneos se associam mais a solo úmido e matéria orgânica; mosquitos urbanos a água em recipientes", ok:true},
+      {t:"Ambos dependem do mesmo tipo de criadouro (pneu)", ok:false},
+      {t:"Flebotomíneos vivem sempre na água parada", ok:false},
+      {t:"Mosquitos urbanos não têm fase aquática", ok:false},
+    ],
+    explain:"Ciclos diferentes → estratégias diferentes.",
+    why:[
+      "Nem sempre compartilham criadouro.",
+      "Flebotomíneo não é ‘água parada’ como regra.",
+      "Mosquitos urbanos têm fase aquática (larva/pupa)."
+    ]
+  },
+  {
+    id:"H9", level:"hard", topic:"Leitura do dado",
+    q:"Por que ‘tempo de inspeção’ e ‘técnica usada’ importam no relatório?",
+    opts:[
+      {t:"Porque influenciam a confiança do resultado e a comparabilidade entre locais", ok:true},
+      {t:"Porque servem só para enfeitar", ok:false},
+      {t:"Porque substituem índices", ok:false},
+      {t:"Porque não mudam nada na interpretação", ok:false},
+    ],
+    explain:"Esforço e técnica mudam chance de detectar e tornam comparações mais honestas.",
+    why:[
+      "Não é enfeite: é método.",
+      "Não substitui índice; complementa.",
+      "Muda interpretação sim."
+    ]
+  },
+  {
+    id:"H10", level:"hard", topic:"SUS integrado",
+    q:"Uma ação integrada SUS–vigilância para arboviroses envolve…",
+    opts:[
+      {t:"UBS + vigilância + comunicação + campo/lab + gestão territorial", ok:true},
+      {t:"Apenas hospital", ok:false},
+      {t:"Apenas laboratório", ok:false},
+      {t:"Apenas notificação sem retorno", ok:false},
+    ],
+    explain:"Integração é rede: cuidado, vigilância, território e decisão.",
+    why:[
+      "Hospital sozinho é resposta tardia.",
+      "Laboratório sem ação é diagnóstico sem impacto.",
+      "Notificar sem retorno quebra confiança."
+    ]
+  },
+];
+
+/* ========= engine ========= */
+const KEY = "guardias_desafio_quiz_v1";
+const BEST = "guardias_desafio_quiz_best_v1";
+
+let level = "easy";
+let pool = [];
+let idx = 0;
+let hits = 0;
+let answered = false;
+let current = null;
+let round = [];
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function setLevel(l){
+  level = l;
+  document.getElementById("lvl_easy").classList.toggle("active", l==="easy");
+  document.getElementById("lvl_mid").classList.toggle("active", l==="mid");
+  document.getElementById("lvl_hard").classList.toggle("active", l==="hard");
+  showBest();
+}
+
+function pickQuestions(){
+  const all = QUESTIONS.filter(q=>q.level===level);
+  // cada nível tem 10 fixas; embaralhar e usar todas
+  return shuffle(all);
+}
+
+function start(){
+  round = pickQuestions();
+  idx = 0;
+  hits = 0;
+  answered = false;
+  current = null;
+  saveState();
+  document.getElementById("finalPanel").style.display="none";
+  render();
+}
+
+function resume(){
+  const s = loadState();
+  if(!s){ alert("Não há rodada salva. Clique em Começar rodada."); return; }
+  level = s.level;
+  setLevel(level);
+  round = s.round;
+  idx = s.idx;
+  hits = s.hits;
+  answered = s.answered;
+  current = s.current;
+  document.getElementById("finalPanel").style.display = "none";
+  render();
+}
+
+function saveState(){
+  const s = { level, round, idx, hits, answered, current };
+  localStorage.setItem(KEY, JSON.stringify(s));
+}
+function loadState(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||""); }catch(e){ return null; }
+}
+
+function showBest(){
+  const b = JSON.parse(localStorage.getItem(BEST)||"{}");
+  const best = b[level] || null;
+  const box = document.getElementById("bestBox");
+  if(!best){
+    box.style.display="block";
+    box.innerHTML = `<b>Recorde deste nível:</b> ainda não existe. Faça a primeira rodada!`;
+    return;
+  }
+  box.style.display="block";
+  box.innerHTML = `<b>Recorde deste nível:</b> ${best.score}% • ${best.hits}/${best.total} • selo: <b>${best.badge}</b>`;
+}
+
+function resetBest(){
+  if(!confirm("Zerar recordes de todos os níveis neste celular?")) return;
+  localStorage.removeItem(BEST);
+  showBest();
+  alert("Recordes zerados.");
+}
+
+function updateKpis(){
+  document.getElementById("k_total").textContent = round.length ? round.length : "—";
+  document.getElementById("k_hits").textContent = hits;
+  const prog = round.length ? Math.round((idx/round.length)*100) : 0;
+  document.getElementById("k_prog").textContent = prog + "%";
+  document.getElementById("roundInfo").textContent =
+    round.length ? `Questão ${Math.min(idx+1, round.length)} de ${round.length} • nível: ${labelLevel(level)}` : "Toque em “Começar rodada”.";
+}
+
+function labelLevel(l){
+  if(l==="easy") return "Semente (fácil)";
+  if(l==="mid") return "Trilha (médio)";
+  return "Coroa (difícil)";
+}
+
+function render(){
+  updateKpis();
+  showBest();
+
+  const area = document.getElementById("gameArea");
+  if(!round.length){
+    area.innerHTML = `<div class="qCard"><b>Pronta?</b><p style="margin:8px 0 0">Escolha o nível e inicie.</p></div>`;
+    return;
+  }
+
+  if(idx >= round.length){
+    finish();
+    return;
+  }
+
+  current = round[idx];
+  const opts = shuffle(current.opts).map((o,i)=>({...o, _i:i}));
+  // guardar ordem atual para correção
+  current._opts = opts;
+
+  const tagColor = current.level==="easy" ? "rgba(34,197,94,.12)"
+                 : current.level==="mid" ? "rgba(245,158,11,.14)"
+                 : "rgba(239,68,68,.12)";
+
+  area.innerHTML = `
+    <div class="qCard">
+      <div class="qTop">
+        <div><b>${current.q}</b><div style="margin-top:4px"><small>Tema: ${current.topic}</small></div></div>
+        <div class="tag" style="background:${tagColor};border-color:rgba(140,20,90,.14)">
+          ${labelLevel(current.level)}
+        </div>
+      </div>
+
+      <div id="opts"></div>
+
+      <div id="feedback" style="display:none"></div>
+
+      <hr>
+
+      <div class="btnRow">
+        <button class="btn primary" id="btnNext" onclick="next()" disabled>➡️ Próxima</button>
+        <button class="btn ghost" onclick="saveState(); alert('Rodada salva ✅')">💾 Salvar</button>
+      </div>
+    </div>
+  `;
+
+  const wrap = document.getElementById("opts");
+  opts.forEach((o,ix)=>{
+    const id = `opt_${ix}`;
+    const el = document.createElement("div");
+    el.className = "opt";
+    el.innerHTML = `<input type="radio" name="q"><div>${o.t}</div>`;
+    el.onclick = ()=> choose(ix);
+    wrap.appendChild(el);
+  });
+
+  answered = false;
+  saveState();
+}
+
+function choose(ix){
+  if(answered) return;
+  answered = true;
+
+  const optsEls = Array.from(document.querySelectorAll(".opt"));
+  const picked = current._opts[ix];
+  const isOk = picked.ok;
+
+  // marcar estilos
+  optsEls.forEach((el,i)=>{
+    const o = current._opts[i];
+    if(o.ok) el.classList.add("correct");
+    if(i===ix && !o.ok) el.classList.add("wrong");
+    if(i!==ix && !o.ok) el.classList.add("dim");
+  });
+
+  if(isOk) hits++;
+
+  const fb = document.getElementById("feedback");
+  fb.style.display="block";
+
+  const title = isOk ? `✅ Acertou!` : `❌ Quase!`;
+  const color = isOk ? "var(--green)" : "var(--red)";
+  const why = current.why && current.why.length ? current.why.map(x=>`• ${x}`).join("\n") : "• Siga estudando: o importante é entender o porquê.";
+  fb.innerHTML = `
+    <div class="callout" style="border-left-color:${color}">
+      <b>${title}</b>
+      <div style="margin-top:6px">${current.explain}</div>
+      <div class="tip" style="margin-top:10px">
+        <b>Por que as outras não são a melhor resposta?</b>
+        <pre style="margin:8px 0 0">${why}</pre>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("btnNext").disabled = false;
+  saveState();
+  updateKpis();
+}
+
+function next(){
+  if(!answered) return;
+  idx++;
+  answered = false;
+  saveState();
+  render();
+}
+
+function finish(){
+  const total = round.length;
+  const score = Math.round((hits/total)*100);
+  const badge = score>=90 ? "👑 Guardiã Mestra"
+              : score>=75 ? "🛡️ Guardiã Estratégica"
+              : score>=60 ? "🌿 Guardiã em Treino"
+              : "🌱 Guardiã Semente";
+
+  // salvar recorde
+  const best = JSON.parse(localStorage.getItem(BEST)||"{}");
+  const prev = best[level];
+  if(!prev || score>prev.score){
+    best[level] = {score, hits, total, badge, at: new Date().toISOString()};
+    localStorage.setItem(BEST, JSON.stringify(best));
+  }
+  localStorage.removeItem(KEY); // encerra rodada
+
+  document.getElementById("finalPanel").style.display="block";
+  document.getElementById("finalBox").innerHTML = `
+    <div class="callout">
+      <b>Seu resultado</b>
+      <div style="margin-top:8px" class="kpis">
+        <div class="kpi"><b>Nível</b><span>${labelLevel(level)}</span></div>
+        <div class="kpi"><b>Acertos</b><span>${hits}/${total}</span></div>
+        <div class="kpi"><b>Nota</b><span>${score}%</span></div>
+      </div>
+
+      <div class="tip" style="margin-top:12px">
+        <b>Selo do dia:</b> <span style="font-weight:950">${badge}</span>
+        <div style="margin-top:6px"><small>Dica: repita o desafio em outro nível para comparar seu avanço.</small></div>
+      </div>
+
+      <div class="btnRow" style="margin-top:10px">
+        <button class="btn primary" onclick="start()">🔁 Jogar novamente</button>
+        <button class="btn ghost" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆️ Voltar ao topo</button>
+      </div>
+    </div>
+  `;
+
+  // mostrar recorde atualizado
+  showBest();
+
+  // mostrar tela final
+  document.getElementById("gameArea").innerHTML = `
+    <div class="qCard">
+      <b>Rodada finalizada ✅</b>
+      <p style="margin:8px 0 0">Veja seu resultado na seção “Resultado final”.</p>
+    </div>
+  `;
+  updateKpis();
+}
+
+/* init */
+showBest();
+</script>
+
+</body>
+</html>
