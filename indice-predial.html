@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Protocolo Predial | Vigilância Entomológica</title>
+
+<style>
+:root{
+  --bg0:#fff7fb;
+  --bg1:#ffe4f2;
+  --card:#ffffffdd;
+  --stroke:#e9b6d6;
+  --txt:#3b0a2a;
+  --muted:#6b2d4a;
+  --pink:#db2777;
+  --violet:#8b5cf6;
+  --green:#22c55e;
+  --gold:#f59e0b;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+}
+body{
+  margin:0;
+  background:linear-gradient(180deg,var(--bg0),var(--bg1));
+  color:var(--txt);
+}
+header{
+  background:#fff;
+  border-bottom:1px solid var(--stroke);
+  padding:14px;
+}
+header h1{margin:0;font-size:16px}
+header p{margin:4px 0 0;font-size:12px;color:var(--muted)}
+
+main{
+  max-width:900px;
+  margin:auto;
+  padding:16px 16px 120px;
+}
+
+.panel{
+  background:var(--card);
+  border:1px solid var(--stroke);
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:14px;
+}
+
+label{font-weight:700;font-size:13px}
+input,textarea{
+  width:100%;
+  padding:8px;
+  margin-top:6px;
+  margin-bottom:10px;
+  border-radius:12px;
+  border:1px solid var(--stroke);
+}
+
+.check{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  margin-bottom:8px;
+}
+
+button{
+  padding:12px;
+  border-radius:14px;
+  border:none;
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.result{
+  background:#fdf2f8;
+  border-left:4px solid var(--pink);
+  padding:12px;
+  border-radius:14px;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🏢 Protocolo Rápido de Avaliação Predial</h1>
+  <p>Baseado nos índices oficiais de vigilância entomológica (MS / OPAS)</p>
+</header>
+
+<main>
+
+<div class="panel">
+  <label>Identificação do prédio</label>
+  <input id="predio" placeholder="Ex: Escola Municipal X, Bloco A">
+
+  <label>Data da inspeção</label>
+  <input type="date" id="data">
+
+  <label>Nº total de imóveis/unidades inspecionadas</label>
+  <input type="number" id="imoveis" min="1">
+
+  <label>Nº de imóveis com larvas/pupas</label>
+  <input type="number" id="imoveisPos" min="0">
+</div>
+
+<div class="panel">
+  <h3>📦 Avaliação de recipientes</h3>
+
+  <label>Total de recipientes inspecionados</label>
+  <input type="number" id="recipientes" min="0">
+
+  <label>Nº de recipientes positivos (larvas/pupas)</label>
+  <input type="number" id="recipientesPos" min="0">
+
+  <div class="check">
+    <input type="checkbox"> Recipientes com água parada artificial
+  </div>
+  <div class="check">
+    <input type="checkbox"> Recipientes em área sombreada
+  </div>
+  <div class="check">
+    <input type="checkbox"> Recipientes próximos a áreas de circulação humana
+  </div>
+</div>
+
+<div class="panel">
+  <h3>📝 Observações técnicas</h3>
+  <textarea id="obs" placeholder="Descreva o padrão observado, tipo de recipientes, riscos e ações recomendadas."></textarea>
+</div>
+
+<div class="panel">
+  <button onclick="calcular()">📊 Calcular índices e gerar relatório</button>
+  <div id="saida"></div>
+</div>
+
+</main>
+
+<script>
+function calcular(){
+  const imoveis = Number(document.getElementById("imoveis").value);
+  const imoveisPos = Number(document.getElementById("imoveisPos").value);
+  const recip = Number(document.getElementById("recipientes").value);
+  const recipPos = Number(document.getElementById("recipientesPos").value);
+
+  if(imoveis<=0){ alert("Informe nº de imóveis"); return; }
+
+  const IP = ((imoveisPos/imoveis)*100).toFixed(1);
+  const IB = ((recipPos/imoveis)*100).toFixed(1);
+  const IR = recip>0 ? ((recipPos/recip)*100).toFixed(1) : "0";
+
+  let risco = "Baixo";
+  if(IP>=1) risco="Alerta";
+  if(IP>=4) risco="Alto";
+
+  document.getElementById("saida").innerHTML = `
+    <div class="result">
+      <h3>📄 Relatório Predial</h3>
+      <p><b>Índice Predial (IP):</b> ${IP}%</p>
+      <p><b>Índice de Breteau (IB):</b> ${IB}</p>
+      <p><b>Índice de Recipientes (IR):</b> ${IR}%</p>
+      <p><b>Classificação de risco:</b> <b>${risco}</b></p>
+      <p><b>Interpretação:</b> 
+      ${risco==="Baixo"?"Manter monitoramento.":risco==="Alerta"?"Reforçar manejo ambiental e educação.":"Ação imediata de controle recomendada."}
+      </p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
