@@ -1,67 +1,60 @@
-/* menu.css — footer estilo app (igual ao print) */
-
-:root{
-  --menu-bg: rgba(255,246,251,.95);
-  --menu-stroke: rgba(79,12,55,.14);
-  --menu-txt: #2a0f22;
-  --menu-pink:#d946ef;
-  --menu-violet:#8b5cf6;
-}
+/* === MENU INTELIGENTE === */
 
 .auto-footer{
   position:fixed;
   bottom:0; left:0; right:0;
-  background: var(--menu-bg);
-  border-top: 1px solid var(--menu-stroke);
-  z-index: 999;
-  padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(255,246,251,.96);
+  border-top:1px solid rgba(79,12,55,.14);
+  z-index:999;
+  transition: transform .25s ease, height .25s ease;
 }
 
-/* “grade” de botões como app */
+/* estado compacto */
+.auto-footer.compact{
+  height:72px;
+  overflow:hidden;
+}
+
+/* botão de expandir */
+.menu-toggle{
+  text-align:center;
+  font-size:12px;
+  font-weight:800;
+  color:#6b2d4a;
+  padding:6px 0;
+  cursor:pointer;
+}
+
+/* menu em si */
 .foot{
   max-width:1100px;
-  margin:0 auto;
+  margin:auto;
   display:flex;
   flex-wrap:wrap;
   gap:10px;
   justify-content:center;
+  padding:8px 10px calc(10px + env(safe-area-inset-bottom));
 }
 
-/* botões grandes e fofos */
 .foot a{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-
-  /* 3 por linha em celular (fica igual ao seu print) */
   width: calc((100% - 20px)/3);
-  max-width: 170px;
-
-  padding: 14px 12px;
-  border-radius: 18px;
+  max-width:160px;
+  padding:12px;
+  border-radius:18px;
   text-decoration:none;
-
-  background: rgba(255,255,255,.82);
-  border: 1px solid rgba(79,12,55,.14);
-  color: var(--menu-txt);
-
-  font-weight: 900;
-  box-shadow: 0 10px 28px rgba(80,10,55,.12);
+  background:#fff;
+  border:1px solid rgba(79,12,55,.14);
+  font-weight:900;
+  text-align:center;
+  box-shadow:0 10px 28px rgba(80,10,55,.12);
 }
 
-/* ícone e texto */
-.foot a .mi{ font-size: 18px; line-height: 1; }
-.foot a .ml{ font-size: 14px; line-height: 1; }
-
-/* ativo */
 .foot a.active{
-  background: linear-gradient(135deg, var(--menu-pink), var(--menu-violet));
-  color: #fff;
-  border: none;
+  background:linear-gradient(135deg,#d946ef,#8b5cf6);
+  color:white;
+  border:none;
 }
 
-/* telas maiores: 7 botões cabem melhor */
-@media(min-width: 900px){
-  .foot a{ width:auto; min-width: 140px; }
+@media(min-width:900px){
+  .auto-footer.compact{ height:auto; }
 }
