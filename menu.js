@@ -1,8 +1,14 @@
-/* menu.js — injeta menu.html e marca a aba ativa */
 (async function () {
-  const mount = document.getElementById("app-menu");
-  if (!mount) return;
-// injeta menu.css automaticamente
+  // 1) Se tiver mais de um app-menu, mantém só o primeiro
+  const mounts = Array.from(document.querySelectorAll("#app-menu"));
+  if (mounts.length === 0) return;
+  const mount = mounts[0];
+  mounts.slice(1).forEach(m => m.remove());
+
+  // 2) Remove qualquer footer/menu automático já inserido (evita duplicar)
+  document.querySelectorAll(".auto-footer").forEach(el => el.remove());
+
+  // 3) Injeta menu.css automaticamente (se você estiver usando)
   if (!document.getElementById("menu-css")) {
     const link = document.createElement("link");
     link.id = "menu-css";
@@ -11,10 +17,8 @@
     document.head.appendChild(link);
   }
 
-  // Descobre qual página está aberta
+  // 4) Página atual
   const path = (location.pathname.split("/").pop() || "index.html").toLowerCase();
-
-  // Mapeie aqui os nomes dos seus arquivos → "page id"
   const pageMap = {
     "index.html": "index",
     "teoria.html": "teoria",
@@ -24,58 +28,24 @@
     "laboratorio.html": "lab",
     "roteiro-professor.html": "prof",
   };
-
   const activeId = pageMap[path] || "index";
 
-  // Carrega o template
+  // 5) Carrega menu.html
   let html = "";
-  try {
-    const res = await fetch("menu.html", { cache: "no-store" });
-    if (!res.ok) throw new Error("Falha ao buscar menu.html");
-    html = await res.text();
-  } catch (e) {
-    // fallback caso o fetch falhe
-    html = `
-      <nav class="foot" aria-label="Menu">
-        <a data-page="index" href="index.html">🏠 Início</a>
-        <a data-page="teoria" href="teoria.html">🧠 Teoria</a>
-        <a data-page="campo" href="campo.html">🌱 Campo</a>
-        <a data-page="protocolo" href="indice-predial.html">🏢 Protocolo</a>
-        <a data-page="quiz" href="quiz.html">🎯 Desafio</a>
-        <a data-page="lab" href="laboratorio.html">🧬 Lab</a>
-        <a data-page="prof" href="roteiro-professor.html">👩‍🏫 Prof</a>
-      </nav>
-    `;
-  }
+  const res = await fetch("menu.html", { cache: "no-store" });
+  html = await res.text();
 
-  // Injeta dentro de um footer fixo
-  mount.innerHTML = `
-    <footer class="auto-footer">
-      ${html}
-    </footer>
-  `;
+  // 6) Insere
+  mount.innerHTML = `<footer class="auto-footer compact">${html}</footer>`;
 
-
-  // Marca item ativo
-  const links = mount.querySelectorAll("a[data-page]");
-  links.forEach(a => {
-    const id = a.getAttribute("data-page");
-    if (id === activeId) a.classList.add("active");
+  // 7) Marca ativo
+  mount.querySelectorAll("a[data-page]").forEach(a => {
+    if (a.getAttribute("data-page") === activeId) a.classList.add("active");
   });
 
-  // Acessibilidade: marca página atual
-  const activeLink = mount.querySelector("a.active");
-  if (activeLink) activeLink.setAttribute("aria-current", "page");
+  // 8) Toggle global (se menu.html tiver o botão)
+  window.toggleMenu = function () {
+    const f = document.querySelector(".auto-footer");
+    if (f) f.classList.toggle("compact");
+  };
 })();
-// === menu recolhível ===
-window.toggleMenu = function(){
-  const f = document.querySelector(".auto-footer");
-  f.classList.toggle("compact");
-};
-
-// começa compacto no celular
-if (window.innerWidth < 900) {
-  document.addEventListener("DOMContentLoaded",()=>{
-    document.querySelector(".auto-footer")?.classList.add("compact");
-  });
-}
