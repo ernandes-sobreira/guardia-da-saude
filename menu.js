@@ -55,6 +55,7 @@
     </footer>
   `;
 
+
   // Marca item ativo
   const links = mount.querySelectorAll("a[data-page]");
   links.forEach(a => {
@@ -66,3 +67,15 @@
   const activeLink = mount.querySelector("a.active");
   if (activeLink) activeLink.setAttribute("aria-current", "page");
 })();
+// === menu recolhível ===
+window.toggleMenu = function(){
+  const f = document.querySelector(".auto-footer");
+  f.classList.toggle("compact");
+};
+
+// começa compacto no celular
+if (window.innerWidth < 900) {
+  document.addEventListener("DOMContentLoaded",()=>{
+    document.querySelector(".auto-footer")?.classList.add("compact");
+  });
+}
