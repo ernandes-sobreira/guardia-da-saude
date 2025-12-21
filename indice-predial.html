@@ -705,4 +705,199 @@ function gerarRelatorio(){
 
   const obs = valStr("obs");
 
-  /
+  // Texto de relatório (para copiar/baixar)
+  const rel = [
+`RELATÓRIO — PROTOCOLO PREDIAL (VIGILÂNCIA ENTOMOLÓGICA)`,
+`Local: ${local}`,
+`Tipo: ${tipoLocal}`,
+`Data: ${data}${equipe?`\nEquipe: ${equipe}`:""}`,
+``,
+`1) ÍNDICES OFICIAIS`,
+`- IP (Índice Predial / House Index): ${IP.toFixed(1)}% (${imPos}/${im})`,
+`- IB (Índice de Breteau): ${IB.toFixed(1)} (recip. positivos por 100 imóveis)`,
+`- IR (Índice de Recipientes / Container Index): ${IR.toFixed(1)}% (${recipPos}/${recipTotal || 0})`,
+``,
+`2) FASE DO VETOR OBSERVADA (intensidade)`,
+`- Larvas: ${lar}/2 | Pupas: ${pup}/2 | Adultos: ${adu}/2`,
+``,
+`3) RECIPIENTES (tipo e quantidade)`,
+fmtList(recipMarcados.length?recipMarcados:["Nenhum recipiente marcado/quantificado"]),
+``,
+`4) AMBIENTE`,
+fmtList(ambMarcados.length?ambMarcados:["Sem marcações ambientais"]),
+``,
+`5) TÉCNICAS E ESFORÇO AMOSTRAL`,
+`- Técnica principal: ${tec}`,
+`- Tempo de inspeção (min): ${tempo || "não informado"}`,
+`- Ovitrampas: ${nOvi} | CDC: ${nCDC}`,
+`- Confiança do registro (baseada no tempo informado): ${confianca}`,
+``,
+`6) CLASSIFICAÇÃO DE RISCO (score)`,
+`- Score: ${score} | Classe: ${classe}`,
+``,
+`7) RECOMENDAÇÕES AUTOMÁTICAS`,
+fmtList(acoes),
+``,
+`8) OBSERVAÇÕES TÉCNICAS`,
+obs ? obs : "—",
+``].join("\n");
+
+  lastReportText = rel;
+
+  // UI output
+  document.getElementById("saida").innerHTML = `
+    <div class="result">
+      <h3 style="margin:0 0 8px">📄 Relatório gerado</h3>
+
+      <div class="kpis">
+        <div class="kpi"><b>IP (Predial)</b><span>${IP.toFixed(1)}%</span></div>
+        <div class="kpi"><b>IB (Breteau)</b><span>${IB.toFixed(1)}</span></div>
+        <div class="kpi"><b>IR (Recipientes)</b><span>${IR.toFixed(1)}%</span></div>
+      </div>
+
+      <div style="margin-top:10px; padding:10px; border-radius:14px; background:rgba(255,255,255,.75); border:1px solid rgba(140,20,90,.12)">
+        <b>Risco:</b> <span style="font-weight:950; color:${cor}">${classe}</span>
+        <span style="color:var(--muted)"> • score ${score} • confiança ${confianca}</span>
+      </div>
+
+      <hr>
+
+      <b>Recipientes marcados</b>
+      <pre style="white-space:pre-wrap; margin:8px 0; color:var(--txt)">${recipMarcados.length ? recipMarcados.map(x=>"• "+x).join("\n") : "—"}</pre>
+
+      <b>Ambiente</b>
+      <pre style="white-space:pre-wrap; margin:8px 0; color:var(--txt)">${ambMarcados.length ? ambMarcados.map(x=>"• "+x).join("\n") : "—"}</pre>
+
+      <b>Recomendações automáticas</b>
+      <pre style="white-space:pre-wrap; margin:8px 0; color:var(--txt)">${acoes.map(x=>"• "+x).join("\n")}</pre>
+
+      <details style="margin-top:10px">
+        <summary style="cursor:pointer; font-weight:900">Ver relatório completo (texto)</summary>
+        <pre style="white-space:pre-wrap; margin-top:10px; background:rgba(255,255,255,.7); padding:12px; border-radius:14px; border:1px solid rgba(140,20,90,.12)">${escapeHtml(rel)}</pre>
+      </details>
+    </div>
+  `;
+}
+
+function escapeHtml(s){
+  return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+}
+
+function copiarRelatorio(){
+  if(!lastReportText){
+    alert("Gere o relatório primeiro.");
+    return;
+  }
+  navigator.clipboard.writeText(lastReportText)
+    .then(()=>alert("Relatório copiado!"))
+    .catch(()=>alert("Não consegui copiar automaticamente. Abra o relatório e selecione manualmente."));
+}
+
+function baixarRelatorio(){
+  if(!lastReportText){
+    alert("Gere o relatório primeiro.");
+    return;
+  }
+  const blob = new Blob([lastReportText], {type:"text/plain;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  const safe = (valStr("local") || "vistoria").replace(/[^\w\-]+/g,"_");
+  a.download = `relatorio_${safe}.txt`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ========= salvar / carregar ========= */
+const KEY="guardiãs_vistorias_prediais_v3";
+
+function snapshot(){
+  const ids = [
+    "local","tipoLocal","data","equipe",
+    "imoveis","imoveisPos","faseLarva","fasePupa","faseAdulto",
+    "c_baldes","q_baldes","c_pratos","q_pratos","c_pneus","q_pneus","c_calhas","q_calhas",
+    "c_descartaveis","q_descartaveis","c_naturais","q_naturais",
+    "recipTotal","recipPos",
+    "a_sombra","a_fluxo","a_mo","a_agua_art","a_agua_nat",
+    "tecPrincipal","tempo","nOvi","nCDC",
+    "obs"
+  ];
+  const data = {};
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    if(el.type==="checkbox") data[id]=el.checked;
+    else data[id]=el.value;
+  });
+  return data;
+}
+
+function applySnap(s){
+  Object.keys(s).forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    if(el.type==="checkbox") el.checked=!!s[id];
+    else el.value=s[id];
+  });
+}
+
+function salvarVistoria(){
+  const loc = valStr("local");
+  if(!loc){
+    alert("Dê um nome ao local/prédio antes de salvar.");
+    return;
+  }
+  const all = JSON.parse(localStorage.getItem(KEY)||"[]");
+  const id = `${Date.now()}_${loc}`.slice(0,80);
+  all.unshift({id, when:new Date().toISOString(), local:loc, snap:snapshot()});
+  localStorage.setItem(KEY, JSON.stringify(all));
+  carregarLista();
+  alert("Vistoria salva neste celular ✅");
+}
+
+function carregarLista(){
+  const selEl=document.getElementById("listaVistorias");
+  const all = JSON.parse(localStorage.getItem(KEY)||"[]");
+  selEl.innerHTML = `<option value="">— selecionar —</option>` + all.map(v=>{
+    const dt = new Date(v.when);
+    const tag = `${v.local} • ${dt.toLocaleString()}`;
+    return `<option value="${v.id}">${tag}</option>`;
+  }).join("");
+}
+
+function carregarVistoria(id){
+  if(!id) return;
+  const all = JSON.parse(localStorage.getItem(KEY)||"[]");
+  const item = all.find(x=>x.id===id);
+  if(!item) return;
+  applySnap(item.snap);
+  lastReportText = "";
+  document.getElementById("saida").innerHTML = "";
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function limparTudo(){
+  if(!confirm("Limpar campos desta vistoria?")) return;
+  document.querySelectorAll("input,select,textarea").forEach(el=>{
+    if(el.type==="checkbox") el.checked=false;
+    else if(el.type==="number") el.value="";
+    else if(el.tagName==="SELECT") el.selectedIndex=0;
+    else el.value="";
+  });
+  // devolver valores default de quantidades/armadilhas
+  ["q_baldes","q_pratos","q_pneus","q_calhas","q_descartaveis","q_naturais","nOvi","nCDC"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.value="0";
+  });
+  document.getElementById("faseLarva").value="0";
+  document.getElementById("fasePupa").value="0";
+  document.getElementById("faseAdulto").value="0";
+  lastReportText="";
+  document.getElementById("saida").innerHTML="";
+}
+
+carregarLista();
+</script>
+<div id="app-menu"></div>
+<script src="menu.js"></script>
+</body>
+</html>
