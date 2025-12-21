@@ -2,6 +2,14 @@
 (async function () {
   const mount = document.getElementById("app-menu");
   if (!mount) return;
+// injeta menu.css automaticamente
+  if (!document.getElementById("menu-css")) {
+    const link = document.createElement("link");
+    link.id = "menu-css";
+    link.rel = "stylesheet";
+    link.href = "menu.css";
+    document.head.appendChild(link);
+  }
 
   // Descobre qual página está aberta
   const path = (location.pathname.split("/").pop() || "index.html").toLowerCase();
