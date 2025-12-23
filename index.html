@@ -426,6 +426,16 @@ window.addEventListener("load",()=>{
     box-shadow:0 10px 30px rgba(120,20,80,.22);
   }
   #btnCaderno:active{ transform:scale(.98); }
+  /* REMOVE o botão velho "Baixar meu Caderno (TXT)" do canto superior esquerdo */
+.btn-caderno,
+#btnCaderno,
+#baixarCaderno,
+a[download],
+button[onclick*="Caderno"],
+button[onclick*="caderno"]{
+  display:none !important;
+}
+
 </style>
 
 </body>
