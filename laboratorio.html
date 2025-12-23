@@ -1,329 +1,522 @@
 <!doctype html>
 <html lang="pt-br">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Guardiãs da Vigilância 🧬 | Módulo 3 — Laboratório</title>
-<meta name="theme-color" content="#ec4899"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Guardiãs da Vigilância 🧬 | Módulo 3 — Laboratório</title>
+  <meta name="theme-color" content="#ec4899"/>
 
-<style>
-:root{
-  --bg0:#fff7fb;
-  --bg1:#ffe4f2;
-  --card: rgba(255,255,255,.8);
-  --stroke: rgba(120,20,80,.15);
+  <style>
+    :root{
+      --bg0:#fff7fb;
+      --bg1:#ffe4f2;
+      --card: rgba(255,255,255,.86);
+      --stroke: rgba(120,20,80,.15);
 
-  --txt:#3b0a2a;
-  --muted: rgba(59,10,42,.65);
+      --txt:#3b0a2a;
+      --muted: rgba(59,10,42,.65);
 
-  --pink:#ec4899;
-  --violet:#8b5cf6;
-  --teal:#06b6d4;
-  --green:#22c55e;
-  --gold:#f59e0b;
+      --pink:#ec4899;
+      --violet:#8b5cf6;
+      --teal:#06b6d4;
+      --green:#22c55e;
+      --gold:#f59e0b;
 
-  --r:20px;
-  --shadow: 0 18px 60px rgba(120,20,80,.18);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:
-    radial-gradient(900px 600px at 10% 0%, rgba(236,72,153,.18), transparent 55%),
-    radial-gradient(800px 600px at 90% 10%, rgba(139,92,246,.18), transparent 55%),
-    linear-gradient(180deg,var(--bg0),var(--bg1));
-  color:var(--txt);
-}
-a{color:var(--pink); font-weight:700}
+      --r:20px;
+      --shadow: 0 18px 60px rgba(120,20,80,.18);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      /* garante que o conteúdo não fique escondido atrás do menu automático */
+      padding-bottom: 150px;
 
-/* Header */
-header{
-  position:sticky; top:0; z-index:30;
-  background: rgba(255,247,251,.85);
-  backdrop-filter: blur(10px);
-  border-bottom:1px solid var(--stroke);
-}
-.header{
-  max-width:1100px;
-  margin:auto;
-  padding:14px 16px;
-  display:flex;
-  gap:12px;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-}
-.logo{
-  width:46px;height:46px;
-  border-radius:18px;
-  display:grid;place-items:center;
-  background:linear-gradient(135deg,var(--pink),var(--violet));
-  color:white;
-  font-size:22px;
-  box-shadow:var(--shadow);
-}
-.header h1{
-  margin:0;
-  font-size:16px;
-}
-.header p{
-  margin:2px 0 0;
-  font-size:12px;
-  color:var(--muted);
-}
+      background:
+        radial-gradient(900px 600px at 10% 0%, rgba(236,72,153,.18), transparent 55%),
+        radial-gradient(800px 600px at 90% 10%, rgba(139,92,246,.18), transparent 55%),
+        linear-gradient(180deg,var(--bg0),var(--bg1));
+      color:var(--txt);
+    }
+    a{color:var(--pink); font-weight:800}
 
-/* Layout */
-main{
-  max-width:1100px;
-  margin:auto;
-  padding:16px 16px 120px;
-  display:grid;
-  grid-template-columns: 340px 1fr;
-  gap:14px;
-}
-@media(max-width:900px){
-  main{grid-template-columns:1fr}
-}
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:30;
+      background: rgba(255,247,251,.90);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--stroke);
+    }
+    .header{
+      max-width:1100px;
+      margin:auto;
+      padding:14px 16px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:46px;height:46px;
+      border-radius:18px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--pink),var(--violet));
+      color:white;
+      font-size:22px;
+      box-shadow:var(--shadow);
+      flex:0 0 auto;
+    }
+    .header h1{ margin:0; font-size:16px; }
+    .header p{
+      margin:2px 0 0;
+      font-size:12px;
+      color:var(--muted);
+    }
 
-/* Panels */
-.panel{
-  background:var(--card);
-  border:1px solid var(--stroke);
-  border-radius:var(--r);
-  box-shadow:var(--shadow);
-}
-.panel h2{
-  font-size:14px;
-  margin:0;
-}
-.panel .ph{
-  padding:14px;
-  border-bottom:1px solid var(--stroke);
-}
-.panel .pb{
-  padding:12px;
-}
+    /* Layout */
+    main{
+      max-width:1100px;
+      margin:auto;
+      padding:16px 16px 24px;
+      display:grid;
+      grid-template-columns: 340px 1fr;
+      gap:14px;
+    }
+    @media(max-width:900px){
+      main{grid-template-columns:1fr}
+    }
 
-/* Left menu */
-.lesson-btn{
-  width:100%;
-  text-align:left;
-  padding:12px;
-  margin-bottom:8px;
-  border-radius:16px;
-  border:1px solid transparent;
-  background:rgba(255,255,255,.6);
-  cursor:pointer;
-}
-.lesson-btn.active{
-  border-color:var(--pink);
-  background:rgba(236,72,153,.12);
-}
-.lesson-btn b{display:block;font-size:13px}
-.lesson-btn span{font-size:12px;color:var(--muted)}
+    /* Panels */
+    .panel{
+      background:var(--card);
+      border:1px solid var(--stroke);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .ph{
+      padding:14px;
+      border-bottom:1px solid var(--stroke);
+    }
+    .pb{ padding:12px; }
+    .panel h2{ font-size:14px; margin:0; }
 
-/* Content */
-.content{
-  padding:16px;
-  line-height:1.7;
-}
-.content h3{margin-top:12px}
-.callout{
-  background:rgba(236,72,153,.08);
-  border-left:4px solid var(--pink);
-  padding:12px;
-  border-radius:14px;
-  margin:12px 0;
-}
-.checklist{
-  margin-top:14px;
-}
-.check{
-  display:flex;
-  gap:10px;
-  margin-bottom:8px;
-}
-textarea{
-  width:100%;
-  min-height:160px;
-  border-radius:14px;
-  border:1px solid var(--stroke);
-  padding:10px;
-  margin-top:10px;
-}
+    /* Menu esquerdo */
+    .lesson-btn{
+      width:100%;
+      text-align:left;
+      padding:12px;
+      margin-bottom:8px;
+      border-radius:16px;
+      border:1px solid transparent;
+      background:rgba(255,255,255,.72);
+      cursor:pointer;
+      transition: transform .06s ease;
+    }
+    .lesson-btn:active{transform:scale(.99)}
+    .lesson-btn.active{
+      border-color:var(--pink);
+      background:rgba(236,72,153,.12);
+    }
+    .lesson-btn b{display:block;font-size:13px}
+    .lesson-btn span{font-size:12px;color:var(--muted)}
+
+    /* Conteúdo */
+    .content{
+      padding:16px;
+      line-height:1.75;
+    }
+    .content h3{margin:14px 0 8px}
+    .content ul{margin:8px 0 14px}
+    .callout{
+      background:rgba(236,72,153,.08);
+      border-left:4px solid var(--pink);
+      padding:12px;
+      border-radius:14px;
+      margin:12px 0;
+    }
+    .meta{
+      background:rgba(6,182,212,.08);
+      border-left:4px solid var(--teal);
+      padding:12px;
+      border-radius:14px;
+      margin:12px 0;
+    }
+    .warn{
+      background:rgba(245,158,11,.12);
+      border-left:4px solid var(--gold);
+      padding:12px;
+      border-radius:14px;
+      margin:12px 0;
+    }
+
+    /* checklist + notas */
+    .check{
+      display:flex;
+      gap:10px;
+      margin:10px 0;
+      align-items:flex-start;
+      padding:10px 10px;
+      border:1px dashed rgba(120,20,80,.18);
+      border-radius:14px;
+      background:rgba(255,255,255,.6);
+    }
+    .check input{ transform: translateY(2px); }
+    textarea{
+      width:100%;
+      min-height:160px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      padding:10px;
+      margin-top:10px;
+      background:rgba(255,255,255,.78);
+      color:var(--txt);
+      outline:none;
+    }
+
+    .tools{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:12px 0 0;
+    }
+    .btn{
+      border:0;
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius:14px;
+      font-weight:900;
+      background:rgba(255,255,255,.78);
+      border:1px solid var(--stroke);
+      color:var(--txt);
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--pink),var(--violet));
+      color:white;
+      border-color:transparent;
+    }
+    .hint{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:10px;
+    }
+  </style>
+</head>
+
+<body>
 
 <header>
   <div class="header">
-    <div style="display:flex;gap:12px;align-items:center">
-      <div class="logo">🧬</div>
-      <div>
-        <h1>Módulo 3 — Laboratório (8h)</h1>
-        <p>Do campo ao microscópio: ciência feita por meninas</p>
-      </div>
+    <div class="logo">🧬</div>
+    <div>
+      <h1>Módulo 3 — Laboratório (8h)</h1>
+      <p>Do campo ao microscópio: ciência feita por meninas</p>
     </div>
   </div>
 </header>
 
 <main>
 
-<!-- LEFT -->
-<aside class="panel">
-  <div class="ph">
-    <h2>🔬 Estações do Laboratório</h2>
-  </div>
-  <div class="pb" id="menu"></div>
-</aside>
+  <!-- ESQUERDA -->
+  <aside class="panel">
+    <div class="ph">
+      <h2>🔬 Estações do Laboratório</h2>
+      <p class="hint">Toque em uma estação para abrir. Tudo salva automaticamente.</p>
+    </div>
+    <div class="pb" id="menu"></div>
+  </aside>
 
-<!-- RIGHT -->
-<section class="panel">
-  <div class="ph">
-    <h2 id="title">Escolha uma estação</h2>
-    <p id="subtitle" style="font-size:12px;color:var(--muted)"></p>
-  </div>
-  <div class="content" id="content"></div>
-</section>
+  <!-- DIREITA -->
+  <section class="panel">
+    <div class="ph">
+      <h2 id="title">Escolha uma estação</h2>
+      <p id="subtitle" style="font-size:12px;color:var(--muted);margin:6px 0 0"></p>
+    </div>
+    <div class="content" id="content">
+      <div class="callout">
+        <b>Como usar</b>
+        <p style="margin:6px 0 0">
+          1) Abra a estação → 2) Leia os blocos → 3) Marque o checklist → 4) Escreva sua nota.
+          <br/>O site salva automaticamente no seu celular.
+        </p>
+      </div>
+    </div>
+  </section>
 
 </main>
 
-<nav>
-  <div class="nav">
-    <a href="index.html">🏠 Início</a>
-    <a href="teoria.html">🧠 Teoria</a>
-    <a href="campo.html">🌱 Campo</a>
-    <a class="active" href="laboratorio.html">🧬 Lab</a>
-    <a href="roteiro-professor.html">👩‍🏫 Prof</a>
-  </div>
-</nav>
-
 <script>
-const lessons = [
-{
- id:"L1",
- title:"Estação 1 — Chegada do material ao laboratório",
- sub:"Organização, biossegurança e respeito ao material",
- html:`
-<h3>O que acontece quando o material chega?</h3>
-<p>No laboratório, tudo começa com <b>organização</b>. O que foi observado no campo vira material de estudo.</p>
+  const STORAGE_PREFIX = "gv_lab_v1__";
 
-<div class="callout">
-<b>Biossegurança é cuidado com a vida</b>
-<ul>
-<li>Usar luvas quando indicado</li>
-<li>Não comer nem beber</li>
-<li>Manter bancadas organizadas</li>
-</ul>
-</div>
+  const lessons = [
+    {
+      id:"L1",
+      title:"Estação 1 — Chegada do material ao laboratório",
+      sub:"Organização, biossegurança e respeito ao material",
+      html:`
+        <h3>Objetivo da estação</h3>
+        <p>Transformar o material do campo em <b>amostra confiável</b> para observação. Aqui, a regra é:
+        <b>sem organização não existe dado</b>.</p>
 
-<h3>Por que isso importa?</h3>
-<p>Sem organização, o dado perde valor. Vigilância em saúde depende de confiança.</p>
+        <div class="meta">
+          <b>Biossegurança (linguagem simples)</b>
+          <ul>
+            <li>Luvas quando indicado • cabelo preso • bancada limpa</li>
+            <li>Nada de comida/bebida no laboratório</li>
+            <li>Não encostar no rosto durante a atividade</li>
+            <li>Descarte correto (lixo comum vs. perfurocortante, se houver)</li>
+          </ul>
+        </div>
 
-<h3>Referências</h3>
-<ul>
-<li><a href="https://bvsms.saude.gov.br/" target="_blank">BVS Ministério da Saúde</a></li>
-</ul>
-`
-},
-{
- id:"L2",
- title:"Estação 2 — Rotulagem e registro científico",
- sub:"Nomear, identificar e não misturar informações",
- html:`
-<h3>Rotular é proteger a informação</h3>
-<p>Cada amostra precisa ter:</p>
-<ul>
-<li>Local</li>
-<li>Data</li>
-<li>Tipo de coleta</li>
-</ul>
+        <h3>Checklist (marque no app)</h3>
+        ${mkChecks("L1",[
+          "Conferi se cada frasco/saco tem etiqueta mínima (local + data + coletor).",
+          "Separei amostras por tipo (larva / adulto / água / substrato) sem misturar.",
+          "Organizei a bancada com uma área “limpa” e uma área “suja”.",
+          "Registrei o que chegou (quantidade, condição, problemas)."
+        ])}
 
-<div class="callout">
-<b>Sem rótulo = sem ciência</b>
-<p>Uma amostra sem informação não pode ser usada para decisão em saúde.</p>
-</div>
+        <h3>Minha nota (o que eu aprendi?)</h3>
+        ${mkNote("L1","Escreva com suas palavras por que a biossegurança e a organização protegem a ciência e as pessoas...")}
 
-<h3>Missão</h3>
-<p>Crie um rótulo completo para uma amostra fictícia do campo.</p>
-`
-},
-{
- id:"L3",
- title:"Estação 3 — Observação em lupa e microscópio",
- sub:"Ver detalhes invisíveis a olho nu",
- html:`
-<h3>O que a lupa revela?</h3>
-<p>Larvas, asas, pernas e formas ajudam a entender o grupo do inseto.</p>
+        <div class="callout">
+          <b>Link útil</b>
+          <p style="margin:6px 0 0">
+            Biblioteca Virtual em Saúde (Ministério da Saúde): 
+            <a href="https://bvsms.saude.gov.br/" target="_blank" rel="noopener">bvsms.saude.gov.br</a>
+          </p>
+        </div>
+      `
+    },
+    {
+      id:"L2",
+      title:"Estação 2 — Rotulagem e registro científico",
+      sub:"Nomear, identificar e não misturar informações",
+      html:`
+        <h3>Regra de ouro</h3>
+        <p>Uma amostra sem informação vira “coisa”. Uma amostra bem rotulada vira <b>evidência</b>.</p>
 
-<div class="callout">
-<b>Você não precisa saber a espécie</b>
-<p>Na vigilância, muitas vezes basta saber o <b>grupo</b> e o <b>ambiente</b>.</p>
-</div>
+        <div class="callout">
+          <b>Rótulo mínimo (sempre)</b>
+          <ul>
+            <li><b>Código</b> da amostra</li>
+            <li><b>Local</b> (ex.: bairro + ponto)</li>
+            <li><b>Data</b> e <b>hora</b></li>
+            <li><b>Tipo</b> (larva/adulto/armadilha/recipiente)</li>
+            <li><b>Quem coletou</b></li>
+          </ul>
+        </div>
 
-<h3>Conexão com saúde</h3>
-<p>Identificar corretamente evita ações erradas de controle.</p>
-`
-},
-{
- id:"L4",
- title:"Estação 4 — Do dado à decisão",
- sub:"Como a vigilância usa o que você observou",
- html:`
-<h3>O dado vira ação</h3>
-<ul>
-<li>Orientação à comunidade</li>
-<li>Campanhas educativas</li>
-<li>Monitoramento contínuo</li>
-</ul>
+        <h3>Checklist</h3>
+        ${mkChecks("L2",[
+          "Criei um código único para cada amostra (ex.: GV-2025-01).",
+          "Consegui explicar a diferença entre “rótulo” e “registro no caderno/planilha”.",
+          "Não deixei duas amostras com o mesmo código.",
+          "Separei amostras duvidosas (sem dados) para não contaminar o estudo."
+        ])}
 
-<div class="callout">
-<b>Você faz parte disso</b>
-<p>Seu olhar no campo e no laboratório pode evitar doenças.</p>
-</div>
+        <h3>Minha nota</h3>
+        ${mkNote("L2","Crie aqui um exemplo de rótulo completo para uma amostra fictícia do campo...")}
+      `
+    },
+    {
+      id:"L3",
+      title:"Estação 3 — Observação em lupa e microscópio",
+      sub:"Ver detalhes invisíveis a olho nu",
+      html:`
+        <h3>O que a lupa / microscópio revela?</h3>
+        <p>Partes do corpo e formas (segmentos, asas, antenas) ajudam a reconhecer
+        o <b>grupo</b> do inseto e entender o risco.</p>
 
-<h3>Exemplos reais</h3>
-<p>Dengue, Zika, Chikungunya e outras arboviroses são combatidas assim.</p>
-`
-},
-{
- id:"L5",
- title:"Estação 5 — Encerramento: mulheres na ciência e na saúde",
- sub:"Você também pode estar aqui",
- html:`
-<h3>Ciência também é lugar de mulher</h3>
-<p>Laboratórios, gestão, pesquisa, inovação e vigilância precisam de mulheres.</p>
+        <div class="meta">
+          <b>Não precisa “decorar espécie”</b>
+          <p style="margin:6px 0 0">
+            Nesta oficina, o foco é: <b>grupo + ambiente + evidência</b>.
+            Isso já ajuda a tomar decisões melhores.
+          </p>
+        </div>
 
-<div class="callout">
-<b>Mensagem final</b>
-<p>Ser cientista é observar, cuidar e transformar.</p>
-</div>
+        <h3>Checklist</h3>
+        ${mkChecks("L3",[
+          "Consegui descrever pelo menos 3 características observáveis (ex.: forma do corpo, movimentos, tamanho).",
+          "Diferenciei “larva” de “adulto” pelo que vi (sem chute).",
+          "Registrei um desenho simples ou descrição do que observei (no meu caderno e aqui).",
+          "Evitei tocar na amostra sem necessidade e mantive tudo organizado."
+        ])}
 
-<h3>Reflexão</h3>
-<p>Como você pode levar esse conhecimento para sua comunidade?</p>
-`
-}
-];
+        <h3>Minha nota</h3>
+        ${mkNote("L3","Descreva o que você viu e por que isso pode ajudar a vigilância em saúde...")}
+      `
+    },
+    {
+      id:"L4",
+      title:"Estação 4 — Do dado à decisão",
+      sub:"Como a vigilância usa o que você observou",
+      html:`
+        <h3>O dado vira ação</h3>
+        <ul>
+          <li>Orientação à comunidade (com respeito e sem culpa)</li>
+          <li>Identificação de áreas prioritárias</li>
+          <li>Monitoramento ao longo do tempo</li>
+          <li>Apoio a campanhas educativas e manejo ambiental</li>
+        </ul>
 
-const menu=document.getElementById("menu");
-const title=document.getElementById("title");
-const subtitle=document.getElementById("subtitle");
-const content=document.getElementById("content");
+        <div class="callout">
+          <b>Pergunta poderosa</b>
+          <p style="margin:6px 0 0">
+            “Se eu fosse a vigilância municipal, o que eu faria primeiro com esses achados?”
+          </p>
+        </div>
 
-lessons.forEach(l=>{
- const b=document.createElement("button");
- b.className="lesson-btn";
- b.innerHTML=`<b>${l.title}</b><span>${l.sub}</span>`;
- b.onclick=()=>{
-   document.querySelectorAll(".lesson-btn").forEach(x=>x.classList.remove("active"));
-   b.classList.add("active");
-   title.textContent=l.title;
-   subtitle.textContent=l.sub;
-   content.innerHTML=l.html;
- };
- menu.appendChild(b);
-});
+        <h3>Checklist</h3>
+        ${mkChecks("L4",[
+          "Consegui ligar ambiente → vetor → doença em uma frase simples.",
+          "Entendi que nem tudo se “elimina”: às vezes se maneja ou monitora.",
+          "Consegui sugerir uma ação prática que caiba na realidade do bairro.",
+          "Consigo explicar para outra pessoa o porquê do laboratório."
+        ])}
 
+        <h3>Minha nota</h3>
+        ${mkNote("L4","Escreva 3 decisões possíveis a partir do que foi observado no campo e no laboratório...")}
+      `
+    },
+    {
+      id:"L5",
+      title:"Estação 5 — Encerramento: mulheres na ciência e na saúde",
+      sub:"Você também pode estar aqui",
+      html:`
+        <h3>Ciência é lugar de mulher</h3>
+        <p>Mulheres estão na pesquisa, na gestão, na inovação e na saúde pública.
+        E precisamos de mais meninas ocupando esses espaços com confiança.</p>
+
+        <div class="callout">
+          <b>Mensagem final</b>
+          <p style="margin:6px 0 0">Ser cientista é observar, cuidar e transformar.</p>
+        </div>
+
+        <h3>Checklist</h3>
+        ${mkChecks("L5",[
+          "Consigo dizer o que eu aprendi em 2 frases.",
+          "Consigo explicar por que vigilância salva vidas.",
+          "Consigo imaginar um caminho para seguir na ciência/saúde.",
+          "Eu me sinto mais forte e capaz depois do curso."
+        ])}
+
+        <h3>Minha nota</h3>
+        ${mkNote("L5","Escreva uma promessa: o que você vai levar para sua casa/escola/comunidade?")}
+      `
+    }
+  ];
+
+  function mkChecks(lessonId, items){
+    return `
+      <div class="checklist" data-lesson="${lessonId}">
+        ${items.map((t,i)=>`
+          <label class="check">
+            <input type="checkbox" data-save="1" data-key="${lessonId}__ck${i}">
+            <div>${t}</div>
+          </label>
+        `).join("")}
+        <div class="tools">
+          <button class="btn primary" type="button" data-action="save" data-lesson="${lessonId}">💾 Salvar agora</button>
+          <button class="btn" type="button" data-action="clear" data-lesson="${lessonId}">🧹 Limpar esta estação</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function mkNote(lessonId, placeholder){
+    return `
+      <textarea data-save="1" data-key="${lessonId}__note" placeholder="${placeholder}"></textarea>
+      <div class="hint">✅ Salva automaticamente conforme você digita.</div>
+    `;
+  }
+
+  const menu = document.getElementById("menu");
+  const title = document.getElementById("title");
+  const subtitle = document.getElementById("subtitle");
+  const content = document.getElementById("content");
+
+  function storageKey(k){ return STORAGE_PREFIX + k; }
+
+  function restoreAll(){
+    document.querySelectorAll('[data-save="1"]').forEach(el=>{
+      const k = el.getAttribute("data-key");
+      const v = localStorage.getItem(storageKey(k));
+      if (v === null) return;
+      if (el.type === "checkbox") el.checked = (v === "1");
+      else el.value = v;
+    });
+  }
+
+  function attachAutosave(){
+    document.querySelectorAll('[data-save="1"]').forEach(el=>{
+      const k = el.getAttribute("data-key");
+      const handler = ()=>{
+        if (el.type === "checkbox") localStorage.setItem(storageKey(k), el.checked ? "1" : "0");
+        else localStorage.setItem(storageKey(k), el.value || "");
+      };
+      el.addEventListener("input", handler);
+      el.addEventListener("change", handler);
+    });
+
+    // botões de salvar / limpar
+    document.querySelectorAll('[data-action="save"]').forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        restoreAll(); // só para garantir que nada ficou fora (visual)
+        alert("✅ Salvo no seu celular!");
+      });
+    });
+
+    document.querySelectorAll('[data-action="clear"]').forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const lessonId = btn.getAttribute("data-lesson");
+        if (!confirm("Quer limpar apenas esta estação?")) return;
+
+        // apaga chaves daquela estação
+        Object.keys(localStorage).forEach(k=>{
+          if (k.startsWith(STORAGE_PREFIX + lessonId + "__")) localStorage.removeItem(k);
+        });
+
+        // limpa tela
+        document.querySelectorAll(`[data-key^="${lessonId}__"]`).forEach(el=>{
+          if (el.type === "checkbox") el.checked = false;
+          else el.value = "";
+        });
+
+        alert("🧹 Estação limpa!");
+      });
+    });
+  }
+
+  function openLesson(l, btn){
+    document.querySelectorAll(".lesson-btn").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    title.textContent = l.title;
+    subtitle.textContent = l.sub;
+    content.innerHTML = l.html;
+
+    // reanexa autosave na tela nova e restaura valores
+    restoreAll();
+    attachAutosave();
+
+    // no mobile, volta pro topo
+    if (window.innerWidth < 900) window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  lessons.forEach((l,idx)=>{
+    const b=document.createElement("button");
+    b.className="lesson-btn";
+    b.type="button";
+    b.innerHTML=`<b>${l.title}</b><span>${l.sub}</span>`;
+    b.addEventListener("click", ()=>openLesson(l,b));
+    menu.appendChild(b);
+    if (idx===0) setTimeout(()=>openLesson(l,b), 0);
+  });
 </script>
+
+<!-- Menu automático (sem nav manual aqui) -->
 <div id="app-menu"></div>
 <script src="menu.js"></script>
+
 </body>
 </html>
