@@ -321,6 +321,87 @@ footer{
 </main>
 
 <!-- MENU PADRÃO -->
+  <script>
+/* ===============================
+   CADERNO ÚNICO DO PROJETO
+   =============================== */
+const GV = {
+  data: JSON.parse(localStorage.getItem("GV_CADERNO") || "{}"),
+
+  save(){
+    localStorage.setItem("GV_CADERNO", JSON.stringify(this.data));
+  },
+
+  capture(){
+    const textos = document.querySelectorAll("textarea");
+    const checks = document.querySelectorAll("input[type=checkbox]");
+
+    textos.forEach((t,i)=>{
+      this.data[`texto_${location.pathname}_${i}`] = t.value;
+    });
+
+    checks.forEach((c,i)=>{
+      this.data[`check_${location.pathname}_${i}`] = c.checked;
+    });
+
+    this.save();
+  },
+
+  restore(){
+    const textos = document.querySelectorAll("textarea");
+    const checks = document.querySelectorAll("input[type=checkbox]");
+
+    textos.forEach((t,i)=>{
+      const v = this.data[`texto_${location.pathname}_${i}`];
+      if(v) t.value = v;
+    });
+
+    checks.forEach((c,i)=>{
+      const v = this.data[`check_${location.pathname}_${i}`];
+      if(v !== undefined) c.checked = v;
+    });
+  },
+
+  downloadTXT(){
+    this.capture();
+    let out = "CADERNO — GUARDIÃS DA VIGILÂNCIA\n\n";
+    for(const k in this.data){
+      out += `${k}:\n${this.data[k]}\n\n`;
+    }
+    const blob = new Blob([out],{type:"text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "meu-caderno.txt";
+    a.click();
+  }
+};
+
+window.addEventListener("load",()=>{
+  GV.restore();
+  document.addEventListener("input",()=>GV.capture());
+});
+</script>
+<button id="btnCaderno" onclick="GV.downloadTXT()">
+  📥 Baixar Caderno
+</button>
+
+<style>
+#btnCaderno{
+  position:fixed;
+  right:14px;
+  bottom:96px; /* acima do menu */
+  z-index:9999;
+  border:0;
+  cursor:pointer;
+  font-weight:900;
+  padding:12px 14px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#db2777,#8b5cf6);
+  color:white;
+  box-shadow:0 10px 30px rgba(120,20,80,.22);
+}
+</style>
+
 <div id="app-menu"></div>
 <script src="menu.js"></script>
   <script src="caderno.js"></script>
