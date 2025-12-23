@@ -1,146 +1,207 @@
-// caderno.js — Guardiãs da Vigilância
-// 1) Auto-salva campos marcados com data-save="1" data-key="..."
-// 2) Gera um TXT único com tudo e baixa no celular
+/* caderno.js — Guardiãs da Vigilância
+   Salva automaticamente inputs/checkboxes/textareas em localStorage
+   e oferece Caderno (modal) + Baixar TXT.
+*/
+(function(){
+  const PREFIX = "GV:";
 
-const GV = {
-  prefix: "GV_CADERNO_V1__",
+  function keyFor(el){
+    // precisa de id fixo. Se não tiver, tenta name. Se não tiver, não salva.
+    const id = el.id || el.name;
+    if(!id) return null;
+    const page = (location.pathname.split("/").pop() || "index.html").replace(/\?.*$/,"");
+    return `${PREFIX}${page}::${id}`;
+  }
 
-  // chave final no localStorage
-  K(page, key){ return `${this.prefix}${page}__${key}`; },
-
-  pageName(){
-    return (location.pathname.split("/").pop() || "index.html").toLowerCase();
-  },
-
-  // salva 1 campo
-  saveField(el){
-    const page = this.pageName();
-    const key = el.getAttribute("data-key");
-    if(!key) return;
-
-    const label = el.getAttribute("data-label") || key;
-
-    const payload = {
-      page,
-      key,
-      label,
-      type: el.type === "checkbox" ? "checkbox" : "text",
-      value: el.type === "checkbox" ? (el.checked ? "1" : "0") : (el.value || ""),
-      ts: new Date().toISOString()
-    };
-
-    localStorage.setItem(this.K(page, key), JSON.stringify(payload));
-  },
-
-  // restaura tudo da página atual
-  restorePage(){
-    const page = this.pageName();
-
-    document.querySelectorAll('[data-save="1"]').forEach(el=>{
-      const key = el.getAttribute("data-key");
-      if(!key) return;
-
-      const raw = localStorage.getItem(this.K(page, key));
-      if(!raw) return;
-
-      try{
-        const payload = JSON.parse(raw);
-        if(payload.type === "checkbox") el.checked = payload.value === "1";
-        else el.value = payload.value || "";
-      }catch(e){}
-    });
-  },
-
-  // liga autosave nos campos
-  bindPage(){
-    document.querySelectorAll('[data-save="1"]').forEach(el=>{
-      const handler = ()=>this.saveField(el);
-      el.addEventListener("input", handler);
-      el.addEventListener("change", handler);
-    });
-  },
-
-  // você chama isso depois de trocar innerHTML (Teoria/Campo etc.)
-  attach(){
-    this.restorePage();
-    this.bindPage();
-  },
-
-  // pega tudo salvo (todas as páginas)
-  getAllSaved(){
-    const out = [];
-    for(let i=0;i<localStorage.length;i++){
-      const k = localStorage.key(i);
-      if(!k || !k.startsWith(this.prefix)) continue;
-      const raw = localStorage.getItem(k);
-      if(!raw) continue;
-      try{ out.push(JSON.parse(raw)); }catch(e){}
+  function saveEl(el){
+    const k = keyFor(el);
+    if(!k) return;
+    const type = (el.type || "").toLowerCase();
+    let v = "";
+    if(type === "checkbox" || type === "radio"){
+      v = el.checked ? "1" : "0";
+    } else {
+      v = el.value ?? "";
     }
-    // ordena por página e rótulo
-    out.sort((a,b)=>{
-      if(a.page !== b.page) return a.page.localeCompare(b.page);
-      return (a.label||"").localeCompare(b.label||"");
-    });
-    return out;
-  },
+    localStorage.setItem(k, v);
+  }
 
-  // cria TXT bonitão
-  buildTXT(){
-    const all = this.getAllSaved();
-    if(all.length === 0) return "Caderno vazio (nenhuma anotação salva ainda).";
+  function loadEl(el){
+    const k = keyFor(el);
+    if(!k) return;
+    const saved = localStorage.getItem(k);
+    if(saved === null) return;
 
-    const now = new Date();
-    let txt = `GUARDIÃS DA VIGILÂNCIA — CADERNO ÚNICO\n`;
-    txt += `Gerado em: ${now.toLocaleString()}\n`;
-    txt += `Obs.: Este caderno foi salvo no seu dispositivo (navegador).\n`;
-    txt += `------------------------------------------------------------\n\n`;
-
-    let currentPage = null;
-
-    for(const item of all){
-      if(item.page !== currentPage){
-        currentPage = item.page;
-        txt += `\n### PÁGINA: ${currentPage}\n`;
-        txt += `------------------------------------------------------------\n`;
-      }
-
-      const mark = (item.type === "checkbox")
-        ? (item.value === "1" ? "[X]" : "[ ]")
-        : "";
-
-      const value = (item.type === "checkbox")
-        ? ""
-        : (item.value || "").trim();
-
-      if(item.type === "checkbox"){
-        txt += `${mark} ${item.label}\n`;
-      }else{
-        txt += `- ${item.label}:\n${value}\n\n`;
-      }
+    const type = (el.type || "").toLowerCase();
+    if(type === "checkbox" || type === "radio"){
+      el.checked = saved === "1";
+    } else {
+      el.value = saved;
     }
+  }
 
-    return txt.trim();
-  },
+  function bindContainer(container){
+    if(!container) return;
+    const els = container.querySelectorAll("input, textarea, select");
+    els.forEach(el=>{
+      // só salva se tiver id ou name
+      if(!(el.id || el.name)) return;
 
-  // baixa TXT
-  downloadTXT(filename="caderno-guardiãs.txt"){
-    const txt = this.buildTXT();
-    const blob = new Blob([txt], {type:"text/plain;charset=utf-8"});
-    const url = URL.createObjectURL(blob);
+      loadEl(el);
 
+      // evitar duplicar listener
+      if(el.__gvBound) return;
+      el.__gvBound = true;
+
+      el.addEventListener("input", ()=>saveEl(el));
+      el.addEventListener("change", ()=>saveEl(el));
+    });
+  }
+
+  function allEntriesText(){
+    const keys = Object.keys(localStorage).filter(k=>k.startsWith(PREFIX)).sort();
+    if(keys.length === 0) return "CADERNO — GUARDIÃS DA VIGILÂNCIA\n\n(sem registros ainda)\n";
+
+    let out = "CADERNO — GUARDIÃS DA VIGILÂNCIA\n\n";
+    let currentPage = "";
+    keys.forEach(k=>{
+      const v = localStorage.getItem(k) ?? "";
+      const rest = k.slice(PREFIX.length);
+      const [page, field] = rest.split("::");
+
+      if(page !== currentPage){
+        currentPage = page;
+        out += `\n==============================\nPÁGINA: ${page}\n==============================\n`;
+      }
+      const prettyVal = (v === "1") ? "✅ marcado" : (v === "0") ? "⬜ não marcado" : v;
+      out += `• ${field}: ${prettyVal}\n`;
+    });
+    return out.trim() + "\n";
+  }
+
+  function downloadTXT(){
+    const text = allEntriesText();
+    const blob = new Blob([text], {type:"text/plain;charset=utf-8"});
     const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
+    a.href = URL.createObjectURL(blob);
+    a.download = "meu-caderno.txt";
     document.body.appendChild(a);
     a.click();
-    a.remove();
-
-    setTimeout(()=>URL.revokeObjectURL(url), 500);
+    setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
   }
-};
 
-// expõe no navegador
-window.GV = GV;
+  function ensureModal(){
+    if(document.getElementById("gv-caderno-modal")) return;
 
-// liga automático ao abrir a página
-document.addEventListener("DOMContentLoaded", ()=>GV.attach());
+    const modal = document.createElement("div");
+    modal.id = "gv-caderno-modal";
+    modal.innerHTML = `
+      <div id="gv-caderno-backdrop" style="
+        position:fixed; inset:0; background:rgba(0,0,0,.35);
+        display:none; z-index:9998;
+      "></div>
+
+      <div id="gv-caderno-panel" style="
+        position:fixed; left:50%; top:50%;
+        transform:translate(-50%,-50%);
+        width:min(900px, 92vw);
+        height:min(80vh, 700px);
+        background:rgba(255,255,255,.92);
+        border:1px solid rgba(120,20,80,.18);
+        border-radius:18px;
+        box-shadow:0 24px 80px rgba(120,20,80,.25);
+        display:none;
+        z-index:9999;
+        overflow:hidden;
+        backdrop-filter: blur(10px);
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      ">
+        <div style="padding:12px 14px; display:flex; gap:10px; align-items:center; justify-content:space-between;
+                    border-bottom:1px solid rgba(120,20,80,.12); background:rgba(255,240,248,.8);">
+          <div style="font-weight:900; color:#3b0a2a;">📓 Meu Caderno</div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button id="gv-btn-download" style="
+              border:0; cursor:pointer; font-weight:900;
+              padding:10px 12px; border-radius:12px;
+              background:linear-gradient(135deg,#db2777,#8b5cf6);
+              color:white;
+            ">⬇️ Baixar TXT</button>
+            <button id="gv-btn-close" style="
+              border:1px solid rgba(120,20,80,.18); cursor:pointer; font-weight:900;
+              padding:10px 12px; border-radius:12px;
+              background:white; color:#3b0a2a;
+            ">✖ Fechar</button>
+          </div>
+        </div>
+        <textarea id="gv-caderno-text" readonly style="
+          width:100%; height:calc(100% - 56px);
+          border:0; outline:none; padding:14px;
+          background:transparent; color:#2a0f22;
+          font-size:13px; line-height:1.5;
+        "></textarea>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    const backdrop = document.getElementById("gv-caderno-backdrop");
+    const panel = document.getElementById("gv-caderno-panel");
+    const close = document.getElementById("gv-btn-close");
+    const dl = document.getElementById("gv-btn-download");
+
+    function hide(){
+      backdrop.style.display = "none";
+      panel.style.display = "none";
+    }
+    backdrop.addEventListener("click", hide);
+    close.addEventListener("click", hide);
+    dl.addEventListener("click", downloadTXT);
+  }
+
+  function openCaderno(){
+    ensureModal();
+    const backdrop = document.getElementById("gv-caderno-backdrop");
+    const panel = document.getElementById("gv-caderno-panel");
+    const ta = document.getElementById("gv-caderno-text");
+    ta.value = allEntriesText();
+    backdrop.style.display = "block";
+    panel.style.display = "block";
+  }
+
+  function installFloatingButton(){
+    if(document.getElementById("gv-caderno-fab")) return;
+
+    const btn = document.createElement("button");
+    btn.id = "gv-caderno-fab";
+    btn.innerHTML = "📓 Caderno";
+    btn.style.cssText = `
+      position:fixed;
+      right:14px;
+      bottom:92px; /* acima do seu menu */
+      z-index:9997;
+      border:0;
+      cursor:pointer;
+      font-weight:900;
+      padding:12px 14px;
+      border-radius:14px;
+      color:white;
+      background:linear-gradient(135deg,#db2777,#8b5cf6);
+      box-shadow:0 16px 50px rgba(120,20,80,.28);
+    `;
+    btn.addEventListener("click", openCaderno);
+    document.body.appendChild(btn);
+  }
+
+  // API pública (se você quiser usar botão manual)
+  window.GV = {
+    bind: bindContainer,
+    openCaderno,
+    downloadTXT
+  };
+
+  // Auto: salva tudo que existe na página
+  document.addEventListener("DOMContentLoaded", ()=>{
+    bindContainer(document);
+    installFloatingButton();
+  });
+
+})();
