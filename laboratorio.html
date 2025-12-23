@@ -54,7 +54,10 @@
       display:flex;
       gap:12px;
       align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
     }
+    .hLeft{display:flex;gap:12px;align-items:center}
     .logo{
       width:46px;height:46px;
       border-radius:18px;
@@ -72,6 +75,46 @@
       color:var(--muted);
     }
 
+    /* progresso no header */
+    .progWrap{
+      min-width: 280px;
+      max-width: 420px;
+      flex: 1 1 340px;
+      background: rgba(255,255,255,.6);
+      border: 1px solid var(--stroke);
+      border-radius: 16px;
+      padding: 10px 12px;
+    }
+    .progTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:8px;
+    }
+    .progTop b{font-size:12px}
+    .progTop small{color:var(--muted);font-weight:800}
+    .bar{
+      width:100%;
+      height:12px;
+      background: rgba(140,20,90,.10);
+      border-radius: 999px;
+      overflow:hidden;
+      border: 1px solid rgba(120,20,80,.12);
+    }
+    .fill{
+      height:100%;
+      width:0%;
+      background: linear-gradient(135deg,var(--pink),var(--violet));
+      border-radius: 999px;
+      transition: width .25s ease;
+    }
+    .barRow{
+      display:grid;
+      gap:10px;
+    }
+
     /* Layout */
     main{
       max-width:1100px;
@@ -83,6 +126,7 @@
     }
     @media(max-width:900px){
       main{grid-template-columns:1fr}
+      .progWrap{min-width: unset; max-width: unset}
     }
 
     /* Panels */
@@ -149,7 +193,7 @@
       margin:12px 0;
     }
 
-    /* checklist + notas */
+    /* checklist */
     .check{
       display:flex;
       gap:10px;
@@ -161,17 +205,6 @@
       background:rgba(255,255,255,.6);
     }
     .check input{ transform: translateY(2px); }
-    textarea{
-      width:100%;
-      min-height:160px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      padding:10px;
-      margin-top:10px;
-      background:rgba(255,255,255,.78);
-      color:var(--txt);
-      outline:none;
-    }
 
     .tools{
       display:flex;
@@ -199,6 +232,25 @@
       color:var(--muted);
       margin-top:10px;
     }
+
+    /* mini progresso dentro do painel direito */
+    .miniProg{
+      margin-top:10px;
+      background: rgba(255,255,255,.55);
+      border:1px solid var(--stroke);
+      border-radius: 16px;
+      padding: 10px 12px;
+    }
+    .miniProg .row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:8px;
+    }
+    .miniProg .row b{font-size:12px}
+    .miniProg .row small{color:var(--muted);font-weight:900}
   </style>
 </head>
 
@@ -206,10 +258,26 @@
 
 <header>
   <div class="header">
-    <div class="logo">🧬</div>
-    <div>
-      <h1>Módulo 3 — Laboratório (8h)</h1>
-      <p>Do campo ao microscópio: ciência feita por meninas</p>
+    <div class="hLeft">
+      <div class="logo">🧬</div>
+      <div>
+        <h1>Módulo 3 — Laboratório (8h)</h1>
+        <p>Do campo ao microscópio: ciência feita por meninas</p>
+      </div>
+    </div>
+
+    <!-- Progresso do Módulo (diagnóstico) -->
+    <div class="progWrap" aria-label="Progresso do módulo">
+      <div class="progTop">
+        <b>📊 Diagnóstico do módulo</b>
+        <small id="modLabel">0%</small>
+      </div>
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+        <div class="fill" id="modFill"></div>
+      </div>
+      <div class="hint" style="margin:8px 0 0">
+        Progresso = itens do checklist marcados (todas as estações).
+      </div>
     </div>
   </div>
 </header>
@@ -220,7 +288,7 @@
   <aside class="panel">
     <div class="ph">
       <h2>🔬 Estações do Laboratório</h2>
-      <p class="hint">Toque em uma estação para abrir. Tudo salva automaticamente.</p>
+      <p class="hint">Toque em uma estação para abrir. Checklists salvam automaticamente.</p>
     </div>
     <div class="pb" id="menu"></div>
   </aside>
@@ -230,13 +298,34 @@
     <div class="ph">
       <h2 id="title">Escolha uma estação</h2>
       <p id="subtitle" style="font-size:12px;color:var(--muted);margin:6px 0 0"></p>
+
+      <!-- progresso da estação atual -->
+      <div class="miniProg" id="miniProg" style="display:none">
+        <div class="row">
+          <b>✅ Progresso da estação</b>
+          <small id="staLabel">0%</small>
+        </div>
+        <div class="bar">
+          <div class="fill" id="staFill"></div>
+        </div>
+        <div class="hint" style="margin-top:8px">
+          As anotações são feitas no <b>Caderno</b> (botão flutuante do app).
+        </div>
+      </div>
     </div>
+
     <div class="content" id="content">
       <div class="callout">
-        <b>Como usar</b>
+        <b>Como usar (para a Bárbara conduzir aula)</b>
         <p style="margin:6px 0 0">
-          1) Abra a estação → 2) Leia os blocos → 3) Marque o checklist → 4) Escreva sua nota.
-          <br/>O site salva automaticamente no seu celular.
+          1) Abra a estação → 2) Leia em voz alta os blocos-chave → 3) Faça as perguntas do “Desafio rápido”
+          → 4) As alunas marcam o checklist → 5) Reflexão e registro no <b>Caderno global</b>.
+        </p>
+      </div>
+      <div class="warn">
+        <b>Lembrete importante</b>
+        <p style="margin:6px 0 0">
+          Nesta página <b>não</b> tem campo de anotação. As notas ficam <b>somente</b> no Caderno do app (um lugar só).
         </p>
       </div>
     </div>
@@ -245,7 +334,7 @@
 </main>
 
 <script>
-  const STORAGE_PREFIX = "gv_lab_v1__";
+  const STORAGE_PREFIX = "gv_lab_v2__"; // versão nova
 
   const lessons = [
     {
@@ -254,34 +343,46 @@
       sub:"Organização, biossegurança e respeito ao material",
       html:`
         <h3>Objetivo da estação</h3>
-        <p>Transformar o material do campo em <b>amostra confiável</b> para observação. Aqui, a regra é:
-        <b>sem organização não existe dado</b>.</p>
+        <p>Transformar o material do campo em <b>amostra confiável</b>. Aqui vale a regra:
+        <b>sem organização, não existe dado</b>.</p>
 
         <div class="meta">
-          <b>Biossegurança (linguagem simples)</b>
+          <b>Biossegurança (simples e direta)</b>
           <ul>
             <li>Luvas quando indicado • cabelo preso • bancada limpa</li>
-            <li>Nada de comida/bebida no laboratório</li>
-            <li>Não encostar no rosto durante a atividade</li>
-            <li>Descarte correto (lixo comum vs. perfurocortante, se houver)</li>
+            <li>Nada de comida/bebida • nada de celular na bancada</li>
+            <li>Evitar tocar no rosto durante a atividade</li>
+            <li>Descarte correto do material (quando houver)</li>
           </ul>
         </div>
 
-        <h3>Checklist (marque no app)</h3>
+        <div class="callout">
+          <b>Desafio rápido (Bárbara pergunta / elas respondem)</b>
+          <ul>
+            <li>O que acontece com um dado sem etiqueta?</li>
+            <li>Por que separar “área limpa” e “área suja”?</li>
+          </ul>
+        </div>
+
+        <h3>Checklist da estação</h3>
         ${mkChecks("L1",[
           "Conferi se cada frasco/saco tem etiqueta mínima (local + data + coletor).",
           "Separei amostras por tipo (larva / adulto / água / substrato) sem misturar.",
           "Organizei a bancada com uma área “limpa” e uma área “suja”.",
-          "Registrei o que chegou (quantidade, condição, problemas)."
+          "Registrei problemas do material (vazamento, falta de rótulo, dano)."
         ])}
 
-        <h3>Minha nota (o que eu aprendi?)</h3>
-        ${mkNote("L1","Escreva com suas palavras por que a biossegurança e a organização protegem a ciência e as pessoas...")}
+        <div class="warn">
+          <b>Registro no Caderno</b>
+          <p style="margin:6px 0 0">
+            Abra o <b>Caderno</b> do app e registre: “o que chegou”, “como foi organizado” e “qual problema apareceu”.
+          </p>
+        </div>
 
         <div class="callout">
           <b>Link útil</b>
           <p style="margin:6px 0 0">
-            Biblioteca Virtual em Saúde (Ministério da Saúde): 
+            Biblioteca Virtual em Saúde (Ministério da Saúde):
             <a href="https://bvsms.saude.gov.br/" target="_blank" rel="noopener">bvsms.saude.gov.br</a>
           </p>
         </div>
@@ -299,10 +400,18 @@
           <b>Rótulo mínimo (sempre)</b>
           <ul>
             <li><b>Código</b> da amostra</li>
-            <li><b>Local</b> (ex.: bairro + ponto)</li>
+            <li><b>Local</b> (bairro + ponto)</li>
             <li><b>Data</b> e <b>hora</b></li>
             <li><b>Tipo</b> (larva/adulto/armadilha/recipiente)</li>
             <li><b>Quem coletou</b></li>
+          </ul>
+        </div>
+
+        <div class="meta">
+          <b>Desafio rápido</b>
+          <ul>
+            <li>Qual o risco de “dois frascos com o mesmo código”?</li>
+            <li>Qual informação você NUNCA pode deixar faltar?</li>
           </ul>
         </div>
 
@@ -314,8 +423,12 @@
           "Separei amostras duvidosas (sem dados) para não contaminar o estudo."
         ])}
 
-        <h3>Minha nota</h3>
-        ${mkNote("L2","Crie aqui um exemplo de rótulo completo para uma amostra fictícia do campo...")}
+        <div class="warn">
+          <b>Registro no Caderno</b>
+          <p style="margin:6px 0 0">
+            No Caderno: escreva 1 exemplo completo de rótulo + 1 erro comum que você evitaria.
+          </p>
+        </div>
       `
     },
     {
@@ -324,27 +437,37 @@
       sub:"Ver detalhes invisíveis a olho nu",
       html:`
         <h3>O que a lupa / microscópio revela?</h3>
-        <p>Partes do corpo e formas (segmentos, asas, antenas) ajudam a reconhecer
-        o <b>grupo</b> do inseto e entender o risco.</p>
+        <p>Partes do corpo e formas (asas, antenas, segmentos) ajudam a reconhecer o <b>grupo</b> e entender risco.</p>
 
         <div class="meta">
           <b>Não precisa “decorar espécie”</b>
           <p style="margin:6px 0 0">
-            Nesta oficina, o foco é: <b>grupo + ambiente + evidência</b>.
-            Isso já ajuda a tomar decisões melhores.
+            Aqui o foco é: <b>grupo + ambiente + evidência</b>. Isso já orienta decisão em saúde.
           </p>
+        </div>
+
+        <div class="callout">
+          <b>Desafio rápido</b>
+          <ul>
+            <li>Que detalhe você viu que te deu certeza (e não “achismo”)?</li>
+            <li>Como isso mudaria uma ação no território?</li>
+          </ul>
         </div>
 
         <h3>Checklist</h3>
         ${mkChecks("L3",[
-          "Consegui descrever pelo menos 3 características observáveis (ex.: forma do corpo, movimentos, tamanho).",
+          "Descrevi pelo menos 3 características observáveis (forma, movimento, tamanho etc.).",
           "Diferenciei “larva” de “adulto” pelo que vi (sem chute).",
-          "Registrei um desenho simples ou descrição do que observei (no meu caderno e aqui).",
-          "Evitei tocar na amostra sem necessidade e mantive tudo organizado."
+          "Registrei um desenho simples ou descrição no meu Caderno.",
+          "Mantive o material organizado e evitei tocar sem necessidade."
         ])}
 
-        <h3>Minha nota</h3>
-        ${mkNote("L3","Descreva o que você viu e por que isso pode ajudar a vigilância em saúde...")}
+        <div class="warn">
+          <b>Registro no Caderno</b>
+          <p style="margin:6px 0 0">
+            No Caderno: “o que eu vi”, “qual grupo eu suspeito” e “qual ambiente pode explicar isso”.
+          </p>
+        </div>
       `
     },
     {
@@ -367,16 +490,28 @@
           </p>
         </div>
 
+        <div class="meta">
+          <b>Desafio rápido</b>
+          <ul>
+            <li>Esse achado pede <b>eliminar</b>, <b>manejar</b> ou <b>monitorar</b>?</li>
+            <li>Qual ação tem maior efeito com menor conflito social?</li>
+          </ul>
+        </div>
+
         <h3>Checklist</h3>
         ${mkChecks("L4",[
-          "Consegui ligar ambiente → vetor → doença em uma frase simples.",
+          "Liguei ambiente → vetor → doença em uma frase simples.",
           "Entendi que nem tudo se “elimina”: às vezes se maneja ou monitora.",
-          "Consegui sugerir uma ação prática que caiba na realidade do bairro.",
-          "Consigo explicar para outra pessoa o porquê do laboratório."
+          "Sugeri uma ação prática que cabe na realidade do bairro.",
+          "Consigo explicar para outra pessoa por que o laboratório importa."
         ])}
 
-        <h3>Minha nota</h3>
-        ${mkNote("L4","Escreva 3 decisões possíveis a partir do que foi observado no campo e no laboratório...")}
+        <div class="warn">
+          <b>Registro no Caderno</b>
+          <p style="margin:6px 0 0">
+            No Caderno: escreva 3 decisões possíveis e justifique em 1 linha cada.
+          </p>
+        </div>
       `
     },
     {
@@ -385,12 +520,19 @@
       sub:"Você também pode estar aqui",
       html:`
         <h3>Ciência é lugar de mulher</h3>
-        <p>Mulheres estão na pesquisa, na gestão, na inovação e na saúde pública.
-        E precisamos de mais meninas ocupando esses espaços com confiança.</p>
+        <p>Mulheres estão na pesquisa, na gestão, na inovação e na saúde pública. Precisamos de mais meninas nesses espaços.</p>
 
         <div class="callout">
           <b>Mensagem final</b>
           <p style="margin:6px 0 0">Ser cientista é observar, cuidar e transformar.</p>
+        </div>
+
+        <div class="meta">
+          <b>Desafio rápido</b>
+          <ul>
+            <li>Qual parte do curso te deixou mais confiante?</li>
+            <li>Que atitude você levaria para sua escola/casa?</li>
+          </ul>
         </div>
 
         <h3>Checklist</h3>
@@ -401,8 +543,12 @@
           "Eu me sinto mais forte e capaz depois do curso."
         ])}
 
-        <h3>Minha nota</h3>
-        ${mkNote("L5","Escreva uma promessa: o que você vai levar para sua casa/escola/comunidade?")}
+        <div class="warn">
+          <b>Registro no Caderno</b>
+          <p style="margin:6px 0 0">
+            No Caderno: escreva uma promessa (“A partir de hoje eu vou…”).
+          </p>
+        </div>
       `
     }
   ];
@@ -420,14 +566,8 @@
           <button class="btn primary" type="button" data-action="save" data-lesson="${lessonId}">💾 Salvar agora</button>
           <button class="btn" type="button" data-action="clear" data-lesson="${lessonId}">🧹 Limpar esta estação</button>
         </div>
+        <div class="hint">✅ Os checklists salvam automaticamente no seu celular.</div>
       </div>
-    `;
-  }
-
-  function mkNote(lessonId, placeholder){
-    return `
-      <textarea data-save="1" data-key="${lessonId}__note" placeholder="${placeholder}"></textarea>
-      <div class="hint">✅ Salva automaticamente conforme você digita.</div>
     `;
   }
 
@@ -435,6 +575,15 @@
   const title = document.getElementById("title");
   const subtitle = document.getElementById("subtitle");
   const content = document.getElementById("content");
+
+  // progresso
+  const modFill = document.getElementById("modFill");
+  const modLabel = document.getElementById("modLabel");
+  const staFill = document.getElementById("staFill");
+  const staLabel = document.getElementById("staLabel");
+  const miniProg = document.getElementById("miniProg");
+
+  let currentLessonId = null;
 
   function storageKey(k){ return STORAGE_PREFIX + k; }
 
@@ -444,26 +593,101 @@
       const v = localStorage.getItem(storageKey(k));
       if (v === null) return;
       if (el.type === "checkbox") el.checked = (v === "1");
-      else el.value = v;
     });
+  }
+
+  function saveOne(el){
+    const k = el.getAttribute("data-key");
+    if (!k) return;
+    if (el.type === "checkbox") localStorage.setItem(storageKey(k), el.checked ? "1" : "0");
+  }
+
+  function countModuleProgress(){
+    // conta todos os checkboxes de todas as estações (pela lista lessons)
+    let total = 0;
+    let done = 0;
+
+    lessons.forEach(l=>{
+      // cada estação tem 4 itens no checklist (neste modelo)
+      // mas vamos contar pelo storage: para ser robusto, contamos pelo HTML quando aberto + pelo padrão de chaves.
+      // Aqui: contamos pelo padrão de chaves ck0..ck99 até falhar (limite seguro 50)
+      for(let i=0;i<50;i++){
+        const key = `${l.id}__ck${i}`;
+        const val = localStorage.getItem(storageKey(key));
+        // consideramos "existente" quando já foi criado/visitado OU quando este ck faz parte do modelo.
+        // Como temos 4 itens por estação, paramos no primeiro "buraco" depois que já encontrou algum.
+        // Mais simples/seguro: usar o tamanho do checklist que existe no HTML da estação quando aberta.
+      }
+    });
+
+    // forma correta: total baseado no modelo (itens que realmente existem)
+    // vamos reconstruir total lendo o conteúdo do objeto lessons via regex: conta "data-key=...__ck"
+    // (rápido e confiável)
+    total = lessons.reduce((acc,l)=>{
+      const m = (l.html.match(/__ck\d+/g) || []);
+      // deduplicar por estação
+      const uniq = new Set(m);
+      return acc + uniq.size;
+    },0);
+
+    // done: contar localStorage = "1" para chaves existentes
+    done = 0;
+    lessons.forEach(l=>{
+      const m = (l.html.match(/__ck\d+/g) || []);
+      const uniq = Array.from(new Set(m));
+      uniq.forEach(suf=>{
+        const key = `${l.id}${suf}`; // ex: L1__ck0
+        const val = localStorage.getItem(storageKey(key));
+        if (val === "1") done++;
+      });
+    });
+
+    return {done, total, pct: total ? Math.round((done/total)*100) : 0};
+  }
+
+  function countStationProgress(lessonId){
+    const l = lessons.find(x=>x.id===lessonId);
+    if(!l) return {done:0,total:0,pct:0};
+    const m = (l.html.match(/__ck\d+/g) || []);
+    const uniq = Array.from(new Set(m));
+    const total = uniq.length;
+    let done = 0;
+    uniq.forEach(suf=>{
+      const key = `${lessonId}${suf}`;
+      const val = localStorage.getItem(storageKey(key));
+      if (val === "1") done++;
+    });
+    return {done,total,pct: total ? Math.round((done/total)*100) : 0};
+  }
+
+  function renderProgress(){
+    const mp = countModuleProgress();
+    modFill.style.width = mp.pct + "%";
+    modLabel.textContent = `${mp.pct}% (${mp.done}/${mp.total})`;
+
+    if(currentLessonId){
+      miniProg.style.display = "block";
+      const sp = countStationProgress(currentLessonId);
+      staFill.style.width = sp.pct + "%";
+      staLabel.textContent = `${sp.pct}% (${sp.done}/${sp.total})`;
+    }else{
+      miniProg.style.display = "none";
+    }
   }
 
   function attachAutosave(){
     document.querySelectorAll('[data-save="1"]').forEach(el=>{
-      const k = el.getAttribute("data-key");
       const handler = ()=>{
-        if (el.type === "checkbox") localStorage.setItem(storageKey(k), el.checked ? "1" : "0");
-        else localStorage.setItem(storageKey(k), el.value || "");
+        saveOne(el);
+        renderProgress();
       };
-      el.addEventListener("input", handler);
       el.addEventListener("change", handler);
     });
 
-    // botões de salvar / limpar
     document.querySelectorAll('[data-action="save"]').forEach(btn=>{
       btn.addEventListener("click", ()=>{
-        restoreAll(); // só para garantir que nada ficou fora (visual)
-        alert("✅ Salvo no seu celular!");
+        // apenas confirma (os itens já salvam sozinhos)
+        alert("✅ Checklists salvos no seu celular!");
       });
     });
 
@@ -480,26 +704,27 @@
         // limpa tela
         document.querySelectorAll(`[data-key^="${lessonId}__"]`).forEach(el=>{
           if (el.type === "checkbox") el.checked = false;
-          else el.value = "";
         });
 
+        renderProgress();
         alert("🧹 Estação limpa!");
       });
     });
   }
 
   function openLesson(l, btn){
+    currentLessonId = l.id;
+
     document.querySelectorAll(".lesson-btn").forEach(x=>x.classList.remove("active"));
     btn.classList.add("active");
     title.textContent = l.title;
     subtitle.textContent = l.sub;
     content.innerHTML = l.html;
 
-    // reanexa autosave na tela nova e restaura valores
     restoreAll();
     attachAutosave();
+    renderProgress();
 
-    // no mobile, volta pro topo
     if (window.innerWidth < 900) window.scrollTo({top:0, behavior:"smooth"});
   }
 
@@ -512,13 +737,15 @@
     menu.appendChild(b);
     if (idx===0) setTimeout(()=>openLesson(l,b), 0);
   });
+
+  // atualiza progresso mesmo antes de abrir (caso já tenha marcações antigas)
+  renderProgress();
 </script>
 
-<!-- Menu automático (sem nav manual aqui) -->
+<!-- Menu automático do seu app -->
 <div id="app-menu"></div>
 <script src="menu.js"></script>
-  <script src="caderno-global.js"></script>
-
+<script src="caderno-global.js"></script>
 
 </body>
 </html>
