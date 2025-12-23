@@ -324,5 +324,28 @@ footer{
 <div id="app-menu"></div>
 <script src="menu.js"></script>
   <script src="caderno.js"></script>
+  <!-- BOTÃO FLUTUANTE: BAIXAR CADERNO -->
+<button id="btnCaderno" onclick="GV.downloadTXT()">
+  📥 Baixar Caderno
+</button>
+
+<style>
+  #btnCaderno{
+    position:fixed;
+    right:14px;
+    bottom:92px; /* fica acima do menu */
+    z-index:9999;
+    border:0;
+    cursor:pointer;
+    font-weight:900;
+    padding:12px 14px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#db2777,#8b5cf6);
+    color:white;
+    box-shadow:0 10px 30px rgba(120,20,80,.22);
+  }
+  #btnCaderno:active{ transform:scale(.98); }
+</style>
+
 </body>
 </html>
