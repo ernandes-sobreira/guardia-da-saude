@@ -796,24 +796,6 @@ aulas.forEach(a=>{
   chips.appendChild(b);
 });
 
-/* =======================
-   BOTÃO "Registrar no Caderno"
-   (usa o caderno-global.js)
-======================= */
-function bindCadernoButtons(a){
-  conteudo.querySelectorAll("[data-caderno]").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const titulo = btn.getAttribute("data-caderno") || a.title;
-      // tenta usar funções do seu caderno-global.js (sem quebrar se não existir)
-      if(window.GV && typeof window.GV.addEntry === "function"){
-        window.GV.addEntry(`[TEORIA] ${titulo}`, `Aula: ${a.title}\n\nO que eu aprendi:\n- \n\nDúvidas:\n- \n\nIdeias para o território:\n- `);
-        if(window.GV.open) window.GV.open();
-      }else{
-        alert("Seu caderno-global.js não tem GV.addEntry(). Me mande ele que eu ajusto em 1 minuto.");
-      }
-    });
-  });
-}
 
 /* abre primeira aula por padrão */
 openAula(aulas[0]);
