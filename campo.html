@@ -4,9 +4,9 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Guardiãs da Vigilância 🌱 | Campo (Avançado)</title>
+<meta name="theme-color" content="#d946ef"/>
 
 <style>
-/* === identidade mantida === */
 :root{
   --bg0:#fff6fb;
   --bg1:#ffe4f3;
@@ -33,7 +33,6 @@ body{
   color:var(--txt);
 }
 
-/* layout */
 header{
   position:sticky;top:0;z-index:20;
   background:rgba(255,246,251,.9);
@@ -50,6 +49,8 @@ header .h{
   background:linear-gradient(135deg,var(--pink),var(--violet));
   color:white;font-size:22px;box-shadow:var(--shadow);
 }
+header h1{margin:0;font-size:16px}
+header p{margin:2px 0 0;font-size:12px;color:var(--muted)}
 
 main{
   max-width:1100px;margin:auto;
@@ -82,6 +83,7 @@ main{
 
 .content{line-height:1.75}
 .content h3{margin-top:14px}
+
 .callout{
   background:rgba(217,70,239,.08);
   border-left:4px solid var(--pink);
@@ -97,33 +99,39 @@ main{
   border-left:4px solid var(--gold);
   padding:12px;border-radius:14px;margin:12px 0;
 }
+
+/* checklist */
 .check{
-  display:flex;gap:10px;margin-bottom:8px;
+  display:flex;gap:10px;margin:8px 0;
+  align-items:flex-start;
 }
-textarea{
-  width:100%;min-height:180px;
-  border-radius:14px;border:1px solid var(--stroke);
-  padding:10px;margin-top:10px;
+.check input{transform: translateY(2px);}
+
+/* progress */
+.progress-wrap{
+  margin-top:10px;
+  display:grid;
+  gap:10px;
 }
-nav{
-  position:fixed;bottom:0;left:0;right:0;
-  background:rgba(255,246,251,.95);
-  border-top:1px solid var(--stroke);
+.prog{
+  background:rgba(255,255,255,.6);
+  border:1px solid var(--stroke);
+  border-radius:999px;
+  overflow:hidden;
+  height:12px;
 }
-.nav{
-  max-width:1100px;margin:auto;
-  padding:10px;display:flex;gap:8px;
-}
-.nav a{
-  flex:1;text-align:center;padding:12px;
-  border-radius:16px;text-decoration:none;
-  background:rgba(255,255,255,.7);
-  color:var(--txt);font-weight:800;
-}
-.nav a.active{
+.prog > div{
+  height:100%;
+  width:0%;
   background:linear-gradient(135deg,var(--pink),var(--violet));
-  color:white;
+  transition:width .25s ease;
 }
+.prog-meta{
+  display:flex;justify-content:space-between;
+  font-size:12px;color:var(--muted);
+}
+
+/* bottom menu injected by menu.js */
 </style>
 </head>
 
@@ -134,22 +142,33 @@ nav{
     <div class="logo">🌱</div>
     <div>
       <h1>Módulo de Campo — Vigilância Entomológica Avançada</h1>
-      <p style="font-size:12px;color:var(--muted)">
-        Onde o território explica o vetor, e o vetor explica a doença
-      </p>
+      <p>Onde o território explica o vetor, e o vetor explica a doença</p>
+
+      <div class="progress-wrap">
+        <div class="prog-meta">
+          <span>Progresso da lição</span>
+          <span id="lessonPct">0%</span>
+        </div>
+        <div class="prog"><div id="lessonBar"></div></div>
+
+        <div class="prog-meta">
+          <span>Progresso do módulo</span>
+          <span id="modulePct">0%</span>
+        </div>
+        <div class="prog"><div id="moduleBar"></div></div>
+      </div>
+
     </div>
   </div>
 </header>
 
 <main>
 
-<!-- MENU -->
 <aside class="panel">
-  <div class="ph"><h2>🧭 Ambientes Investigados</h2></div>
+  <div class="ph"><h2>🧭 Roteiros de Observação</h2></div>
   <div class="pb" id="menu"></div>
 </aside>
 
-<!-- CONTEÚDO -->
 <section class="panel">
   <div class="ph">
     <h2 id="title">Selecione um ambiente</h2>
@@ -160,191 +179,294 @@ nav{
 
 </main>
 
+<!-- menu fixo (o seu menu.js + caderno-global.js) -->
+<div id="app-menu"></div>
+<script src="menu.js"></script>
+<script src="caderno-global.js"></script>
+
 <script>
-const lessons=[
+/* ========= CONTEÚDO ========= */
+const lessons = [
 {
-title:"1️⃣ Água parada artificial (criadouros urbanos)",
-sub:"Baldes, pneus, caixas, recipientes domésticos",
-html:`
-<h3>O que define este ambiente?</h3>
-<p>São locais criados pela ação humana onde a água se acumula de forma
-temporária ou permanente, geralmente em áreas urbanas.</p>
+  id:"campo_epi",
+  title:"🧤 Antes de sair: Segurança & EPIs",
+  sub:"O campo começa com proteção e ética",
+  html:`
+    <h3>EPIs obrigatórios (sem negociação)</h3>
+    <div class="warn">
+      <ul>
+        <li><b>Bota fechada</b> (ou tênis resistente) + meia</li>
+        <li><b>Calça comprida</b> (preferir tecido mais grosso)</li>
+        <li><b>Camisa manga longa</b> (ou protetor UV)</li>
+        <li><b>Repelente</b> aplicado e reaplicado</li>
+        <li><b>Boné/chapéu</b> e água para hidratação</li>
+        <li><b>Luvas</b> quando houver risco (lixo, mato fechado, material sujo)</li>
+      </ul>
+      <p style="margin:0"><b>Nunca</b> coletar com a mão nua. Observação > captura.</p>
+    </div>
 
-<div class="eco">
-<b>Vetores associados</b>
-<ul>
-<li>Mosquitos urbanos (ex.: Aedes)</li>
-<li>Fase dominante: <b>larvas e pupas</b></li>
-</ul>
-</div>
+    <h3>Postura ética no território</h3>
+    <div class="callout">
+      <ul>
+        <li>Não invadir quintais/áreas privadas sem autorização</li>
+        <li>Não expor pessoas ou endereços em fotos</li>
+        <li>Foco em <b>ambiente</b>, não em “culpar” moradores</li>
+      </ul>
+    </div>
 
-<h3>Por que o vetor escolhe esse local?</h3>
-<ul>
-<li>Água limpa ou pouco poluída</li>
-<li>Baixa presença de predadores</li>
-<li>Proximidade com humanos</li>
-</ul>
-
-<div class="callout">
-<b>Relação com doenças</b>
-<p>Dengue, Zika e Chikungunya dependem diretamente da existência
-desses microambientes.</p>
-</div>
-
-<h3>Checklist de campo (obrigatório)</h3>
-<div class="check"><input type="checkbox"> Identifiquei pelo menos 3 tipos diferentes de recipientes</div>
-<div class="check"><input type="checkbox"> Classifiquei cada um em baixo/médio/alto risco</div>
-<div class="check"><input type="checkbox"> Relacionei risco com sombra, frequência de uso e presença de tampa</div>
-<div class="check"><input type="checkbox"> Propus ação realista de manejo ambiental</div>
-
-{
-title:"2️⃣ Água natural ou semi-natural",
-sub:"Valetas, poças, áreas alagadas, margens",
-html:`
-<h3>O que caracteriza?</h3>
-<p>São ambientes onde a água não depende exclusivamente de recipientes,
-mas de dinâmica ambiental e climática.</p>
-
-<div class="eco">
-<b>Vetores e fases</b>
-<ul>
-<li>Mosquitos diversos</li>
-<li>Fase larval e adulta</li>
-</ul>
-</div>
-
-<h3>Importância ecológica</h3>
-<ul>
-<li>Podem manter populações mesmo fora de surtos urbanos</li>
-<li>Relacionam-se com chuva, drenagem e planejamento urbano</li>
-</ul>
-
-<div class="callout">
-<b>Vigilância estratégica</b>
-<p>Nem todo foco é eliminado — alguns são monitorados.</p>
-</div>
-
-<h3>Checklist</h3>
-<div class="check"><input type="checkbox"> Diferenciei ambiente natural de artificial</div>
-<div class="check"><input type="checkbox"> Observei conexão com chuva e drenagem</div>
-<div class="check"><input type="checkbox"> Avaliei se o ambiente pode ser manejado ou apenas monitorado</div>
-<div class="check"><input type="checkbox"> Relacionei com sazonalidade</div>
-
-<textarea placeholder="Explique por que nem todo ambiente aquático deve ser eliminado."></textarea>
-`
+    <h3>Checklist (obrigatório)</h3>
+    <div class="check"><input data-save type="checkbox" data-key="epi_bota"> <span>Estou com bota/tênis fechado e roupa adequada</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="epi_rep"> <span>Estou com repelente (e sei a hora de reaplicar)</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="epi_agua"> <span>Estou com água e pausas planejadas</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="epi_etica"> <span>Entendi as regras de ética (sem invasão/sem exposição)</span></div>
+  `
 },
 {
-title:"3️⃣ Ambientes terrestres e sombreados",
-sub:"Matéria orgânica, folhas, solo úmido",
-html:`
-<h3>Características principais</h3>
-<p>Ambientes com pouca luz, umidade elevada e acúmulo de matéria orgânica.</p>
+  id:"agua_artificial",
+  title:"1️⃣ Água parada artificial (urbano)",
+  sub:"Baldes, pneus, caixas, recipientes domésticos",
+  html:`
+    <h3>O que define este ambiente?</h3>
+    <p>São criadouros criados pela ação humana, onde a água se acumula e permite o desenvolvimento de larvas.</p>
 
-<div class="eco">
-<b>Vetores associados</b>
-<ul>
-<li>Flebotomíneos</li>
-<li>Outros insetos de importância sanitária</li>
-</ul>
-</div>
+    <div class="eco">
+      <b>Vetores associados</b>
+      <ul>
+        <li>Mosquitos urbanos (ex.: <b>Aedes</b>)</li>
+        <li>Fase dominante: <b>larvas e pupas</b></li>
+      </ul>
+    </div>
 
-<h3>Por que são invisíveis?</h3>
-<ul>
-<li>Não têm água visível</li>
-<li>Não chamam atenção da população</li>
-</ul>
+    <h3>Por que o vetor escolhe esse local?</h3>
+    <ul>
+      <li>Água relativamente limpa</li>
+      <li>Baixa presença de predadores</li>
+      <li>Proximidade com pessoas (alimento para o mosquito adulto)</li>
+    </ul>
 
-<div class="callout">
-<b>Relação com Oropouche e leishmanioses</b>
-</div>
+    <div class="callout">
+      <b>Relação com doenças</b>
+      <p style="margin:6px 0 0">Dengue, Zika e Chikungunya dependem diretamente da existência desses microambientes.</p>
+    </div>
 
-<h3>Checklist</h3>
-<div class="check"><input type="checkbox"> Identifiquei áreas sombreadas e úmidas</div>
-<div class="check"><input type="checkbox"> Relacionei presença de matéria orgânica com abrigo</div>
-<div class="check"><input type="checkbox"> Diferenciei risco ambiental de risco domiciliar</div>
-
-<textarea placeholder="Por que esses ambientes são difíceis de controlar apenas com campanhas educativas?"></textarea>
-`
+    <h3>Checklist de campo</h3>
+    <div class="check"><input data-save type="checkbox" data-key="a1_tipos"> <span>Identifiquei 3 tipos diferentes de recipientes</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a1_risco"> <span>Classifiquei cada um em baixo/médio/alto risco</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a1_fatores"> <span>Relacionei risco com sombra, uso e tampa</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a1_acao"> <span>Propus uma ação realista de manejo ambiental</span></div>
+  `
 },
 {
-title:"4️⃣ Ambientes domiciliares e peridomiciliares",
-sub:"Casas, quintais, anexos, depósitos",
-html:`
-<h3>Definição</h3>
-<p>Espaços onde o contato humano–vetor é mais direto.</p>
+  id:"agua_natural",
+  title:"2️⃣ Água natural ou semi-natural",
+  sub:"Valetas, poças, áreas alagadas, margens",
+  html:`
+    <h3>O que caracteriza?</h3>
+    <p>Ambientes em que a água depende do clima, drenagem e dinâmica do terreno (não de recipientes).</p>
 
-<div class="eco">
-<b>Vetores e risco</b>
-<ul>
-<li>Mosquitos adultos</li>
-<li>Triatomíneos (em alguns contextos)</li>
-</ul>
-</div>
+    <div class="eco">
+      <b>Vetores e fases</b>
+      <ul>
+        <li>Mosquitos diversos</li>
+        <li>Fase larval e adulta (dependendo do grupo)</li>
+      </ul>
+    </div>
 
-<h3>Vigilância ética</h3>
-<ul>
-<li>Não invadir</li>
-<li>Não culpabilizar</li>
-<li>Orientar com respeito</li>
-</ul>
+    <h3>Por que isso é estratégico?</h3>
+    <ul>
+      <li>Podem sustentar populações de vetores fora do “pico urbano”</li>
+      <li>Conectam vigilância a planejamento urbano, chuva e drenagem</li>
+    </ul>
 
-<div class="callout">
-<b>Saúde pública é parceria</b>
-</div>
+    <div class="callout">
+      <b>Vigilância inteligente</b>
+      <p style="margin:6px 0 0">Nem todo foco é eliminável. Alguns são <b>monitorados</b> com critério e segurança.</p>
+    </div>
 
-<h3>Checklist</h3>
-<div class="check"><input type="checkbox"> Diferenciei domicílio e peridomicílio</div>
-<div class="check"><input type="checkbox"> Identifiquei possíveis abrigos sem capturar insetos</div>
-<div class="check"><input type="checkbox"> Propus ação educativa adequada</div>
-
-<textarea placeholder="Explique por que a vigilância domiciliar exige mais sensibilidade social."></textarea>
-`
+    <h3>Checklist</h3>
+    <div class="check"><input data-save type="checkbox" data-key="a2_dif"> <span>Diferenciei natural vs. artificial</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a2_chuva"> <span>Observei conexão com chuva e drenagem</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a2_manejo"> <span>Avaliei: manejar ou apenas monitorar?</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a2_sazon"> <span>Relacionei com sazonalidade</span></div>
+  `
 },
 {
-title:"5️⃣ Integração ecológica e decisão em saúde",
-sub:"Do ambiente ao controle da doença",
-html:`
-<h3>Integração final</h3>
-<p>Nenhum ambiente age sozinho. A vigilância integra dados.</p>
+  id:"terrestre_sombra",
+  title:"3️⃣ Terrestres e sombreados",
+  sub:"Matéria orgânica, folhas, solo úmido",
+  html:`
+    <h3>Características principais</h3>
+    <p>Ambientes úmidos, com matéria orgânica e pouca luz. Muitas vezes “invisíveis” para a população.</p>
 
-<div class="callout">
-<b>Pergunta-chave</b>
-<p>Se você fosse a vigilância municipal, o que faria com esses dados?</p>
-</div>
+    <div class="eco">
+      <b>Vetores associados</b>
+      <ul>
+        <li>Flebotomíneos</li>
+        <li>Outros insetos com importância sanitária local</li>
+      </ul>
+    </div>
 
-<h3>Checklist final</h3>
-<div class="check"><input type="checkbox"> Relacionei ambiente, vetor e doença</div>
-<div class="check"><input type="checkbox"> Diferenciei eliminação, manejo e monitoramento</div>
-<div class="check"><input type="checkbox"> Compreendi o papel do campo na decisão</div>
-<div class="check"><input type="checkbox"> Consigo explicar isso para outra pessoa</div>
+    <h3>Por que são difíceis?</h3>
+    <ul>
+      <li>Não têm água “óbvia” como criadouro</li>
+      <li>Exigem olhar ecológico: sombra + umidade + abrigo</li>
+    </ul>
 
-<textarea placeholder="Explique como o campo orienta ações reais de vigilância em saúde."></textarea>
-`
+    <div class="callout">
+      <b>Conexão com saúde</b>
+      <p style="margin:6px 0 0">O ambiente pode favorecer ciclos de transmissão em contextos específicos (depende do território).</p>
+    </div>
+
+    <h3>Checklist</h3>
+    <div class="check"><input data-save type="checkbox" data-key="a3_area"> <span>Identifiquei áreas sombreadas e úmidas</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a3_org"> <span>Relacionei matéria orgânica com abrigo</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a3_risco"> <span>Diferenciei risco ambiental vs. domiciliar</span></div>
+  `
+},
+{
+  id:"domiciliar",
+  title:"4️⃣ Domiciliares e peridomiciliares",
+  sub:"Casas, quintais, anexos, depósitos",
+  html:`
+    <h3>Definição</h3>
+    <p>Onde o contato humano–vetor é mais direto. Aqui a vigilância precisa de <b>cuidado social</b>.</p>
+
+    <div class="eco">
+      <b>Risco comum</b>
+      <ul>
+        <li>Mosquitos adultos em repouso</li>
+        <li>Abrigos e microambientes no quintal</li>
+      </ul>
+    </div>
+
+    <h3>Vigilância ética</h3>
+    <ul>
+      <li>Não invadir</li>
+      <li>Não humilhar</li>
+      <li>Orientar com respeito e clareza</li>
+    </ul>
+
+    <div class="callout">
+      <b>Saúde pública é parceria</b>
+      <p style="margin:6px 0 0">Quando a pessoa entende o “porquê”, ela vira parte da solução.</p>
+    </div>
+
+    <h3>Checklist</h3>
+    <div class="check"><input data-save type="checkbox" data-key="a4_diff"> <span>Diferenciei domicílio e peridomicílio</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a4_abrigo"> <span>Identifiquei possíveis abrigos sem capturar insetos</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a4_edu"> <span>Propus uma orientação educativa adequada</span></div>
+  `
+},
+{
+  id:"integracao",
+  title:"5️⃣ Integração ecológica e decisão",
+  sub:"Do ambiente ao controle da doença",
+  html:`
+    <h3>Integração final</h3>
+    <p>Nenhum ambiente age sozinho. A vigilância junta: <b>observação + registro + decisão</b>.</p>
+
+    <div class="callout">
+      <b>Pergunta-chave</b>
+      <p style="margin:6px 0 0">Se você fosse a vigilância municipal, o que faria com os dados do campo?</p>
+    </div>
+
+    <h3>Checklist final</h3>
+    <div class="check"><input data-save type="checkbox" data-key="a5_rel"> <span>Relacionei ambiente, vetor e risco</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a5_dec"> <span>Diferenciei eliminar, manejar e monitorar</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a5_papel"> <span>Entendi o papel do campo na decisão</span></div>
+    <div class="check"><input data-save type="checkbox" data-key="a5_exp"> <span>Consigo explicar isso para outra pessoa</span></div>
+  `
 }
 ];
 
+/* ========= UI ========= */
 const menu=document.getElementById("menu");
 const title=document.getElementById("title");
 const subtitle=document.getElementById("subtitle");
 const content=document.getElementById("content");
 
+const lessonPctEl = document.getElementById("lessonPct");
+const modulePctEl = document.getElementById("modulePct");
+const lessonBar = document.getElementById("lessonBar");
+const moduleBar = document.getElementById("moduleBar");
+
+const LS_PREFIX = "GV_CAMPO_";
+
+/* salva e restaura checkboxes */
+function restoreChecks(root){
+  root.querySelectorAll('input[type="checkbox"][data-save][data-key]').forEach(cb=>{
+    const k = LS_PREFIX + cb.dataset.key;
+    cb.checked = localStorage.getItem(k) === "1";
+    cb.addEventListener("change", ()=>{
+      localStorage.setItem(k, cb.checked ? "1" : "0");
+      updateProgress();
+    });
+  });
+}
+
+function countLessonChecks(){
+  const all = content.querySelectorAll('input[type="checkbox"][data-save][data-key]');
+  const done = [...all].filter(x=>x.checked).length;
+  return {all: all.length, done};
+}
+
+function countModuleChecks(){
+  const keys = lessons.flatMap(l=>{
+    const tmp = document.createElement("div");
+    tmp.innerHTML = l.html;
+    return [...tmp.querySelectorAll('input[type="checkbox"][data-save][data-key]')].map(cb=>cb.dataset.key);
+  });
+  const unique = [...new Set(keys)];
+  const done = unique.filter(k => localStorage.getItem(LS_PREFIX+k) === "1").length;
+  return {all: unique.length, done};
+}
+
+function pct(done, all){
+  if(!all) return 0;
+  return Math.round((done/all)*100);
+}
+
+function updateProgress(){
+  // lição atual
+  const L = countLessonChecks();
+  const pL = pct(L.done, L.all);
+  lessonPctEl.textContent = pL + "%";
+  lessonBar.style.width = pL + "%";
+
+  // módulo inteiro
+  const M = countModuleChecks();
+  const pM = pct(M.done, M.all);
+  modulePctEl.textContent = pM + "%";
+  moduleBar.style.width = pM + "%";
+}
+
+function openLesson(l){
+  document.querySelectorAll(".lesson-btn").forEach(x=>x.classList.remove("active"));
+  const btn = document.getElementById("btn_"+l.id);
+  if(btn) btn.classList.add("active");
+
+  title.textContent = l.title;
+  subtitle.textContent = l.sub;
+  content.innerHTML = l.html;
+
+  restoreChecks(content);
+  updateProgress();
+}
+
+/* monta menu */
 lessons.forEach(l=>{
- const b=document.createElement("button");
- b.className="lesson-btn";
- b.innerHTML=`<b>${l.title}</b><span>${l.sub}</span>`;
- b.onclick=()=>{
-   document.querySelectorAll(".lesson-btn").forEach(x=>x.classList.remove("active"));
-   b.classList.add("active");
-   title.textContent=l.title;
-   subtitle.textContent=l.sub;
-   content.innerHTML=l.html;
- };
- menu.appendChild(b);
+  const b=document.createElement("button");
+  b.className="lesson-btn";
+  b.id = "btn_"+l.id;
+  b.innerHTML=`<b>${l.title}</b><span>${l.sub}</span>`;
+  b.onclick=()=>openLesson(l);
+  menu.appendChild(b);
 });
+
+/* abre primeiro por padrão */
+openLesson(lessons[0]);
 </script>
-<div id="app-menu"></div>
-<script src="menu.js"></script>
-    <script src="caderno-global.js"></script>
 
 </body>
 </html>
+
